@@ -728,6 +728,26 @@
             font-weight: 600;
         }
 
+        .empty-state-category {
+            text-align: center;
+            padding: 40px 20px;
+            color: #4A7A9C;
+        }
+        .empty-state-category svg {
+            width: 56px;
+            height: 56px;
+            margin-bottom: 16px;
+            opacity: 0.3;
+        }
+        .empty-state-category p {
+            font-size: 16px;
+        }
+        .empty-state-category .sub {
+            font-size: 14px;
+            margin-top: 8px;
+            opacity: 0.7;
+        }
+
         .hidden { display: none !important; }
 
         .footer {
@@ -891,7 +911,7 @@
         </div>
 
         <footer class="footer">
-            <p>Promptarium — сапфировая библиотека промтов. Версия 12.0 · Firebase</p>
+            <p>Promptarium — сапфировая библиотека промтов. Версия 12.1 · Firebase</p>
             <p style="margin-top: 6px;">
                 <a href="#" onclick="openAbout()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
@@ -979,7 +999,7 @@
                 </p>
 
                 <div class="about-footer">
-                    <p>Версия 12.0 · 2026 · Бесплатно и открыто</p>
+                    <p>Версия 12.1 · 2026 · Бесплатно и открыто</p>
                     <p style="margin-top:4px;">
                         <span style="color:#4A7A9C;">📧 promptarium@example.com</span>
                     </p>
@@ -1040,7 +1060,12 @@
                 prompts = [];
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
-                    prompts.push({ id: doc.id, ...data });
+                    // Пропускаем промты без title
+                    if (data.title && data.title.trim() !== '') {
+                        prompts.push({ id: doc.id, ...data });
+                    } else {
+                        console.warn('Пропущен промт без title:', doc.id);
+                    }
                 });
                 renderAll();
                 updateAboutStats();
@@ -1162,12 +1187,32 @@
             const grid = document.getElementById('popular-prompts');
             if (!grid) return;
             const popular = prompts.slice(0, 6);
+            if (popular.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state-category">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#4A7A9C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+                        <p>Промты пока не добавлены</p>
+                        <p class="sub">Добавьте их через Firebase или предложите свои</p>
+                    </div>
+                `;
+                return;
+            }
             grid.innerHTML = popular.map(p => renderPromptCard(p)).join('');
             attachStarEvents(grid);
         }
 
         function renderPrompts(list, container) {
             if (!container) return;
+            if (!list || list.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state-category">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#4A7A9C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+                        <p>В этой категории пока нет промтов</p>
+                        <p class="sub">Но ты можешь добавить их через Firebase!</p>
+                    </div>
+                `;
+                return;
+            }
             container.innerHTML = list.map(p => renderPromptCard(p)).join('');
             attachStarEvents(container);
         }
@@ -1185,7 +1230,13 @@
             const mainContent = document.getElementById('main-content');
             if (!mainContent) return;
             if (prompts.length === 0) {
-                mainContent.innerHTML = `<div class="loader"><div class="spinner"></div><p>Загрузка промтов...</p></div>`;
+                mainContent.innerHTML = `
+                    <div class="empty-state-category">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#4A7A9C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+                        <p>Промты пока не добавлены</p>
+                        <p class="sub">Добавьте их через Firebase или предложите свои</p>
+                    </div>
+                `;
                 return;
             }
             mainContent.innerHTML = `
@@ -1279,7 +1330,6 @@
                 navigator.clipboard.writeText(previewText).then(() => {
                     window.open(url, '_blank');
                 }).catch(() => {
-                    // fallback
                     const ta = document.createElement('textarea');
                     ta.value = previewText;
                     document.body.appendChild(ta);
