@@ -911,7 +911,7 @@
         </div>
 
         <footer class="footer">
-            <p>Promptarium — сапфировая библиотека промтов. Версия 12.3 · Firebase</p>
+            <p>Promptarium — сапфировая библиотека промтов. Версия 12.4 · Firebase</p>
             <p style="margin-top: 6px;">
                 <a href="#" onclick="openAbout()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
@@ -998,7 +998,7 @@
                 </p>
 
                 <div class="about-footer">
-                    <p>Версия 12.3 · 2026 · Бесплатно и открыто</p>
+                    <p>Версия 12.4 · 2026 · Бесплатно и открыто</p>
                     <p style="margin-top:4px;">
                         <span style="color:#4A7A9C;">📧 promptarium@example.com</span>
                     </p>
@@ -1053,9 +1053,12 @@
         let ratings = JSON.parse(localStorage.getItem('promptarium_ratings') || '{}');
         let isCategoryOpen = false;
         let isFirstLoad = true;
+        let isLoading = false;
 
         // ==================== FIREBASE FUNCTIONS ====================
         async function loadPrompts() {
+            if (isLoading) return;
+            isLoading = true;
             try {
                 const querySnapshot = await getDocs(collection(db, "prompts"));
                 prompts = [];
@@ -1067,7 +1070,14 @@
                         console.warn('Пропущен промт без title:', doc.id);
                     }
                 });
-                renderAll();
+                
+                // Обновляем только то, что сейчас открыто
+                if (isCategoryOpen && currentCategory) {
+                    const filtered = prompts.filter(p => p.category === currentCategory);
+                    renderPrompts(filtered, document.getElementById('category-prompts'));
+                } else {
+                    renderAll();
+                }
                 updateAboutStats();
             } catch (error) {
                 console.error("Ошибка загрузки:", error);
@@ -1077,6 +1087,7 @@
                     </div>
                 `;
             }
+            isLoading = false;
         }
 
         async function getPromptFromFirebase(id) {
@@ -1227,7 +1238,10 @@
         }
 
         function renderAll() {
-            if (isCategoryOpen) return;
+            if (isCategoryOpen) {
+                console.log('⛔ renderAll заблокирован, так как открыта категория');
+                return;
+            }
 
             const mainContent = document.getElementById('main-content');
             if (!mainContent) return;
@@ -1290,8 +1304,9 @@
 
         // ==================== ПОИСК ====================
         window.handleSearch = function() {
+            // Если открыта категория — игнорируем поиск
             if (isCategoryOpen) {
-                // Если открыта категория — поиск не мешаем
+                console.log('⛔ Поиск заблокирован, так как открыта категория');
                 return;
             }
 
