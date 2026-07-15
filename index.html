@@ -911,7 +911,7 @@
         </div>
 
         <footer class="footer">
-            <p>Promptarium — сапфировая библиотека промтов. Версия 12.2 · Firebase</p>
+            <p>Promptarium — сапфировая библиотека промтов. Версия 12.3 · Firebase</p>
             <p style="margin-top: 6px;">
                 <a href="#" onclick="openAbout()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
@@ -998,7 +998,7 @@
                 </p>
 
                 <div class="about-footer">
-                    <p>Версия 12.2 · 2026 · Бесплатно и открыто</p>
+                    <p>Версия 12.3 · 2026 · Бесплатно и открыто</p>
                     <p style="margin-top:4px;">
                         <span style="color:#4A7A9C;">📧 promptarium@example.com</span>
                     </p>
@@ -1051,6 +1051,7 @@
         let currentPrompt = null;
         let favorites = JSON.parse(localStorage.getItem('promptarium_favorites') || '[]');
         let ratings = JSON.parse(localStorage.getItem('promptarium_ratings') || '{}');
+        let isCategoryOpen = false;
         let isFirstLoad = true;
 
         // ==================== FIREBASE FUNCTIONS ====================
@@ -1226,6 +1227,8 @@
         }
 
         function renderAll() {
+            if (isCategoryOpen) return;
+
             const mainContent = document.getElementById('main-content');
             if (!mainContent) return;
             
@@ -1287,6 +1290,11 @@
 
         // ==================== ПОИСК ====================
         window.handleSearch = function() {
+            if (isCategoryOpen) {
+                // Если открыта категория — поиск не мешаем
+                return;
+            }
+
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
             const container = document.getElementById('search-results');
             
@@ -1355,6 +1363,7 @@
 
         // ==================== НАВИГАЦИЯ ====================
         window.showCategory = function(catId) {
+            isCategoryOpen = true;
             currentCategory = catId;
             document.getElementById('main-view').classList.add('hidden');
             document.getElementById('category-view').classList.remove('hidden');
@@ -1389,6 +1398,7 @@
         };
 
         window.goHome = function() {
+            isCategoryOpen = false;
             document.getElementById('main-view').classList.remove('hidden');
             document.getElementById('category-view').classList.add('hidden');
             document.getElementById('search-results').classList.remove('active');
