@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         /* ============================================
-           БАЗА (без изменений)
+           БАЗА
            ============================================ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -20,6 +20,12 @@
             min-height: 100vh;
             overflow-x: hidden;
             cursor: default;
+            animation: bgShift 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes bgShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
         }
 
         ::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -27,9 +33,6 @@
         ::-webkit-scrollbar-thumb { background: rgba(30, 144, 255, 0.3); border-radius: 10px; box-shadow: 0 0 15px rgba(30, 144, 255, 0.1); }
         ::-webkit-scrollbar-thumb:hover { background: rgba(30, 144, 255, 0.5); }
 
-        /* ============================================
-           ИНТЕРАКТИВНЫЙ ФОН (НОВЫЙ)
-           ============================================ */
         #stars-canvas {
             position: fixed;
             top: 0;
@@ -62,9 +65,6 @@
             100% { transform: translate(1%, -1%) scale(1.01); }
         }
 
-        /* ============================================
-           СВЕТ ПОД КУРСОРОМ (УЛУЧШЕН)
-           ============================================ */
         #cursor-glow {
             position: fixed;
             width: 400px;
@@ -91,9 +91,6 @@
             padding: 30px 20px 60px;
         }
 
-        /* ============================================
-           АНИМАЦИИ (НОВЫЕ)
-           ============================================ */
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes glowPulse { 0% { box-shadow: 0 0 15px rgba(30, 144, 255, 0.05); } 50% { box-shadow: 0 0 30px rgba(30, 144, 255, 0.2), 0 0 60px rgba(79, 195, 247, 0.08); } 100% { box-shadow: 0 0 15px rgba(30, 144, 255, 0.05); } }
@@ -102,6 +99,11 @@
         @keyframes floatSlow { 0% { transform: translateY(0px); } 50% { transform: translateY(-6px); } 100% { transform: translateY(0px); } }
         @keyframes cardAppear { 0% { opacity: 0; transform: scale(0.95) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
         @keyframes pulseGlow { 0% { filter: drop-shadow(0 0 10px rgba(79, 195, 247, 0.3)); } 50% { filter: drop-shadow(0 0 25px rgba(79, 195, 247, 0.6)); } 100% { filter: drop-shadow(0 0 10px rgba(79, 195, 247, 0.3)); } }
+        @keyframes neonPulse {
+            0% { box-shadow: 0 0 15px rgba(30, 144, 255, 0.05), inset 0 0 15px rgba(30, 144, 255, 0.02); }
+            50% { box-shadow: 0 0 35px rgba(30, 144, 255, 0.15), inset 0 0 25px rgba(30, 144, 255, 0.05); }
+            100% { box-shadow: 0 0 15px rgba(30, 144, 255, 0.05), inset 0 0 15px rgba(30, 144, 255, 0.02); }
+        }
 
         .fade-in-down { animation: fadeInDown 0.6s ease-out forwards; }
         .fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
@@ -109,9 +111,6 @@
         .fade-in-up-delay-2 { animation: fadeInUp 0.6s ease-out 0.2s forwards; opacity: 0; }
         .fade-in-up-delay-3 { animation: fadeInUp 0.6s ease-out 0.3s forwards; opacity: 0; }
 
-        /* ============================================
-           ШАПКА (УЛУЧШЕНА)
-           ============================================ */
         .header {
             display: flex;
             justify-content: space-between;
@@ -185,16 +184,10 @@
             background: rgba(30, 144, 255, 0.08);
         }
 
-        /* ============================================
-           ГЕРОЙ
-           ============================================ */
         .hero { text-align: center; padding: 30px 0 40px; }
         .hero h1 { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: clamp(32px, 5vw, 56px); color: #FFFFFF; text-shadow: 0 0 60px rgba(79, 195, 247, 0.06); margin-bottom: 10px; animation: floatSlow 5s ease-in-out infinite; }
         .hero p { font-size: clamp(15px, 1.8vw, 20px); color: #64B5F6; margin-bottom: 25px; }
 
-        /* ============================================
-           ПОИСК (ГЛАССМОРФИЗМ)
-           ============================================ */
         .search-wrapper { max-width: 560px; margin: 0 auto 20px; }
         .search-wrapper input {
             width: 100%; padding: 16px 24px; border-radius: 50px;
@@ -253,7 +246,7 @@
         .section-title svg { width: 28px; height: 28px; }
 
         /* ============================================
-           КАТЕГОРИИ (ГЛАССМОРФИЗМ)
+           КАТЕГОРИИ (С НЕОНОВОЙ ПОДСВЕТКОЙ)
            ============================================ */
         .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; margin-bottom: 10px; }
         .category-card {
@@ -263,11 +256,12 @@
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: pointer; text-decoration: none; color: #E8F0FE;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            animation: neonPulse 3s ease-in-out infinite;
         }
         .category-card:hover {
             transform: translateY(-8px) scale(1.03);
-            border-color: rgba(30, 144, 255, 0.3);
-            box-shadow: 0 12px 50px rgba(30, 144, 255, 0.08), inset 0 1px 0 rgba(255,255,255,0.05);
+            border-color: rgba(30, 144, 255, 0.4);
+            box-shadow: 0 12px 50px rgba(30, 144, 255, 0.2), inset 0 0 30px rgba(79, 195, 247, 0.05);
             background: rgba(6, 10, 26, 0.4);
         }
         .category-card svg { width: 36px; height: 36px; display: block; margin: 0 auto 10px; transition: transform 0.3s; }
@@ -276,7 +270,7 @@
         .category-card .count { font-size: 12px; color: #4A7A9C; margin-top: 4px; display: block; }
 
         /* ============================================
-           КАРТОЧКИ ПРОМТОВ (ГЛАССМОРФИЗМ)
+           КАРТОЧКИ ПРОМТОВ (НЕОНОВАЯ ПОДСВЕТКА)
            ============================================ */
         .prompts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
         .prompt-card {
@@ -286,6 +280,7 @@
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: pointer; animation: cardAppear 0.5s ease-out forwards; opacity: 0;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+            animation: neonPulse 4s ease-in-out infinite;
         }
         .prompt-card:nth-child(1) { animation-delay: 0s; }
         .prompt-card:nth-child(2) { animation-delay: 0.05s; }
@@ -296,15 +291,35 @@
 
         .prompt-card:hover {
             transform: translateY(-6px) scale(1.01);
-            border-color: rgba(30, 144, 255, 0.2);
-            box-shadow: 0 12px 50px rgba(30, 144, 255, 0.06), inset 0 1px 0 rgba(255,255,255,0.03);
+            border-color: rgba(30, 144, 255, 0.25);
+            box-shadow: 0 12px 50px rgba(30, 144, 255, 0.12), inset 0 0 30px rgba(79, 195, 247, 0.04);
             background: rgba(6, 10, 26, 0.35);
         }
         .prompt-card .prompt-title { font-weight: 600; font-size: 16px; margin-bottom: 8px; color: #E8F0FE; display: flex; align-items: center; gap: 8px; }
         .prompt-card .prompt-title svg { width: 20px; height: 20px; flex-shrink: 0; opacity: 0.6; }
+
+        /* ===== МИКРО-АНИМАЦИЯ ТЕГОВ ===== */
         .prompt-card .prompt-tags { display: flex; gap: 5px; flex-wrap: wrap; margin: 6px 0 10px; }
-        .prompt-card .prompt-tags span { background: rgba(30, 144, 255, 0.06); padding: 2px 12px; border-radius: 20px; font-size: 10px; color: #64B5F6; border: 1px solid rgba(30, 144, 255, 0.04); transition: all 0.3s; cursor: pointer; }
-        .prompt-card .prompt-tags span:hover { background: rgba(30, 144, 255, 0.12); border-color: rgba(30, 144, 255, 0.12); transform: scale(1.05); }
+        .prompt-card .prompt-tags span {
+            background: rgba(30, 144, 255, 0.06);
+            padding: 2px 12px; border-radius: 20px;
+            font-size: 10px; color: #64B5F6;
+            border: 1px solid rgba(30, 144, 255, 0.04);
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            position: relative;
+        }
+        .prompt-card .prompt-tags span:hover {
+            background: rgba(30, 144, 255, 0.15);
+            border-color: rgba(30, 144, 255, 0.2);
+            transform: scale(1.1) translateY(-2px);
+            box-shadow: 0 4px 15px rgba(30, 144, 255, 0.1);
+            color: #FFFFFF;
+        }
+        .prompt-card .prompt-tags span:active {
+            transform: scale(0.95);
+        }
+
         .prompt-card .prompt-meta { display: flex; gap: 14px; font-size: 12px; color: #4A7A9C; align-items: center; flex-wrap: wrap; }
         .prompt-card .prompt-meta .stars { color: #FBBF24; cursor: pointer; user-select: none; display: flex; gap: 2px; }
         .prompt-card .prompt-meta .stars .star { transition: all 0.2s; font-size: 14px; }
@@ -342,11 +357,12 @@
             cursor: pointer;
             animation: fadeInUp 0.3s ease-out;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            animation: neonPulse 4s ease-in-out infinite;
         }
         #category-prompts-container .prompt-card:hover {
             transform: translateY(-4px);
-            border-color: rgba(30, 144, 255, 0.3);
-            box-shadow: 0 12px 50px rgba(30, 144, 255, 0.08);
+            border-color: rgba(30, 144, 255, 0.35);
+            box-shadow: 0 12px 50px rgba(30, 144, 255, 0.15), inset 0 0 30px rgba(79, 195, 247, 0.04);
             background: rgba(6, 10, 26, 0.5);
         }
 
@@ -373,12 +389,18 @@
             font-size: 11px;
             color: #64B5F6;
             border: 1px solid rgba(30, 144, 255, 0.04);
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             cursor: pointer;
         }
         #category-prompts-container .prompt-tags span:hover {
-            background: rgba(30, 144, 255, 0.12);
-            border-color: rgba(30, 144, 255, 0.12);
+            background: rgba(30, 144, 255, 0.15);
+            border-color: rgba(30, 144, 255, 0.2);
+            transform: scale(1.1) translateY(-2px);
+            box-shadow: 0 4px 15px rgba(30, 144, 255, 0.1);
+            color: #FFFFFF;
+        }
+        #category-prompts-container .prompt-tags span:active {
+            transform: scale(0.95);
         }
 
         #category-prompts-container .prompt-meta {
@@ -567,7 +589,7 @@
         </div>
 
         <footer class="footer">
-            <p>Promptarium — сапфировая библиотека промтов. Версия 19.0 · Firebase</p>
+            <p>Promptarium — сапфировая библиотека промтов. Версия 20.0 · Firebase</p>
             <p style="margin-top: 6px;">
                 <a href="#" onclick="openAbout()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
@@ -655,7 +677,7 @@
                 </p>
 
                 <div class="about-footer">
-                    <p>Версия 19.0 · 2026 · Бесплатно и открыто</p>
+                    <p>Версия 20.0 · 2026 · Бесплатно и открыто</p>
                     <p style="margin-top:4px;">
                         <span style="color:#4A7A9C;">📧 promptarium@example.com</span>
                     </p>
@@ -1162,13 +1184,15 @@
         });
 
         // ============================================================
-        // 12. ЗВЁЗДЫ
+        // 12. ЗВЁЗДЫ (С ПАДАЮЩИМИ)
         // ============================================================
         const canvas = document.getElementById('stars-canvas');
         const ctx = canvas.getContext('2d');
         let w, h;
         const stars = [];
         const STAR_COUNT = 200;
+        const SHOOTING_STAR_COUNT = 3;
+        let shootingStars = [];
 
         function resizeCanvas() {
             w = canvas.width = window.innerWidth;
@@ -1177,6 +1201,7 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
+        // Обычные звёзды
         class Star {
             constructor() {
                 this.reset();
@@ -1217,14 +1242,91 @@
             }
         }
 
+        // Падающие звёзды
+        class ShootingStar {
+            constructor() {
+                this.reset();
+                this.active = false;
+            }
+            reset() {
+                this.x = Math.random() * w * 0.8;
+                this.y = Math.random() * h * 0.3;
+                this.length = 80 + Math.random() * 120;
+                this.speed = 6 + Math.random() * 10;
+                this.angle = -Math.PI / 4 + (Math.random() - 0.5) * 0.3;
+                this.opacity = 0.8 + Math.random() * 0.2;
+                this.active = true;
+                this.life = 1;
+                this.decay = 0.005 + Math.random() * 0.01;
+            }
+            update() {
+                if (!this.active) {
+                    if (Math.random() < 0.005) this.reset();
+                    return;
+                }
+                this.x += Math.cos(this.angle) * this.speed;
+                this.y += Math.sin(this.angle) * this.speed;
+                this.life -= this.decay;
+                if (this.life <= 0 || this.x > w || this.y > h) {
+                    this.active = false;
+                }
+            }
+            draw(ctx) {
+                if (!this.active) return;
+                const opacity = this.opacity * this.life;
+                const endX = this.x - Math.cos(this.angle) * this.length;
+                const endY = this.y - Math.sin(this.angle) * this.length;
+
+                const gradient = ctx.createLinearGradient(this.x, this.y, endX, endY);
+                gradient.addColorStop(0, `rgba(255, 255, 255, ${opacity})`);
+                gradient.addColorStop(0.2, `rgba(200, 230, 255, ${opacity * 0.5})`);
+                gradient.addColorStop(1, `rgba(200, 230, 255, 0)`);
+
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(endX, endY);
+                ctx.strokeStyle = gradient;
+                ctx.lineWidth = 2 + Math.random() * 1.5;
+                ctx.shadowColor = `rgba(100, 180, 255, ${opacity * 0.3})`;
+                ctx.shadowBlur = 20;
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+
+                // Яркая головка
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, 2.5 * this.life, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${opacity * 0.8})`;
+                ctx.fill();
+            }
+        }
+
         for (let i = 0; i < STAR_COUNT; i++) stars.push(new Star());
+        for (let i = 0; i < SHOOTING_STAR_COUNT; i++) {
+            const s = new ShootingStar();
+            s.active = false;
+            shootingStars.push(s);
+        }
+
+        let shootingTimer = 0;
 
         function animateStars() {
             ctx.clearRect(0, 0, w, h);
+
             for (const star of stars) {
                 star.update();
                 star.draw(ctx);
             }
+
+            shootingTimer++;
+            for (const ss of shootingStars) {
+                if (!ss.active && shootingTimer > 200 + Math.random() * 300) {
+                    ss.reset();
+                    shootingTimer = 0;
+                }
+                ss.update();
+                ss.draw(ctx);
+            }
+
             requestAnimationFrame(animateStars);
         }
         animateStars();
