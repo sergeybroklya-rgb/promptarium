@@ -911,7 +911,7 @@
         </div>
 
         <footer class="footer">
-            <p>Promptarium — сапфировая библиотека промтов. Версия 12.4 · Firebase</p>
+            <p>Promptarium — сапфировая библиотека промтов. Версия 12.5 · Firebase</p>
             <p style="margin-top: 6px;">
                 <a href="#" onclick="openAbout()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
@@ -998,7 +998,7 @@
                 </p>
 
                 <div class="about-footer">
-                    <p>Версия 12.4 · 2026 · Бесплатно и открыто</p>
+                    <p>Версия 12.5 · 2026 · Бесплатно и открыто</p>
                     <p style="margin-top:4px;">
                         <span style="color:#4A7A9C;">📧 promptarium@example.com</span>
                     </p>
@@ -1052,13 +1052,11 @@
         let favorites = JSON.parse(localStorage.getItem('promptarium_favorites') || '[]');
         let ratings = JSON.parse(localStorage.getItem('promptarium_ratings') || '{}');
         let isCategoryOpen = false;
-        let isFirstLoad = true;
-        let isLoading = false;
+        let isDataLoaded = false;
 
         // ==================== FIREBASE FUNCTIONS ====================
         async function loadPrompts() {
-            if (isLoading) return;
-            isLoading = true;
+            if (isDataLoaded) return;
             try {
                 const querySnapshot = await getDocs(collection(db, "prompts"));
                 prompts = [];
@@ -1066,19 +1064,12 @@
                     const data = doc.data();
                     if (data.title && data.title.trim() !== '') {
                         prompts.push({ id: doc.id, ...data });
-                    } else {
-                        console.warn('Пропущен промт без title:', doc.id);
                     }
                 });
-                
-                // Обновляем только то, что сейчас открыто
-                if (isCategoryOpen && currentCategory) {
-                    const filtered = prompts.filter(p => p.category === currentCategory);
-                    renderPrompts(filtered, document.getElementById('category-prompts'));
-                } else {
-                    renderAll();
-                }
+                isDataLoaded = true;
+                renderAll();
                 updateAboutStats();
+                console.log('✅ Промты загружены:', prompts.length);
             } catch (error) {
                 console.error("Ошибка загрузки:", error);
                 document.getElementById('main-content').innerHTML = `
@@ -1087,7 +1078,6 @@
                     </div>
                 `;
             }
-            isLoading = false;
         }
 
         async function getPromptFromFirebase(id) {
@@ -1238,20 +1228,19 @@
         }
 
         function renderAll() {
+            // Если открыта категория — НЕ перерисовываем главную страницу
             if (isCategoryOpen) {
-                console.log('⛔ renderAll заблокирован, так как открыта категория');
+                console.log('⛔ renderAll() заблокирован, категория открыта');
                 return;
             }
 
             const mainContent = document.getElementById('main-content');
             if (!mainContent) return;
             
-            if (isFirstLoad && prompts.length === 0) {
+            if (!isDataLoaded && prompts.length === 0) {
                 mainContent.innerHTML = `<div class="loader"><div class="spinner"></div><p>Загрузка промтов...</p></div>`;
                 return;
             }
-
-            isFirstLoad = false;
 
             if (prompts.length === 0) {
                 mainContent.innerHTML = `
@@ -1264,6 +1253,7 @@
                 return;
             }
 
+            console.log('🔄 Рендерим главную страницу');
             mainContent.innerHTML = `
                 <div class="section-title fade-in-up-delay-1">
                     <svg viewBox="0 0 24 24" fill="none" stroke="#4FC3F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
@@ -1304,9 +1294,9 @@
 
         // ==================== ПОИСК ====================
         window.handleSearch = function() {
-            // Если открыта категория — игнорируем поиск
+            // Если категория открыта — поиск не работает
             if (isCategoryOpen) {
-                console.log('⛔ Поиск заблокирован, так как открыта категория');
+                console.log('⛔ Поиск заблокирован, категория открыта');
                 return;
             }
 
@@ -1398,6 +1388,7 @@
             const filtered = prompts.filter(p => p.category === catId);
             renderPrompts(filtered, document.getElementById('category-prompts'));
             document.querySelector('.container').scrollIntoView({ behavior: 'smooth' });
+            console.log(`📂 Открыта категория: ${cat.name} (${filtered.length} промтов)`);
         };
 
         window.filterByTag = function(tag) {
@@ -1420,6 +1411,7 @@
             document.getElementById('searchInput').value = '';
             renderAll();
             document.querySelector('.container').scrollIntoView({ behavior: 'smooth' });
+            console.log('🏠 Возврат на главную');
         };
 
         window.showAllCategories = function() { 
