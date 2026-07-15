@@ -911,7 +911,7 @@
         </div>
 
         <footer class="footer">
-            <p>Promptarium — сапфировая библиотека промтов. Версия 12.5 · Firebase</p>
+            <p>Promptarium — сапфировая библиотека промтов. Версия 13.0 · Firebase</p>
             <p style="margin-top: 6px;">
                 <a href="#" onclick="openAbout()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
@@ -998,7 +998,7 @@
                 </p>
 
                 <div class="about-footer">
-                    <p>Версия 12.5 · 2026 · Бесплатно и открыто</p>
+                    <p>Версия 13.0 · 2026 · Бесплатно и открыто</p>
                     <p style="margin-top:4px;">
                         <span style="color:#4A7A9C;">📧 promptarium@example.com</span>
                     </p>
@@ -1008,7 +1008,6 @@
     </div>
 
     <script type="module">
-        // ==================== FIREBASE ====================
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
         import { 
             getFirestore, 
@@ -1030,7 +1029,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // ==================== КАТЕГОРИИ ====================
         const categories = [
             { id: 'work', name: 'Работа и бизнес' },
             { id: 'study', name: 'Учёба и знания' },
@@ -1045,7 +1043,6 @@
             { id: 'psychology', name: 'Психология' }
         ];
 
-        // ==================== STATE ====================
         let prompts = [];
         let currentCategory = null;
         let currentPrompt = null;
@@ -1054,7 +1051,6 @@
         let isCategoryOpen = false;
         let isDataLoaded = false;
 
-        // ==================== FIREBASE FUNCTIONS ====================
         async function loadPrompts() {
             if (isDataLoaded) return;
             try {
@@ -1092,7 +1088,6 @@
             }
         }
 
-        // ==================== ЛОКАЛЬНОЕ ХРАНЕНИЕ ====================
         function saveFavorites() { localStorage.setItem('promptarium_favorites', JSON.stringify(favorites)); }
         function saveRatings() { localStorage.setItem('promptarium_ratings', JSON.stringify(ratings)); }
         function isFavorite(id) { return favorites.includes(id); }
@@ -1115,7 +1110,6 @@
             return vals.reduce((a, b) => a + b, 0) / vals.length;
         }
 
-        // ==================== РЕНДЕРИНГ ====================
         function getCategoryCount(catId) {
             return prompts.filter(p => p.category === catId).length;
         }
@@ -1189,13 +1183,7 @@
             if (!grid) return;
             const popular = prompts.slice(0, 6);
             if (popular.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state-category">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#4A7A9C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
-                        <p>Промты пока не добавлены</p>
-                        <p class="sub">Добавьте их через Firebase</p>
-                    </div>
-                `;
+                grid.innerHTML = `<div class="empty-state-category"><svg viewBox="0 0 24 24" fill="none" stroke="#4A7A9C" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg><p>Промты пока не добавлены</p><p class="sub">Добавьте их через Firebase</p></div>`;
                 return;
             }
             grid.innerHTML = popular.map(p => renderPromptCard(p)).join('');
@@ -1205,13 +1193,7 @@
         function renderPrompts(list, container) {
             if (!container) return;
             if (!list || list.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state-category">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#4A7A9C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
-                        <p>В этой категории пока нет промтов</p>
-                        <p class="sub">Добавьте их через Firebase!</p>
-                    </div>
-                `;
+                container.innerHTML = `<div class="empty-state-category"><svg viewBox="0 0 24 24" fill="none" stroke="#4A7A9C" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg><p>В этой категории пока нет промтов</p><p class="sub">Добавьте их через Firebase!</p></div>`;
                 return;
             }
             container.innerHTML = list.map(p => renderPromptCard(p)).join('');
@@ -1227,8 +1209,8 @@
             });
         }
 
+        // === ГЛАВНАЯ СТРАНИЦА ===
         function renderAll() {
-            // Если открыта категория — НЕ перерисовываем главную страницу
             if (isCategoryOpen) {
                 console.log('⛔ renderAll() заблокирован, категория открыта');
                 return;
@@ -1243,27 +1225,20 @@
             }
 
             if (prompts.length === 0) {
-                mainContent.innerHTML = `
-                    <div class="empty-state-category">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#4A7A9C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
-                        <p>Промты пока не добавлены</p>
-                        <p class="sub">Добавьте их через Firebase</p>
-                    </div>
-                `;
+                mainContent.innerHTML = `<div class="empty-state-category"><svg viewBox="0 0 24 24" fill="none" stroke="#4A7A9C" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg><p>Промты пока не добавлены</p><p class="sub">Добавьте их через Firebase</p></div>`;
                 return;
             }
 
-            console.log('🔄 Рендерим главную страницу');
             mainContent.innerHTML = `
                 <div class="section-title fade-in-up-delay-1">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#4FC3F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#4FC3F7" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
                     КАТАЛОГ КАТЕГОРИЙ
                     <span class="line"></span>
                 </div>
                 <div class="categories-grid fade-in-up-delay-1" id="categories-grid"></div>
 
                 <div class="section-title fade-in-up-delay-2">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                     ПОПУЛЯРНЫЕ ПРОМТЫ
                     <span class="line"></span>
                 </div>
@@ -1273,13 +1248,6 @@
             renderCategories();
             renderPopularPrompts();
             updateAboutStats();
-            
-            document.querySelectorAll('#popular-prompts .star').forEach(el => {
-                el.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    setRating(this.dataset.prompt, parseInt(this.dataset.star));
-                });
-            });
         }
 
         function updateAboutStats() {
@@ -1292,9 +1260,8 @@
             }
         }
 
-        // ==================== ПОИСК ====================
+        // === ПОИСК ===
         window.handleSearch = function() {
-            // Если категория открыта — поиск не работает
             if (isCategoryOpen) {
                 console.log('⛔ Поиск заблокирован, категория открыта');
                 return;
@@ -1325,13 +1292,7 @@
             });
 
             if (results.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#4A7A9C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                        <p>🚀 Ничего не найдено по запросу <strong>"${query}"</strong></p>
-                        <p style="font-size:13px; color:#4A7A9C; margin-top:4px;">Попробуй изменить ключевые слова</p>
-                    </div>
-                `;
+                container.innerHTML = `<div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="#4A7A9C" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><p>🚀 Ничего не найдено по запросу <strong>"${query}"</strong></p><p style="font-size:13px; color:#4A7A9C; margin-top:4px;">Попробуй изменить ключевые слова</p></div>`;
                 container.classList.add('active');
                 return;
             }
@@ -1346,7 +1307,6 @@
             attachStarEvents(container);
         };
 
-        // ==================== КНОПКИ ИИ ====================
         window.openAI = function(url) {
             const previewText = document.getElementById('modal-preview').textContent;
             if (previewText) {
@@ -1366,13 +1326,12 @@
             }
         };
 
-        // ==================== НАВИГАЦИЯ ====================
+        // === НАВИГАЦИЯ ===
         window.showCategory = function(catId) {
             isCategoryOpen = true;
             currentCategory = catId;
             document.getElementById('main-view').classList.add('hidden');
             document.getElementById('category-view').classList.remove('hidden');
-            document.getElementById('category-view').dataset.currentCategory = catId;
 
             const cat = categories.find(c => c.id === catId);
             document.getElementById('category-title').innerHTML = `${cat.name} <span class="line"></span>`;
@@ -1418,7 +1377,6 @@
             window.goHome(); 
         };
 
-        // ==================== СЛУЧАЙНЫЙ ПРОМТ ====================
         window.randomPrompt = function() {
             if (prompts.length === 0) {
                 alert('Промты ещё загружаются, попробуй позже!');
@@ -1428,7 +1386,7 @@
             window.openPrompt(p.id);
         };
 
-        // ==================== МОДАЛКА ====================
+        // === МОДАЛКА ===
         window.openPrompt = async function(id) {
             const p = await getPromptFromFirebase(id);
             if (!p) { alert('Промт не найден'); return; }
@@ -1519,7 +1477,6 @@
             if (e.target === e.currentTarget) closeModal();
         });
 
-        // ==================== О ПРОЕКТЕ ====================
         window.openAbout = function() {
             updateAboutStats();
             document.getElementById('about-modal').classList.add('active');
@@ -1533,7 +1490,7 @@
             if (e.target === e.currentTarget) closeAbout();
         });
 
-        // ==================== ЗВЁЗДЫ ====================
+        // === ЗВЁЗДЫ ===
         const canvas = document.getElementById('stars-canvas');
         const ctx = canvas.getContext('2d');
         let w, h;
@@ -1589,7 +1546,6 @@
         }
         animateStars();
 
-        // ==================== СВЕТ ПОД КУРСОРОМ ====================
         const glow = document.getElementById('cursor-glow');
         document.addEventListener('mousemove', (e) => {
             glow.style.left = e.clientX + 'px';
@@ -1610,10 +1566,8 @@
             });
         });
 
-        // ==================== ЗАПУСК ====================
         loadPrompts();
 
-        // Делаем функции доступными глобально
         window.prompts = prompts;
         window.getRating = getRating;
         window.setRating = setRating;
