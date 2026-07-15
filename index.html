@@ -911,7 +911,7 @@
         </div>
 
         <footer class="footer">
-            <p>Promptarium — сапфировая библиотека промтов. Версия 12.1 · Firebase</p>
+            <p>Promptarium — сапфировая библиотека промтов. Версия 12.2 · Firebase</p>
             <p style="margin-top: 6px;">
                 <a href="#" onclick="openAbout()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
@@ -939,27 +939,26 @@
             </div>
             <div class="modal-tags" id="modal-tags"></div>
 
-            <!-- НОВЫЙ БЛОК: КНОПКИ ИИ -->
             <div class="modal-ai-section">
                 <span class="ai-label">🚀 Открыть в нейросети</span>
                 <div class="modal-ai-buttons">
-                    <button onclick="openAI('https://chat.openai.com/', 'chatgpt')">
+                    <button onclick="openAI('https://chat.openai.com/')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="#10a37f" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20"/></svg>
                         ChatGPT
                     </button>
-                    <button onclick="openAI('https://deepseek.com/', 'deepseek')">
+                    <button onclick="openAI('https://deepseek.com/')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="#4D6BFE" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="4"/><path d="M8 8v8M16 8v8"/></svg>
                         DeepSeek
                     </button>
-                    <button onclick="openAI('https://gemini.google.com/', 'gemini')">
+                    <button onclick="openAI('https://gemini.google.com/')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="#4285F4" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                         Gemini
                     </button>
-                    <button onclick="openAI('https://claude.ai/', 'claude')">
+                    <button onclick="openAI('https://claude.ai/')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6l4 2"/></svg>
                         Claude
                     </button>
-                    <button onclick="openAI('https://yandex.ru/gpt/', 'yandexgpt')">
+                    <button onclick="openAI('https://yandex.ru/gpt/')">
                         <svg viewBox="0 0 24 24" fill="none" stroke="#FC3F1D" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 8l8 8M16 8l-8 8"/></svg>
                         YandexGPT
                     </button>
@@ -999,7 +998,7 @@
                 </p>
 
                 <div class="about-footer">
-                    <p>Версия 12.1 · 2026 · Бесплатно и открыто</p>
+                    <p>Версия 12.2 · 2026 · Бесплатно и открыто</p>
                     <p style="margin-top:4px;">
                         <span style="color:#4A7A9C;">📧 promptarium@example.com</span>
                     </p>
@@ -1031,7 +1030,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // ==================== КАТЕГОРИИ (НОВЫЕ) ====================
+        // ==================== КАТЕГОРИИ ====================
         const categories = [
             { id: 'work', name: 'Работа и бизнес' },
             { id: 'study', name: 'Учёба и знания' },
@@ -1052,6 +1051,7 @@
         let currentPrompt = null;
         let favorites = JSON.parse(localStorage.getItem('promptarium_favorites') || '[]');
         let ratings = JSON.parse(localStorage.getItem('promptarium_ratings') || '{}');
+        let isFirstLoad = true;
 
         // ==================== FIREBASE FUNCTIONS ====================
         async function loadPrompts() {
@@ -1060,7 +1060,6 @@
                 prompts = [];
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
-                    // Пропускаем промты без title
                     if (data.title && data.title.trim() !== '') {
                         prompts.push({ id: doc.id, ...data });
                     } else {
@@ -1192,7 +1191,7 @@
                     <div class="empty-state-category">
                         <svg viewBox="0 0 24 24" fill="none" stroke="#4A7A9C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
                         <p>Промты пока не добавлены</p>
-                        <p class="sub">Добавьте их через Firebase или предложите свои</p>
+                        <p class="sub">Добавьте их через Firebase</p>
                     </div>
                 `;
                 return;
@@ -1208,7 +1207,7 @@
                     <div class="empty-state-category">
                         <svg viewBox="0 0 24 24" fill="none" stroke="#4A7A9C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
                         <p>В этой категории пока нет промтов</p>
-                        <p class="sub">Но ты можешь добавить их через Firebase!</p>
+                        <p class="sub">Добавьте их через Firebase!</p>
                     </div>
                 `;
                 return;
@@ -1229,16 +1228,25 @@
         function renderAll() {
             const mainContent = document.getElementById('main-content');
             if (!mainContent) return;
+            
+            if (isFirstLoad && prompts.length === 0) {
+                mainContent.innerHTML = `<div class="loader"><div class="spinner"></div><p>Загрузка промтов...</p></div>`;
+                return;
+            }
+
+            isFirstLoad = false;
+
             if (prompts.length === 0) {
                 mainContent.innerHTML = `
                     <div class="empty-state-category">
                         <svg viewBox="0 0 24 24" fill="none" stroke="#4A7A9C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
                         <p>Промты пока не добавлены</p>
-                        <p class="sub">Добавьте их через Firebase или предложите свои</p>
+                        <p class="sub">Добавьте их через Firebase</p>
                     </div>
                 `;
                 return;
             }
+
             mainContent.innerHTML = `
                 <div class="section-title fade-in-up-delay-1">
                     <svg viewBox="0 0 24 24" fill="none" stroke="#4FC3F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
@@ -1254,9 +1262,11 @@
                 </div>
                 <div class="prompts-grid fade-in-up-delay-3" id="popular-prompts"></div>
             `;
+            
             renderCategories();
             renderPopularPrompts();
             updateAboutStats();
+            
             document.querySelectorAll('#popular-prompts .star').forEach(el => {
                 el.addEventListener('click', function(e) {
                     e.stopPropagation();
@@ -1275,7 +1285,7 @@
             }
         }
 
-        // ==================== ПОИСК (БЕЗОПАСНЫЙ) ====================
+        // ==================== ПОИСК ====================
         window.handleSearch = function() {
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
             const container = document.getElementById('search-results');
@@ -1324,7 +1334,7 @@
         };
 
         // ==================== КНОПКИ ИИ ====================
-        window.openAI = function(url, name) {
+        window.openAI = function(url) {
             const previewText = document.getElementById('modal-preview').textContent;
             if (previewText) {
                 navigator.clipboard.writeText(previewText).then(() => {
@@ -1506,7 +1516,7 @@
             if (e.target === e.currentTarget) closeAbout();
         });
 
-        // ==================== ЗВЁЗДЫ (ОПТИМИЗИРОВАННЫЕ) ====================
+        // ==================== ЗВЁЗДЫ ====================
         const canvas = document.getElementById('stars-canvas');
         const ctx = canvas.getContext('2d');
         let w, h;
@@ -1586,7 +1596,7 @@
         // ==================== ЗАПУСК ====================
         loadPrompts();
 
-        // Делаем функции и данные доступными глобально
+        // Делаем функции доступными глобально
         window.prompts = prompts;
         window.getRating = getRating;
         window.setRating = setRating;
@@ -1607,4 +1617,3 @@
     </script>
 </body>
 </html>
-<!-- force update 2 -->
