@@ -19,23 +19,10 @@
             cursor: default;
         }
 
-        /* КАСТОМНЫЙ СКРОЛЛБАР */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: rgba(30, 144, 255, 0.04);
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(30, 144, 255, 0.3);
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(30, 144, 255, 0.1);
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(30, 144, 255, 0.5);
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(30, 144, 255, 0.04); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: rgba(30, 144, 255, 0.3); border-radius: 10px; box-shadow: 0 0 15px rgba(30, 144, 255, 0.1); }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(30, 144, 255, 0.5); }
 
         #stars-canvas {
             position: fixed;
@@ -73,18 +60,31 @@
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes glowPulse {
             0% { box-shadow: 0 0 15px rgba(30, 144, 255, 0.05); }
-            50% { box-shadow: 0 0 30px rgba(30, 144, 255, 0.15), 0 0 50px rgba(79, 195, 247, 0.06); }
+            50% { box-shadow: 0 0 30px rgba(30, 144, 255, 0.2), 0 0 60px rgba(79, 195, 247, 0.08); }
             100% { box-shadow: 0 0 15px rgba(30, 144, 255, 0.05); }
         }
         @keyframes btnPulse {
             0% { box-shadow: 0 0 20px rgba(30, 144, 255, 0.15); }
-            50% { box-shadow: 0 0 40px rgba(30, 144, 255, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(30, 144, 255, 0.4); }
             100% { box-shadow: 0 0 20px rgba(30, 144, 255, 0.15); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        @keyframes floatSlow {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+            100% { transform: translateY(0px); }
+        }
+        @keyframes cardAppear {
+            0% { opacity: 0; transform: scale(0.95) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .fade-in-down { animation: fadeInDown 0.6s ease-out forwards; }
@@ -112,6 +112,7 @@
             align-items: center;
             gap: 10px;
             cursor: pointer;
+            animation: floatSlow 4s ease-in-out infinite;
         }
         .logo svg {
             width: 30px;
@@ -147,10 +148,7 @@
             box-shadow: 0 0 25px rgba(30, 144, 255, 0.1);
             transform: scale(1.04);
         }
-        .nav-link svg {
-            width: 18px;
-            height: 18px;
-        }
+        .nav-link svg { width: 18px; height: 18px; }
 
         .hero {
             text-align: center;
@@ -163,6 +161,7 @@
             color: #FFFFFF;
             text-shadow: 0 0 60px rgba(79, 195, 247, 0.06);
             margin-bottom: 10px;
+            animation: floatSlow 5s ease-in-out infinite;
         }
         .hero p {
             font-size: clamp(15px, 1.8vw, 20px);
@@ -186,16 +185,17 @@
             outline: none;
             transition: all 0.3s;
         }
-        .search-wrapper input::placeholder {
-            color: #4A7A9C;
-        }
+        .search-wrapper input::placeholder { color: #4A7A9C; }
         .search-wrapper input:focus {
             border-color: #1E90FF;
             box-shadow: 0 0 30px rgba(30, 144, 255, 0.12);
+            transform: scale(1.02);
         }
+
         .search-results {
             margin-top: 15px;
             display: none;
+            animation: fadeInUp 0.3s ease-out;
         }
         .search-results.active { display: block; }
         .search-results .prompts-grid { margin-top: 0; }
@@ -221,10 +221,22 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.08), transparent);
+            animation: shimmer 4s linear infinite;
         }
         .btn-primary:hover {
-            transform: scale(1.04);
-            box-shadow: 0 0 40px rgba(30, 144, 255, 0.3);
+            transform: scale(1.06);
+            box-shadow: 0 0 50px rgba(30, 144, 255, 0.4);
         }
         .btn-primary svg { width: 20px; height: 20px; }
 
@@ -248,7 +260,7 @@
             background: rgba(30, 144, 255, 0.08);
             border-color: #1E90FF;
             box-shadow: 0 0 30px rgba(30, 144, 255, 0.06);
-            transform: scale(1.04);
+            transform: scale(1.05);
         }
         .btn-secondary svg { width: 20px; height: 20px; }
 
@@ -267,10 +279,7 @@
             height: 1px;
             background: linear-gradient(90deg, rgba(30, 144, 255, 0.2), transparent);
         }
-        .section-title svg {
-            width: 28px;
-            height: 28px;
-        }
+        .section-title svg { width: 28px; height: 28px; }
 
         .categories-grid {
             display: grid;
@@ -299,9 +308,9 @@
         .category-card:nth-child(6) { animation-delay: 2s; }
 
         .category-card:hover {
-            transform: translateY(-6px) scale(1.02);
-            border-color: rgba(30, 144, 255, 0.25);
-            box-shadow: 0 10px 40px rgba(30, 144, 255, 0.08);
+            transform: translateY(-8px) scale(1.03);
+            border-color: rgba(30, 144, 255, 0.3);
+            box-shadow: 0 12px 50px rgba(30, 144, 255, 0.1);
         }
         .category-card svg {
             width: 36px;
@@ -310,18 +319,9 @@
             margin: 0 auto 8px;
             transition: transform 0.3s;
         }
-        .category-card:hover svg { transform: scale(1.1); }
-        .category-card .name {
-            font-weight: 600;
-            font-size: 14px;
-            display: block;
-        }
-        .category-card .count {
-            font-size: 12px;
-            color: #4A7A9C;
-            margin-top: 4px;
-            display: block;
-        }
+        .category-card:hover svg { transform: scale(1.15) rotate(-5deg); }
+        .category-card .name { font-weight: 600; font-size: 14px; display: block; }
+        .category-card .count { font-size: 12px; color: #4A7A9C; margin-top: 4px; display: block; }
 
         .prompts-grid {
             display: grid;
@@ -337,11 +337,20 @@
             padding: 18px 18px 16px;
             transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: pointer;
+            animation: cardAppear 0.4s ease-out forwards;
+            opacity: 0;
         }
+        .prompt-card:nth-child(1) { animation-delay: 0s; }
+        .prompt-card:nth-child(2) { animation-delay: 0.05s; }
+        .prompt-card:nth-child(3) { animation-delay: 0.1s; }
+        .prompt-card:nth-child(4) { animation-delay: 0.15s; }
+        .prompt-card:nth-child(5) { animation-delay: 0.2s; }
+        .prompt-card:nth-child(6) { animation-delay: 0.25s; }
+
         .prompt-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(30, 144, 255, 0.15);
-            box-shadow: 0 10px 30px rgba(30, 144, 255, 0.06);
+            transform: translateY(-6px) scale(1.01);
+            border-color: rgba(30, 144, 255, 0.2);
+            box-shadow: 0 10px 40px rgba(30, 144, 255, 0.08);
         }
         .prompt-card .prompt-title {
             font-weight: 600;
@@ -397,9 +406,7 @@
             transition: all 0.2s;
             font-size: 14px;
         }
-        .prompt-card .prompt-meta .stars .star:hover {
-            transform: scale(1.2);
-        }
+        .prompt-card .prompt-meta .stars .star:hover { transform: scale(1.2); }
         .prompt-card .prompt-meta .favorite {
             cursor: pointer;
             font-size: 16px;
@@ -407,12 +414,8 @@
             margin-left: auto;
             color: #4A7A9C;
         }
-        .prompt-card .prompt-meta .favorite.active {
-            color: #FF2D78;
-        }
-        .prompt-card .prompt-meta .favorite:hover {
-            transform: scale(1.15);
-        }
+        .prompt-card .prompt-meta .favorite.active { color: #FF2D78; }
+        .prompt-card .prompt-meta .favorite:hover { transform: scale(1.15); }
 
         .modal-overlay {
             display: none;
@@ -454,10 +457,7 @@
             border: none;
             font-family: 'Inter', sans-serif;
         }
-        .modal-close:hover {
-            color: #FFFFFF;
-            transform: rotate(90deg);
-        }
+        .modal-close:hover { color: #FFFFFF; transform: rotate(90deg); }
         .modal-title {
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
@@ -740,7 +740,6 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Пустое состояние для поиска */
         .empty-state {
             text-align: center;
             padding: 30px 20px;
@@ -752,9 +751,7 @@
             margin-bottom: 12px;
             opacity: 0.4;
         }
-        .empty-state p {
-            font-size: 15px;
-        }
+        .empty-state p { font-size: 15px; }
 
         @media (max-width: 768px) {
             .header { flex-direction: column; align-items: flex-start; }
@@ -805,11 +802,11 @@
                 <h1>PROMPTARIUM</h1>
                 <p>Твой ключ к идеальному запросу для ИИ</p>
                 <div class="search-wrapper">
-                    <input type="text" id="searchInput" placeholder="Поиск промта по названию, тегам или содержанию..." oninput="window.searchPrompts()">
+                    <input type="text" id="searchInput" placeholder="Поиск промта по названию, тегам или содержанию..." oninput="handleSearch()">
                     <div id="search-results" class="search-results"></div>
                 </div>
                 <div class="hero-buttons">
-                    <button class="btn-primary" onclick="window.randomPrompt()">
+                    <button class="btn-primary" onclick="randomPrompt()">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9"/></svg>
                         Случайный промт
                     </button>
@@ -842,7 +839,7 @@
         </div>
 
         <footer class="footer">
-            <p>Promptarium — сапфировая библиотека промтов. Версия 10.0 · Firebase</p>
+            <p>Promptarium — сапфировая библиотека промтов. Версия 11.0 · Firebase</p>
             <p style="margin-top: 6px;">
                 <a href="#" onclick="openAbout()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
@@ -903,7 +900,7 @@
                 </p>
 
                 <div class="about-footer">
-                    <p>Версия 10.0 · 2026 · Бесплатно и открыто</p>
+                    <p>Версия 11.0 · 2026 · Бесплатно и открыто</p>
                     <p style="margin-top:4px;">
                         <span style="color:#4A7A9C;">📧 promptarium@example.com</span>
                     </p>
@@ -1024,20 +1021,20 @@
             const rating = getRating(p.id);
             const fav = isFavorite(p.id);
             return `
-                <div class="prompt-card" onclick="window.openPrompt('${p.id}')">
+                <div class="prompt-card" onclick="openPrompt('${p.id}')">
                     <div class="prompt-title">
                         <svg viewBox="0 0 24 24" fill="none" stroke="#4FC3F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                         ${p.title}
                     </div>
                     <div class="prompt-tags">
-                        ${(p.tags || []).map(t => `<span onclick="event.stopPropagation(); window.filterByTag('${t}')">#${t}</span>`).join('')}
+                        ${(p.tags || []).map(t => `<span onclick="event.stopPropagation(); filterByTag('${t}')">#${t}</span>`).join('')}
                     </div>
                     <div class="prompt-meta">
                         <span class="stars" onclick="event.stopPropagation()">
                             ${renderStars(p.id, rating)}
                         </span>
                         <span>👁 ${Math.floor(500 + Math.random() * 1500)}</span>
-                        <span class="favorite ${fav ? 'active' : ''}" onclick="event.stopPropagation(); window.toggleFavorite('${p.id}')">
+                        <span class="favorite ${fav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${p.id}')">
                             ${fav ? '❤️' : '🤍'}
                         </span>
                     </div>
@@ -1051,7 +1048,7 @@
             grid.innerHTML = categories.map(cat => {
                 const count = getCategoryCount(cat.id);
                 return `
-                    <div class="category-card" onclick="window.showCategory('${cat.id}')">
+                    <div class="category-card" onclick="showCategory('${cat.id}')">
                         ${getCategoryIcon(cat.id)}
                         <span class="name">${cat.name}</span>
                         <span class="count">${count} промтов</span>
@@ -1090,7 +1087,7 @@
             container.querySelectorAll('.star').forEach(el => {
                 el.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    window.setRating(this.dataset.prompt, parseInt(this.dataset.star));
+                    setRating(this.dataset.prompt, parseInt(this.dataset.star));
                 });
             });
         }
@@ -1123,7 +1120,7 @@
             document.querySelectorAll('#popular-prompts .star').forEach(el => {
                 el.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    window.setRating(this.dataset.prompt, parseInt(this.dataset.star));
+                    setRating(this.dataset.prompt, parseInt(this.dataset.star));
                 });
             });
         }
@@ -1138,33 +1135,29 @@
             }
         }
 
-        // ==================== ПОИСК (ИСПРАВЛЕН) ====================
-        window.searchPrompts = function() {
+        // ==================== ПОИСК (РАБОТАЕТ) ====================
+        window.handleSearch = function() {
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
             const container = document.getElementById('search-results');
             
-            // Если запрос пустой — скрываем результаты
             if (query.length === 0) {
                 container.classList.remove('active');
                 container.innerHTML = '';
                 return;
             }
 
-            // Если промты ещё не загружены — показываем загрузку
             if (prompts.length === 0) {
                 container.innerHTML = `<div class="loader" style="padding:20px 0;"><div class="spinner" style="width:24px;height:24px;"></div><p style="font-size:14px;">Загрузка...</p></div>`;
                 container.classList.add('active');
                 return;
             }
 
-            // Ищем промты
             const results = prompts.filter(p =>
                 p.title.toLowerCase().includes(query) ||
                 (p.tags || []).some(t => t.toLowerCase().includes(query)) ||
                 p.template.toLowerCase().includes(query)
             );
 
-            // Если ничего не найдено
             if (results.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
@@ -1177,7 +1170,6 @@
                 return;
             }
 
-            // Показываем результаты
             container.innerHTML = `
                 <div class="section-title" style="margin-top:0;font-size:16px;">
                     Найдено ${results.length} промтов <span class="line"></span>
@@ -1202,8 +1194,8 @@
             prompts.filter(p => p.category === catId).forEach(p => (p.tags || []).forEach(t => allTags.add(t)));
             const filtersContainer = document.getElementById('category-filters');
             filtersContainer.innerHTML = `
-                <span class="filter-tag all active" onclick="window.filterByTag(null)">Все</span>
-                ${Array.from(allTags).map(t => `<span class="filter-tag" onclick="window.filterByTag('${t}')">#${t}</span>`).join('')}
+                <span class="filter-tag all active" onclick="filterByTag(null)">Все</span>
+                ${Array.from(allTags).map(t => `<span class="filter-tag" onclick="filterByTag('${t}')">#${t}</span>`).join('')}
             `;
 
             const filtered = prompts.filter(p => p.category === catId);
@@ -1263,7 +1255,7 @@
             if (p.variables && p.variables.length > 0) {
                 varsContainer.innerHTML = p.variables.map(v => `
                     <label>${v}</label>
-                    <input type="text" id="var-${v}" placeholder="Введите ${v.toLowerCase()}" oninput="window.updatePreview()">
+                    <input type="text" id="var-${v}" placeholder="Введите ${v.toLowerCase()}" oninput="updatePreview()">
                 `).join('');
             } else {
                 varsContainer.innerHTML = '<p style="color:#4A7A9C;font-size:13px;">Без переменных</p>';
@@ -1272,7 +1264,7 @@
             document.getElementById('modal-tags').innerHTML = (p.tags || []).map(t => `<span>#${t}</span>`).join('');
             document.getElementById('modal').classList.add('active');
             document.body.style.overflow = 'hidden';
-            setTimeout(window.updatePreview, 100);
+            setTimeout(updatePreview, 100);
         };
 
         window.updatePreview = function() {
@@ -1293,7 +1285,6 @@
         window.copyFinal = function() {
             const text = document.getElementById('modal-preview').textContent;
             navigator.clipboard.writeText(text).then(() => alert('✅ Готовый промт скопирован!')).catch(() => {
-                // fallback
                 const ta = document.createElement('textarea');
                 ta.value = text;
                 document.body.appendChild(ta);
@@ -1332,10 +1323,10 @@
         };
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') { window.closeModal(); window.closeAbout(); }
+            if (e.key === 'Escape') { closeModal(); closeAbout(); }
         });
         document.getElementById('modal').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) window.closeModal();
+            if (e.target === e.currentTarget) closeModal();
         });
 
         // ==================== О ПРОЕКТЕ ====================
@@ -1349,7 +1340,7 @@
             document.body.style.overflow = 'auto';
         };
         document.getElementById('about-modal').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) window.closeAbout();
+            if (e.target === e.currentTarget) closeAbout();
         });
 
         // ==================== ЗВЁЗДЫ (ОПТИМИЗИРОВАННЫЕ) ====================
@@ -1437,7 +1428,7 @@
         window.getRating = getRating;
         window.setRating = setRating;
         window.renderAll = renderAll;
-        window.searchPrompts = searchPrompts;
+        window.handleSearch = handleSearch;
         window.goHome = goHome;
         window.showCategory = showCategory;
         window.filterByTag = filterByTag;
