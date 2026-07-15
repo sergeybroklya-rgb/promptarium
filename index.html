@@ -31,15 +31,15 @@
 
         #cursor-glow {
             position: fixed;
-            width: 500px;
-            height: 500px;
+            width: 400px;
+            height: 400px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(30, 144, 255, 0.15) 0%, rgba(79, 195, 247, 0.05) 40%, transparent 70%);
+            background: radial-gradient(circle, rgba(30, 144, 255, 0.12) 0%, rgba(79, 195, 247, 0.04) 40%, transparent 70%);
             pointer-events: none;
             z-index: 0;
             transform: translate(-50%, -50%);
             transition: width 0.2s, height 0.2s;
-            filter: blur(25px);
+            filter: blur(30px);
         }
 
         .container {
@@ -51,64 +51,44 @@
         }
 
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-30px); }
+            from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(40px); }
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-            100% { transform: translateY(0px); }
-        }
-        @keyframes floatSlow {
-            0% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-4px) rotate(0.5deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
         }
         @keyframes glowPulse {
             0% { box-shadow: 0 0 15px rgba(30, 144, 255, 0.05); }
-            50% { box-shadow: 0 0 35px rgba(30, 144, 255, 0.2), 0 0 60px rgba(79, 195, 247, 0.08); }
+            50% { box-shadow: 0 0 30px rgba(30, 144, 255, 0.15), 0 0 50px rgba(79, 195, 247, 0.06); }
             100% { box-shadow: 0 0 15px rgba(30, 144, 255, 0.05); }
         }
         @keyframes btnPulse {
-            0% { box-shadow: 0 0 20px rgba(30, 144, 255, 0.2); }
-            50% { box-shadow: 0 0 50px rgba(30, 144, 255, 0.4), 0 0 80px rgba(79, 195, 247, 0.15); }
-            100% { box-shadow: 0 0 20px rgba(30, 144, 255, 0.2); }
-        }
-        @keyframes shimmer {
-            0% { background-position: -200% center; }
-            100% { background-position: 200% center; }
-        }
-        @keyframes heartBeat {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
+            0% { box-shadow: 0 0 20px rgba(30, 144, 255, 0.15); }
+            50% { box-shadow: 0 0 40px rgba(30, 144, 255, 0.3); }
+            100% { box-shadow: 0 0 20px rgba(30, 144, 255, 0.15); }
         }
 
-        .fade-in-down { animation: fadeInDown 0.8s ease-out forwards; }
-        .fade-in-up { animation: fadeInUp 0.8s ease-out forwards; }
-        .fade-in-up-delay-1 { animation: fadeInUp 0.8s ease-out 0.1s forwards; opacity: 0; }
-        .fade-in-up-delay-2 { animation: fadeInUp 0.8s ease-out 0.2s forwards; opacity: 0; }
-        .fade-in-up-delay-3 { animation: fadeInUp 0.8s ease-out 0.3s forwards; opacity: 0; }
-        .fade-in-up-delay-4 { animation: fadeInUp 0.8s ease-out 0.4s forwards; opacity: 0; }
+        .fade-in-down { animation: fadeInDown 0.6s ease-out forwards; }
+        .fade-in-up { animation: fadeInUp 0.6s ease-out forwards; }
+        .fade-in-up-delay-1 { animation: fadeInUp 0.6s ease-out 0.1s forwards; opacity: 0; }
+        .fade-in-up-delay-2 { animation: fadeInUp 0.6s ease-out 0.2s forwards; opacity: 0; }
+        .fade-in-up-delay-3 { animation: fadeInUp 0.6s ease-out 0.3s forwards; opacity: 0; }
 
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             flex-wrap: wrap;
             gap: 15px;
         }
         .logo {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: clamp(24px, 4vw, 36px);
+            font-size: clamp(22px, 3.5vw, 32px);
             color: #FFFFFF;
-            text-shadow: 0 0 40px rgba(79, 195, 247, 0.15);
+            text-shadow: 0 0 40px rgba(79, 195, 247, 0.1);
             letter-spacing: 1px;
             display: flex;
             align-items: center;
@@ -116,156 +96,150 @@
             cursor: pointer;
         }
         .logo svg {
-            width: 32px;
-            height: 32px;
+            width: 30px;
+            height: 30px;
             flex-shrink: 0;
             filter: drop-shadow(0 0 15px rgba(30, 144, 255, 0.3));
-            animation: floatSlow 4s ease-in-out infinite;
         }
         .logo-sub {
             font-family: 'Inter', sans-serif;
             font-weight: 400;
-            font-size: 14px;
+            font-size: 13px;
             color: #64B5F6;
             letter-spacing: 0.5px;
         }
         .nav-link {
             color: #64B5F6;
             text-decoration: none;
-            font-size: 15px;
-            padding: 8px 20px;
+            font-size: 14px;
+            padding: 8px 18px;
             border-radius: 20px;
-            border: 1px solid rgba(30, 144, 255, 0.15);
-            background: rgba(30, 144, 255, 0.05);
+            border: 1px solid rgba(30, 144, 255, 0.12);
+            background: rgba(30, 144, 255, 0.04);
             backdrop-filter: blur(10px);
             transition: all 0.3s;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         .nav-link:hover {
             color: #FFFFFF;
-            border-color: rgba(30, 144, 255, 0.5);
-            box-shadow: 0 0 30px rgba(30, 144, 255, 0.15);
-            transform: scale(1.05);
+            border-color: rgba(30, 144, 255, 0.4);
+            box-shadow: 0 0 25px rgba(30, 144, 255, 0.1);
+            transform: scale(1.04);
+        }
+        .nav-link svg {
+            width: 18px;
+            height: 18px;
         }
 
         .hero {
             text-align: center;
-            padding: 40px 0 50px;
-            transition: all 0.3s;
+            padding: 30px 0 40px;
         }
         .hero h1 {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
-            font-size: clamp(36px, 6vw, 64px);
+            font-size: clamp(32px, 5vw, 56px);
             color: #FFFFFF;
-            text-shadow: 0 0 80px rgba(79, 195, 247, 0.08);
-            margin-bottom: 12px;
-            animation: floatSlow 5s ease-in-out infinite;
+            text-shadow: 0 0 60px rgba(79, 195, 247, 0.06);
+            margin-bottom: 10px;
         }
         .hero p {
-            font-size: clamp(16px, 2vw, 22px);
+            font-size: clamp(15px, 1.8vw, 20px);
             color: #64B5F6;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
         .search-wrapper {
-            max-width: 600px;
+            max-width: 560px;
             margin: 0 auto 20px;
-            position: relative;
         }
         .search-wrapper input {
             width: 100%;
-            padding: 18px 24px;
+            padding: 16px 22px;
             border-radius: 50px;
-            border: 2px solid rgba(30, 144, 255, 0.15);
-            background: rgba(6, 10, 26, 0.75);
-            backdrop-filter: blur(15px);
+            border: 2px solid rgba(30, 144, 255, 0.12);
+            background: rgba(6, 10, 26, 0.7);
+            backdrop-filter: blur(12px);
             color: #FFFFFF;
-            font-size: 16px;
+            font-size: 15px;
             font-family: 'Inter', sans-serif;
             outline: none;
             transition: all 0.3s;
         }
         .search-wrapper input::placeholder {
             color: #4A7A9C;
-            font-weight: 400;
         }
         .search-wrapper input:focus {
             border-color: #1E90FF;
-            box-shadow: 0 0 40px rgba(30, 144, 255, 0.15), inset 0 0 30px rgba(30, 144, 255, 0.05);
-            background: rgba(6, 10, 26, 0.9);
-            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(30, 144, 255, 0.12);
         }
         .search-results {
-            margin-top: 20px;
+            margin-top: 15px;
             display: none;
         }
-        .search-results.active {
-            display: block;
-        }
-        .search-results .prompts-grid {
-            margin-top: 0;
-        }
+        .search-results.active { display: block; }
+        .search-results .prompts-grid { margin-top: 0; }
+
         .hero-buttons {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             justify-content: center;
             flex-wrap: wrap;
         }
         .btn-primary {
-            padding: 14px 36px;
+            padding: 12px 30px;
             border-radius: 50px;
             border: none;
             background: linear-gradient(135deg, #1E90FF, #4FC3F7);
             color: #fff;
             font-weight: 600;
-            font-size: 16px;
+            font-size: 15px;
             cursor: pointer;
             transition: all 0.3s;
             animation: btnPulse 3s ease-in-out infinite;
             font-family: 'Inter', sans-serif;
-            position: relative;
-            overflow: hidden;
-        }
-        .btn-primary::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.08), transparent);
-            animation: shimmer 4s linear infinite;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .btn-primary:hover {
-            transform: scale(1.08);
-            animation: btnPulse 1s ease-in-out infinite;
+            transform: scale(1.04);
+            box-shadow: 0 0 40px rgba(30, 144, 255, 0.3);
         }
+        .btn-primary svg { width: 20px; height: 20px; }
+
         .btn-secondary {
-            padding: 14px 36px;
+            padding: 12px 30px;
             border-radius: 50px;
-            border: 1px solid rgba(30, 144, 255, 0.2);
-            background: rgba(6, 10, 26, 0.5);
-            backdrop-filter: blur(10px);
+            border: 1px solid rgba(30, 144, 255, 0.15);
+            background: rgba(6, 10, 26, 0.4);
+            backdrop-filter: blur(8px);
             color: #E8F0FE;
             font-weight: 500;
-            font-size: 16px;
+            font-size: 15px;
             cursor: pointer;
             transition: all 0.3s;
             font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .btn-secondary:hover {
-            background: rgba(30, 144, 255, 0.1);
+            background: rgba(30, 144, 255, 0.08);
             border-color: #1E90FF;
-            box-shadow: 0 0 40px rgba(30, 144, 255, 0.1);
-            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(30, 144, 255, 0.06);
+            transform: scale(1.04);
         }
+        .btn-secondary svg { width: 20px; height: 20px; }
 
         .section-title {
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
-            font-size: clamp(20px, 3vw, 28px);
+            font-size: clamp(18px, 2.5vw, 24px);
             color: #E8F0FE;
-            margin: 50px 0 20px;
+            margin: 40px 0 16px;
             display: flex;
             align-items: center;
             gap: 12px;
@@ -273,56 +247,59 @@
         .section-title .line {
             flex: 1;
             height: 1px;
-            background: linear-gradient(90deg, rgba(30, 144, 255, 0.3), transparent);
+            background: linear-gradient(90deg, rgba(30, 144, 255, 0.2), transparent);
         }
+        .section-title svg {
+            width: 28px;
+            height: 28px;
+        }
+
         .categories-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 14px;
             margin-bottom: 10px;
         }
         .category-card {
-            background: rgba(6, 10, 26, 0.5);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(30, 144, 255, 0.08);
-            border-radius: 16px;
-            padding: 24px 16px 20px;
+            background: rgba(6, 10, 26, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(30, 144, 255, 0.06);
+            border-radius: 14px;
+            padding: 20px 12px 16px;
             text-align: center;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: pointer;
             text-decoration: none;
             color: #E8F0FE;
             animation: glowPulse 4s ease-in-out infinite;
         }
         .category-card:nth-child(1) { animation-delay: 0s; }
-        .category-card:nth-child(2) { animation-delay: 0.5s; }
-        .category-card:nth-child(3) { animation-delay: 1s; }
-        .category-card:nth-child(4) { animation-delay: 1.5s; }
-        .category-card:nth-child(5) { animation-delay: 2s; }
-        .category-card:nth-child(6) { animation-delay: 2.5s; }
+        .category-card:nth-child(2) { animation-delay: 0.4s; }
+        .category-card:nth-child(3) { animation-delay: 0.8s; }
+        .category-card:nth-child(4) { animation-delay: 1.2s; }
+        .category-card:nth-child(5) { animation-delay: 1.6s; }
+        .category-card:nth-child(6) { animation-delay: 2s; }
 
         .category-card:hover {
-            transform: translateY(-10px) scale(1.04);
-            border-color: rgba(30, 144, 255, 0.4);
-            box-shadow: 0 15px 60px rgba(30, 144, 255, 0.15);
+            transform: translateY(-6px) scale(1.02);
+            border-color: rgba(30, 144, 255, 0.25);
+            box-shadow: 0 10px 40px rgba(30, 144, 255, 0.08);
         }
         .category-card svg {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             display: block;
-            margin: 0 auto 10px;
+            margin: 0 auto 8px;
             transition: transform 0.3s;
         }
-        .category-card:hover svg {
-            transform: scale(1.15) rotate(-5deg);
-        }
+        .category-card:hover svg { transform: scale(1.1); }
         .category-card .name {
             font-weight: 600;
-            font-size: 15px;
+            font-size: 14px;
             display: block;
         }
         .category-card .count {
-            font-size: 13px;
+            font-size: 12px;
             color: #4A7A9C;
             margin-top: 4px;
             display: block;
@@ -330,71 +307,66 @@
 
         .prompts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
         }
         .prompt-card {
-            background: rgba(6, 10, 26, 0.4);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(30, 144, 255, 0.06);
-            border-radius: 16px;
-            padding: 22px 20px 20px;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            background: rgba(6, 10, 26, 0.3);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(30, 144, 255, 0.04);
+            border-radius: 14px;
+            padding: 18px 18px 16px;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: pointer;
-            animation: float 3s ease-in-out infinite;
-            position: relative;
         }
-        .prompt-card:nth-child(1) { animation-delay: 0s; }
-        .prompt-card:nth-child(2) { animation-delay: 0.6s; }
-        .prompt-card:nth-child(3) { animation-delay: 1.2s; }
-        .prompt-card:nth-child(4) { animation-delay: 0.3s; }
-        .prompt-card:nth-child(5) { animation-delay: 0.9s; }
-        .prompt-card:nth-child(6) { animation-delay: 1.5s; }
-
         .prompt-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: rgba(30, 144, 255, 0.25);
-            box-shadow: 0 15px 50px rgba(30, 144, 255, 0.12);
+            transform: translateY(-4px);
+            border-color: rgba(30, 144, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(30, 144, 255, 0.06);
         }
         .prompt-card .prompt-title {
             font-weight: 600;
-            font-size: 17px;
+            font-size: 16px;
             margin-bottom: 6px;
             color: #E8F0FE;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .prompt-card .prompt-title svg {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            opacity: 0.7;
         }
         .prompt-card .prompt-tags {
             display: flex;
-            gap: 6px;
+            gap: 5px;
             flex-wrap: wrap;
-            margin: 8px 0 10px;
+            margin: 6px 0 8px;
         }
         .prompt-card .prompt-tags span {
-            background: rgba(30, 144, 255, 0.08);
-            padding: 2px 12px;
+            background: rgba(30, 144, 255, 0.06);
+            padding: 2px 10px;
             border-radius: 20px;
-            font-size: 11px;
+            font-size: 10px;
             color: #64B5F6;
-            border: 1px solid rgba(30, 144, 255, 0.05);
+            border: 1px solid rgba(30, 144, 255, 0.04);
             transition: all 0.3s;
             cursor: pointer;
         }
         .prompt-card .prompt-tags span:hover {
-            background: rgba(30, 144, 255, 0.2);
-            border-color: rgba(30, 144, 255, 0.3);
+            background: rgba(30, 144, 255, 0.12);
+            border-color: rgba(30, 144, 255, 0.12);
         }
         .prompt-card .prompt-meta {
             display: flex;
-            gap: 18px;
-            font-size: 13px;
+            gap: 14px;
+            font-size: 12px;
             color: #4A7A9C;
             align-items: center;
             flex-wrap: wrap;
-        }
-        .prompt-card .prompt-meta span {
-            display: flex;
-            align-items: center;
-            gap: 4px;
         }
         .prompt-card .prompt-meta .stars {
             color: #FBBF24;
@@ -405,24 +377,23 @@
         }
         .prompt-card .prompt-meta .stars .star {
             transition: all 0.2s;
-            font-size: 15px;
+            font-size: 14px;
         }
         .prompt-card .prompt-meta .stars .star:hover {
-            transform: scale(1.3);
+            transform: scale(1.2);
         }
         .prompt-card .prompt-meta .favorite {
             cursor: pointer;
-            font-size: 18px;
+            font-size: 16px;
             transition: all 0.3s;
             margin-left: auto;
             color: #4A7A9C;
         }
         .prompt-card .prompt-meta .favorite.active {
             color: #FF2D78;
-            animation: heartBeat 0.3s ease-out;
         }
         .prompt-card .prompt-meta .favorite:hover {
-            transform: scale(1.2);
+            transform: scale(1.15);
         }
 
         .modal-overlay {
@@ -433,33 +404,31 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
-        .modal-overlay.active {
-            display: flex;
-        }
+        .modal-overlay.active { display: flex; }
         .modal {
             background: rgba(6, 10, 26, 0.95);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(30, 144, 255, 0.15);
-            border-radius: 20px;
-            max-width: 700px;
+            border: 1px solid rgba(30, 144, 255, 0.1);
+            border-radius: 18px;
+            max-width: 680px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
-            padding: 35px;
+            padding: 30px;
             position: relative;
             animation: fadeInUp 0.3s ease-out;
         }
         .modal-close {
             position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 28px;
+            top: 12px;
+            right: 16px;
+            font-size: 24px;
             color: #4A7A9C;
             cursor: pointer;
             transition: all 0.3s;
@@ -474,22 +443,22 @@
         .modal-title {
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
-            font-size: 22px;
+            font-size: 20px;
             color: #FFFFFF;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         .modal-description {
             color: #64B5F6;
-            font-size: 15px;
-            margin-bottom: 20px;
+            font-size: 14px;
+            margin-bottom: 16px;
             line-height: 1.6;
         }
         .modal-template {
-            background: rgba(30, 144, 255, 0.05);
-            border: 1px solid rgba(30, 144, 255, 0.1);
+            background: rgba(30, 144, 255, 0.04);
+            border: 1px solid rgba(30, 144, 255, 0.08);
             border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 20px;
+            padding: 14px;
+            margin-bottom: 16px;
             font-size: 14px;
             line-height: 1.8;
             color: #E8F0FE;
@@ -497,277 +466,279 @@
             word-break: break-word;
         }
         .modal-template .variable {
-            background: rgba(30, 144, 255, 0.2);
+            background: rgba(30, 144, 255, 0.15);
             color: #4FC3F7;
             padding: 1px 6px;
             border-radius: 4px;
-            border: 1px solid rgba(30, 144, 255, 0.2);
+            border: 1px solid rgba(30, 144, 255, 0.1);
             font-weight: 600;
-        }
-        .modal-variables {
-            margin-bottom: 20px;
         }
         .modal-variables label {
             display: block;
             color: #64B5F6;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
         .modal-variables input {
             width: 100%;
             padding: 10px 14px;
             border-radius: 10px;
-            border: 1px solid rgba(30, 144, 255, 0.15);
-            background: rgba(6, 10, 26, 0.5);
+            border: 1px solid rgba(30, 144, 255, 0.1);
+            background: rgba(6, 10, 26, 0.4);
             color: #FFFFFF;
             font-size: 14px;
             font-family: 'Inter', sans-serif;
             outline: none;
             transition: all 0.3s;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         .modal-variables input:focus {
             border-color: #1E90FF;
-            box-shadow: 0 0 20px rgba(30, 144, 255, 0.1);
+            box-shadow: 0 0 20px rgba(30, 144, 255, 0.06);
         }
         .modal-preview {
-            background: rgba(30, 144, 255, 0.03);
-            border: 1px solid rgba(30, 144, 255, 0.06);
+            background: rgba(30, 144, 255, 0.02);
+            border: 1px solid rgba(30, 144, 255, 0.04);
             border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 20px;
+            padding: 14px;
+            margin-bottom: 16px;
             font-size: 14px;
             line-height: 1.8;
             color: #A0B8D0;
             white-space: pre-wrap;
             word-break: break-word;
-            min-height: 60px;
+            min-height: 50px;
         }
         .modal-actions {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             flex-wrap: wrap;
         }
         .modal-actions button {
-            padding: 12px 28px;
+            padding: 10px 24px;
             border-radius: 50px;
             border: none;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
             transition: all 0.3s;
             font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         .btn-copy {
             background: linear-gradient(135deg, #1E90FF, #4FC3F7);
             color: #fff;
-            box-shadow: 0 0 30px rgba(30, 144, 255, 0.2);
+            box-shadow: 0 0 20px rgba(30, 144, 255, 0.15);
         }
         .btn-copy:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 50px rgba(30, 144, 255, 0.3);
+            transform: scale(1.04);
+            box-shadow: 0 0 35px rgba(30, 144, 255, 0.2);
         }
         .btn-copy-template {
-            background: rgba(30, 144, 255, 0.1);
+            background: rgba(30, 144, 255, 0.08);
             color: #E8F0FE;
-            border: 1px solid rgba(30, 144, 255, 0.2);
+            border: 1px solid rgba(30, 144, 255, 0.12);
         }
         .btn-copy-template:hover {
-            background: rgba(30, 144, 255, 0.2);
-            transform: scale(1.05);
+            background: rgba(30, 144, 255, 0.15);
+            transform: scale(1.04);
         }
         .modal-tags {
             display: flex;
-            gap: 6px;
+            gap: 5px;
             flex-wrap: wrap;
-            margin-top: 15px;
+            margin-top: 12px;
         }
         .modal-tags span {
-            background: rgba(30, 144, 255, 0.08);
-            padding: 2px 12px;
+            background: rgba(30, 144, 255, 0.06);
+            padding: 2px 10px;
             border-radius: 20px;
-            font-size: 11px;
+            font-size: 10px;
             color: #64B5F6;
-            border: 1px solid rgba(30, 144, 255, 0.05);
+            border: 1px solid rgba(30, 144, 255, 0.04);
         }
 
         .about-content {
             text-align: center;
             padding: 10px 0;
         }
-        .about-content .about-icon {
-            font-size: 64px;
-            margin-bottom: 16px;
-            display: block;
+        .about-content .about-icon svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 12px;
         }
         .about-content h2 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 28px;
+            font-size: 26px;
             background: linear-gradient(135deg, #1E90FF, #4FC3F7);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         .about-content p {
             color: #A0B8D0;
-            font-size: 16px;
+            font-size: 15px;
             line-height: 1.8;
             max-width: 500px;
-            margin: 0 auto 8px;
+            margin: 0 auto 6px;
         }
         .about-content .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin: 24px 0;
-            max-width: 400px;
+            gap: 14px;
+            margin: 20px 0;
+            max-width: 380px;
             margin-left: auto;
             margin-right: auto;
         }
         .about-content .stats-grid .stat-item {
-            background: rgba(30, 144, 255, 0.05);
-            border: 1px solid rgba(30, 144, 255, 0.08);
+            background: rgba(30, 144, 255, 0.04);
+            border: 1px solid rgba(30, 144, 255, 0.06);
             border-radius: 12px;
-            padding: 16px 10px;
+            padding: 14px 8px;
         }
         .about-content .stats-grid .stat-item .number {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
             color: #4FC3F7;
             display: block;
         }
         .about-content .stats-grid .stat-item .label {
-            font-size: 12px;
+            font-size: 11px;
             color: #4A7A9C;
             margin-top: 4px;
             display: block;
         }
         .about-content .about-footer {
-            margin-top: 20px;
-            padding-top: 16px;
-            border-top: 1px solid rgba(30, 144, 255, 0.06);
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(30, 144, 255, 0.04);
             color: #4A7A9C;
-            font-size: 13px;
+            font-size: 12px;
         }
 
         #category-view .prompts-grid {
             grid-template-columns: 1fr;
-            max-width: 800px;
-            margin: 20px auto 0;
+            max-width: 760px;
+            margin: 16px auto 0;
         }
-        #category-view .prompt-card {
-            animation: fadeInUp 0.3s ease-out;
-        }
+        #category-view .prompt-card { animation: fadeInUp 0.3s ease-out; }
 
         .category-filters {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             flex-wrap: wrap;
-            margin: 10px 0 20px;
+            margin: 8px 0 16px;
             justify-content: center;
         }
         .category-filters .filter-tag {
-            background: rgba(30, 144, 255, 0.05);
-            padding: 4px 16px;
+            background: rgba(30, 144, 255, 0.04);
+            padding: 4px 14px;
             border-radius: 20px;
-            font-size: 13px;
+            font-size: 12px;
             color: #64B5F6;
-            border: 1px solid rgba(30, 144, 255, 0.08);
+            border: 1px solid rgba(30, 144, 255, 0.06);
             cursor: pointer;
             transition: all 0.3s;
         }
         .category-filters .filter-tag:hover {
-            background: rgba(30, 144, 255, 0.1);
-            border-color: rgba(30, 144, 255, 0.2);
+            background: rgba(30, 144, 255, 0.08);
+            border-color: rgba(30, 144, 255, 0.12);
         }
         .category-filters .filter-tag.active {
-            background: rgba(30, 144, 255, 0.2);
-            border-color: rgba(30, 144, 255, 0.3);
+            background: rgba(30, 144, 255, 0.12);
+            border-color: rgba(30, 144, 255, 0.15);
             color: #FFFFFF;
         }
         .category-filters .filter-tag.all {
-            background: rgba(30, 144, 255, 0.15);
-            border-color: rgba(30, 144, 255, 0.15);
+            background: rgba(30, 144, 255, 0.08);
+            border-color: rgba(30, 144, 255, 0.08);
             font-weight: 600;
         }
 
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
 
         .footer {
-            margin-top: 60px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(30, 144, 255, 0.06);
+            margin-top: 50px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(30, 144, 255, 0.04);
             text-align: center;
             color: #2A4A6A;
-            font-size: 14px;
+            font-size: 13px;
         }
         .footer a {
             color: #4A7A9C;
             text-decoration: none;
-            margin: 0 12px;
+            margin: 0 10px;
             transition: all 0.3s;
             cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
         .footer a:hover {
             color: #4FC3F7;
-            text-shadow: 0 0 20px rgba(30, 144, 255, 0.15);
+            text-shadow: 0 0 15px rgba(30, 144, 255, 0.08);
         }
+        .footer svg { width: 14px; height: 14px; }
 
         .back-btn {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             color: #64B5F6;
             cursor: pointer;
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 20px;
-            border: 1px solid rgba(30, 144, 255, 0.15);
+            border: 1px solid rgba(30, 144, 255, 0.08);
             transition: all 0.3s;
-            margin-bottom: 20px;
-            font-size: 14px;
+            margin-bottom: 16px;
+            font-size: 13px;
         }
         .back-btn:hover {
-            background: rgba(30, 144, 255, 0.1);
-            border-color: rgba(30, 144, 255, 0.3);
+            background: rgba(30, 144, 255, 0.06);
+            border-color: rgba(30, 144, 255, 0.15);
         }
+        .back-btn svg { width: 16px; height: 16px; }
 
         .loader {
             text-align: center;
-            padding: 50px 0;
+            padding: 40px 0;
             color: #4A7A9C;
-            font-size: 18px;
+            font-size: 16px;
         }
         .loader .spinner {
             display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(30, 144, 255, 0.1);
+            width: 36px;
+            height: 36px;
+            border: 3px solid rgba(30, 144, 255, 0.08);
             border-top-color: #4FC3F7;
             border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-bottom: 16px;
+            animation: spin 0.7s linear infinite;
+            margin-bottom: 12px;
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         @media (max-width: 768px) {
             .header { flex-direction: column; align-items: flex-start; }
-            .hero { padding: 20px 0 30px; }
-            .categories-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
-            .category-card { padding: 18px 10px 16px; }
-            .category-card svg { width: 32px; height: 32px; }
-            .category-card .name { font-size: 13px; }
+            .hero { padding: 16px 0 24px; }
+            .categories-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+            .category-card { padding: 14px 8px 12px; }
+            .category-card svg { width: 28px; height: 28px; }
+            .category-card .name { font-size: 12px; }
             .prompts-grid { grid-template-columns: 1fr; }
-            .modal { padding: 25px 20px; margin: 10px; }
-            .about-content .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+            .modal { padding: 20px; margin: 8px; }
+            .about-content .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
         }
         @media (max-width: 480px) {
             .categories-grid { grid-template-columns: repeat(2, 1fr); }
-            .container { padding: 16px 12px 40px; }
-            .search-wrapper input { padding: 14px 18px; font-size: 14px; }
-            .btn-primary, .btn-secondary { padding: 12px 24px; font-size: 14px; }
+            .container { padding: 14px 10px 32px; }
+            .search-wrapper input { padding: 12px 16px; font-size: 14px; }
+            .btn-primary, .btn-secondary { padding: 10px 20px; font-size: 13px; }
+            .btn-primary svg, .btn-secondary svg { width: 16px; height: 16px; }
             .about-content .stats-grid { grid-template-columns: 1fr 1fr; }
         }
     </style>
@@ -789,7 +760,10 @@
                 PROMPTARIUM
                 <span class="logo-sub">· сапфировая библиотека</span>
             </div>
-            <span class="nav-link" onclick="openAbout()">🚀 О проекте</span>
+            <span class="nav-link" onclick="openAbout()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                О проекте
+            </span>
         </header>
 
         <div id="main-view">
@@ -801,8 +775,14 @@
                     <div id="search-results" class="search-results"></div>
                 </div>
                 <div class="hero-buttons">
-                    <button class="btn-primary" onclick="randomPrompt()">🎲 Случайный промт</button>
-                    <button class="btn-secondary" onclick="showAllCategories()">📚 Все категории</button>
+                    <button class="btn-primary" onclick="randomPrompt()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9"/></svg>
+                        Случайный промт
+                    </button>
+                    <button class="btn-secondary" onclick="showAllCategories()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                        Все категории
+                    </button>
                 </div>
             </section>
 
@@ -815,7 +795,10 @@
         </div>
 
         <div id="category-view" class="hidden">
-            <span class="back-btn" onclick="goHome()">← На главную</span>
+            <span class="back-btn" onclick="goHome()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                На главную
+            </span>
             <div class="section-title" id="category-title">
                 КАТЕГОРИЯ
                 <span class="line"></span>
@@ -825,10 +808,16 @@
         </div>
 
         <footer class="footer">
-            <p>Promptarium — сапфировая библиотека промтов. Версия 9.0 · Firebase</p>
-            <p style="margin-top: 8px;">
-                <span class="nav-link" style="display:inline-block; padding:4px 12px; font-size:13px; background:transparent; border-color:rgba(30,144,255,0.1);" onclick="openAbout()">🚀 О проекте</span>
-                <span class="nav-link" style="display:inline-block; padding:4px 12px; font-size:13px; background:transparent; border-color:rgba(30,144,255,0.1);" onclick="alert('✉️ Напиши нам: promptarium@example.com')">✉️ Контакты</span>
+            <p>Promptarium — сапфировая библиотека промтов. Версия 10.0 · Firebase</p>
+            <p style="margin-top: 6px;">
+                <a href="#" onclick="openAbout()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    О проекте
+                </a>
+                <a href="#" onclick="alert('✉️ Напиши нам: promptarium@example.com')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    Контакты
+                </a>
             </p>
         </footer>
     </div>
@@ -850,13 +839,15 @@
     </div>
 
     <div class="modal-overlay" id="about-modal">
-        <div class="modal" style="max-width: 550px;">
+        <div class="modal" style="max-width: 520px;">
             <button class="modal-close" onclick="closeAbout()">✕</button>
             <div class="about-content">
-                <span class="about-icon">🚀</span>
+                <span class="about-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#4FC3F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                </span>
                 <h2>PROMPTARIUM</h2>
                 <p>Сапфировая библиотека промтов для искусственного интеллекта.</p>
-                <p style="font-size:14px; color:#4A7A9C;">Твой ключ к идеальному запросу для ИИ</p>
+                <p style="font-size:13px; color:#4A7A9C;">Твой ключ к идеальному запросу для ИИ</p>
 
                 <div class="stats-grid">
                     <div class="stat-item">
@@ -873,12 +864,12 @@
                     </div>
                 </div>
 
-                <p style="font-size:14px; color:#64B5F6; margin-top:8px;">
+                <p style="font-size:13px; color:#64B5F6; margin-top:6px;">
                     ✦ Сделано с ❤️ для всех, кто хочет говорить с ИИ правильно ✦
                 </p>
 
                 <div class="about-footer">
-                    <p>Версия 9.0 · 2026 · Бесплатно и открыто</p>
+                    <p>Версия 10.0 · 2026 · Бесплатно и открыто</p>
                     <p style="margin-top:4px;">
                         <span style="color:#4A7A9C;">📧 promptarium@example.com</span>
                     </p>
@@ -894,12 +885,8 @@
             getFirestore, 
             collection, 
             getDocs, 
-            addDoc, 
             doc, 
-            setDoc, 
-            getDoc,
-            query,
-            where
+            getDoc 
         } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -924,46 +911,9 @@
             { id: 'quick', name: 'Быстрые действия' }
         ];
 
-        // Начальные промты (для первого заполнения базы)
-        const initialPrompts = [
-            // === РАБОТА И БИЗНЕС (10) ===
-            { category: 'work', title: 'Письмо начальнику о повышении', template: 'Напиши письмо моему начальнику [ИМЯ_НАЧАЛЬНИКА] с просьбой о повышении зарплаты. Я работаю в [КОМПАНИЯ] [ЛЕТ] лет. Мои достижения: [ДОСТИЖЕНИЯ]. Аргументируй профессионально и без агрессии.', variables: ['ИМЯ_НАЧАЛЬНИКА', 'КОМПАНИЯ', 'ЛЕТ', 'ДОСТИЖЕНИЯ'], tags: ['письмо', 'работа', 'зарплата'], description: 'Поможет грамотно и аргументированно попросить о повышении.' },
-            { category: 'work', title: 'Отказ от сотрудничества', template: 'Напиши вежливый отказ на предложение о сотрудничестве от [КОМПАНИЯ]. Причина: [ПРИЧИНА]. Предложи альтернативу в виде [АЛЬТЕРНАТИВА].', variables: ['КОМПАНИЯ', 'ПРИЧИНА', 'АЛЬТЕРНАТИВА'], tags: ['письмо', 'отказ', 'бизнес'], description: 'Корректно отклонить предложение, сохранив отношения.' },
-            { category: 'work', title: 'Письмо клиенту о задержке', template: 'Напиши письмо клиенту [ИМЯ_КЛИЕНТА] из компании [КОМПАНИЯ_КЛИЕНТА] с извинениями за задержку поставки [ТОВАР_УСЛУГА]. Новая дата: [НОВАЯ_ДАТА]. Предложи компенсацию в виде [КОМПЕНСАЦИЯ].', variables: ['ИМЯ_КЛИЕНТА', 'КОМПАНИЯ_КЛИЕНТА', 'ТОВАР_УСЛУГА', 'НОВАЯ_ДАТА', 'КОМПЕНСАЦИЯ'], tags: ['письмо', 'клиенты', 'задержка'], description: 'Корректно уведомить клиента о задержке.' },
-            { category: 'work', title: 'План встречи с инвесторами', template: 'Составь структуру презентации для встречи с инвесторами. Идея: [ИДЕЯ_ПРОЕКТА]. Команда: [КОМАНДА]. Бюджет: [БЮДЖЕТ]. Окупаемость: [ОКУПАЕМОСТЬ].', variables: ['ИДЕЯ_ПРОЕКТА', 'КОМАНДА', 'БЮДЖЕТ', 'ОКУПАЕМОСТЬ'], tags: ['презентация', 'инвесторы', 'бизнес-план'], description: 'Структура для успешной презентации инвесторам.' },
-            { category: 'work', title: 'Self-review сотрудника', template: 'Напиши шаблон самооценки сотрудника на [ДОЛЖНОСТЬ]. Достижения: [ДОСТИЖЕНИЯ]. Зоны роста: [ЗОНЫ_РОСТА]. Цели: [ЦЕЛИ].', variables: ['ДОЛЖНОСТЬ', 'ДОСТИЖЕНИЯ', 'ЗОНЫ_РОСТА', 'ЦЕЛИ'], tags: ['HR', 'самооценка', 'карьера'], description: 'Шаблон для честной самооценки.' },
-            { category: 'work', title: 'Пресс-релиз о запуске', template: 'Напиши пресс-релиз о запуске [ПРОДУКТ_УСЛУГА] от [КОМПАНИЯ]. Особенность: [ОСОБЕННОСТЬ]. Для кого: [ЦА]. Дата: [ДАТА].', variables: ['ПРОДУКТ_УСЛУГА', 'КОМПАНИЯ', 'ОСОБЕННОСТЬ', 'ЦА', 'ДАТА'], tags: ['пресс-релиз', 'запуск', 'маркетинг'], description: 'Профессиональный пресс-релиз для анонса.' },
-            { category: 'work', title: 'Пост в LinkedIn', template: 'Напиши пост для LinkedIn о моём опыте в [СФЕРА]. Мысль: [МЫСЛЬ]. Достижение: [ДОСТИЖЕНИЕ]. Вывод: [ВЫВОД].', variables: ['СФЕРА', 'МЫСЛЬ', 'ДОСТИЖЕНИЕ', 'ВЫВОД'], tags: ['linkedin', 'нетворкинг', 'бренд'], description: 'Пост для профессионального бренда.' },
-            { category: 'work', title: 'Возражение клиенту', template: 'Напиши ответ на возражение клиента: «[ВОЗРАЖЕНИЕ]». Продукт: [ПРОДУКТ]. Выгода: [ВЫГОДА].', variables: ['ВОЗРАЖЕНИЕ', 'ПРОДУКТ', 'ВЫГОДА'], tags: ['продажи', 'клиенты', 'бизнес'], description: 'Грамотно отработать возражения.' },
-            { category: 'work', title: 'Письмо партнёрам о слиянии', template: 'Напиши письмо партнёрам [КОМПАНИЯ] о слиянии с [КОМПАНИЯ_2]. Дата: [ДАТА]. Изменения: [ИЗМЕНЕНИЯ].', variables: ['КОМПАНИЯ', 'КОМПАНИЯ_2', 'ДАТА', 'ИЗМЕНЕНИЯ'], tags: ['письмо', 'слияние', 'бизнес'], description: 'Объявить партнёрам о слиянии.' },
-            { category: 'work', title: 'Предложение о найме', template: 'Напиши предложение о работе для [ИМЯ] на [ДОЛЖНОСТЬ] в [КОМПАНИЯ]. Зарплата: [ЗАРПЛАТА]. Плюсы: [ПЛЮСЫ].', variables: ['ИМЯ', 'ДОЛЖНОСТЬ', 'КОМПАНИЯ', 'ЗАРПЛАТА', 'ПЛЮСЫ'], tags: ['найм', 'HR', 'предложение'], description: 'Привлечь лучших кандидатов.' },
-            // === УЧЁБА (10) ===
-            { category: 'study', title: 'Эссе по литературе', template: 'Напиши вступление для эссе на тему [ТЕМА_ЭССЕ] по произведению [ПРОИЗВЕДЕНИЕ]. Сделай акцент на [АСПЕКТ]. Объём: 100-150 слов.', variables: ['ТЕМА_ЭССЕ', 'ПРОИЗВЕДЕНИЕ', 'АСПЕКТ'], tags: ['эссе', 'литература', 'учёба'], description: 'Вступление для эссе по литературе.' },
-            { category: 'study', title: 'Конспект лекции', template: 'Сделай краткий конспект лекции на тему [ТЕМА_ЛЕКЦИИ]. Основные пункты: [ОСНОВНЫЕ_ПУНКТЫ]. Включи: ключевые термины, 3 главных вывода, вопросы для самопроверки.', variables: ['ТЕМА_ЛЕКЦИИ', 'ОСНОВНЫЕ_ПУНКТЫ'], tags: ['конспект', 'лекция', 'учёба'], description: 'Структурированный конспект для быстрого запоминания.' },
-            { category: 'study', title: 'Список вопросов для экзамена', template: 'Составь список из [КОЛИЧЕСТВО] вопросов для подготовки к экзамену по [ПРЕДМЕТ]. Темы для охвата: [ТЕМЫ].', variables: ['КОЛИЧЕСТВО', 'ПРЕДМЕТ', 'ТЕМЫ'], tags: ['экзамен', 'подготовка', 'вопросы'], description: 'Поможет системно подготовиться к экзамену.' },
-            { category: 'study', title: 'Изучение нового языка', template: 'Я учу [ЯЗЫК]. Уровень: [УРОВЕНЬ]. Составь план на [ВРЕМЯ] для изучения [ТЕМА]. Включи: грамматику, лексику, упражнения.', variables: ['ЯЗЫК', 'УРОВЕНЬ', 'ВРЕМЯ', 'ТЕМА'], tags: ['язык', 'обучение', 'план'], description: 'Персональный план для изучения иностранного языка.' },
-            { category: 'study', title: 'Аргументы для дебатов', template: 'Подготовь аргументы для дебатов на тему [ТЕМА_ДЕБАТОВ]. Моя позиция: [ПОЗИЦИЯ] (за/против). Дай 5 сильных аргументов, 3 контраргумента.', variables: ['ТЕМА_ДЕБАТОВ', 'ПОЗИЦИЯ'], tags: ['дебаты', 'аргументация'], description: 'Полный набор аргументов для победы в дебатах.' },
-            { category: 'study', title: 'Объяснить ребёнку сложную тему', template: 'Объясни тему [ТЕМА] ребёнку [ВОЗРАСТ] лет. Используй простые слова, аналогии и примеры.', variables: ['ТЕМА', 'ВОЗРАСТ'], tags: ['дети', 'обучение', 'простое объяснение'], description: 'Объяснение сложных вещей простым языком для детей.' },
-            // === ТВОРЧЕСТВО (8) ===
-            { category: 'creative', title: 'Слоган для бренда', template: 'Придумай 10 вариантов слогана для бренда [НАЗВАНИЕ_БРЕНДА]. Сфера: [СФЕРА]. Ценности: [ЦЕННОСТИ]. ЦА: [ЦА].', variables: ['НАЗВАНИЕ_БРЕНДА', 'СФЕРА', 'ЦЕННОСТИ', 'ЦА'], tags: ['слоган', 'брендинг', 'нейминг'], description: 'Поможет найти идеальный слоган для бренда.' },
-            { category: 'creative', title: 'Пост в соцсети', template: 'Напиши пост для [СОЦСЕТЬ] на тему [ТЕМА_ПОСТА]. Длина: [ДЛИНА] символов. Тон: [ТОН]. Добавь вовлекающий вопрос.', variables: ['СОЦСЕТЬ', 'ТЕМА_ПОСТА', 'ДЛИНА', 'ТОН'], tags: ['соцсети', 'контент', 'SMM'], description: 'Пост для соцсетей с вовлекающим вопросом.' },
-            { category: 'creative', title: 'Сценарий для TikTok/Reels', template: 'Напиши сценарий для TikTok/Reels на [ВРЕМЯ] секунд. Тема: [ТЕМА_ВИДЕО]. Посыл: [ПОСЫЛ]. Структура: 3–5 сцен.', variables: ['ВРЕМЯ', 'ТЕМА_ВИДЕО', 'ПОСЫЛ'], tags: ['tiktok', 'reels', 'сценарий'], description: 'Готовый сценарий для вирусного видео.' },
-            // === ПРОГРАММИРОВАНИЕ (5) ===
-            { category: 'it', title: 'Генерация тестовых данных', template: 'Сгенерируй [КОЛИЧЕСТВО] записей тестовых данных для таблицы [НАЗВАНИЕ_ТАБЛИЦЫ] с полями: [ПОЛЯ]. Формат: JSON.', variables: ['КОЛИЧЕСТВО', 'НАЗВАНИЕ_ТАБЛИЦЫ', 'ПОЛЯ'], tags: ['тесты', 'данные', 'JSON'], description: 'Генерация реалистичных данных для тестирования.' },
-            { category: 'it', title: 'Оптимизация SQL-запроса', template: 'У меня есть SQL-запрос: [SQL_ЗАПРОС]. Он выполняется [ВРЕМЯ] секунд. Оптимизируй его. Таблица: [НАЗВАНИЕ_ТАБЛИЦЫ].', variables: ['SQL_ЗАПРОС', 'ВРЕМЯ', 'НАЗВАНИЕ_ТАБЛИЦЫ'], tags: ['SQL', 'оптимизация', 'база данных'], description: 'Поможет ускорить тормозные SQL-запросы.' },
-            // === ЖИЗНЬ И ХОББИ (5) ===
-            { category: 'life', title: 'План отпуска', template: 'Составь план отпуска в [МЕСТО] на [КОЛИЧЕСТВО_ДНЕЙ] дней. Бюджет: [БЮДЖЕТ]. Интересы: [ИНТЕРЕСЫ].', variables: ['МЕСТО', 'КОЛИЧЕСТВО_ДНЕЙ', 'БЮДЖЕТ', 'ИНТЕРЕСЫ'], tags: ['путешествия', 'отпуск', 'план'], description: 'Идеальный маршрут для отпуска.' },
-            { category: 'life', title: 'Утренняя рутина', template: 'Разработай утреннюю рутину на [ВРЕМЯ] минут, чтобы улучшить [ЦЕЛЬ] (энергия/продуктивность/спокойствие).', variables: ['ВРЕМЯ', 'ЦЕЛЬ'], tags: ['рутина', 'утро', 'здоровье'], description: 'Поможет начать день с энергией.' },
-            // === БЫСТРЫЕ ДЕЙСТВИЯ (5) ===
-            { category: 'quick', title: 'Сократить текст', template: 'Сократи следующий текст до [КОЛИЧЕСТВО] предложений: [ТЕКСТ]', variables: ['КОЛИЧЕСТВО', 'ТЕКСТ'], tags: ['краткость', 'резюме', 'редактура'], description: 'Быстрое сокращение текста без потери смысла.' },
-            { category: 'quick', title: 'Перефразировать', template: 'Перефразируй этот текст так, чтобы он звучал более [СТИЛЬ]: [ТЕКСТ]', variables: ['СТИЛЬ', 'ТЕКСТ'], tags: ['перефразирование', 'стиль'], description: 'Измени тон и стиль текста за секунду.' },
-            { category: 'quick', title: 'Исправить ошибки', template: 'Исправь грамматические и пунктуационные ошибки в тексте: [ТЕКСТ]', variables: ['ТЕКСТ'], tags: ['грамматика', 'правописание'], description: 'Мгновенная проверка и исправление текста.' }
-        ];
-
         // ==================== STATE ====================
         let prompts = [];
         let currentCategory = null;
-        let currentFilter = null;
         let currentPrompt = null;
         let favorites = JSON.parse(localStorage.getItem('promptarium_favorites') || '[]');
         let ratings = JSON.parse(localStorage.getItem('promptarium_ratings') || '{}');
@@ -972,40 +922,20 @@
         async function loadPrompts() {
             try {
                 const querySnapshot = await getDocs(collection(db, "prompts"));
-                if (querySnapshot.empty) {
-                    // Если база пуста — заполняем начальными данными
-                    await seedDatabase();
-                    return await loadPrompts();
-                }
                 prompts = [];
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
-                    prompts.push({
-                        id: doc.id,
-                        ...data
-                    });
+                    prompts.push({ id: doc.id, ...data });
                 });
                 renderAll();
                 updateAboutStats();
             } catch (error) {
                 console.error("Ошибка загрузки:", error);
                 document.getElementById('main-content').innerHTML = `
-                    <div style="text-align:center; padding:40px; color:#FF6B6B;">
+                    <div style="text-align:center; padding:30px; color:#FF6B6B;">
                         <p>⚠️ Ошибка загрузки данных. Проверь подключение к Firebase.</p>
-                        <p style="font-size:14px; color:#4A7A9C;">${error.message}</p>
                     </div>
                 `;
-            }
-        }
-
-        async function seedDatabase() {
-            try {
-                for (const p of initialPrompts) {
-                    await addDoc(collection(db, "prompts"), p);
-                }
-                console.log("✅ База данных заполнена начальными промтами");
-            } catch (error) {
-                console.error("Ошибка заполнения:", error);
             }
         }
 
@@ -1013,9 +943,7 @@
             try {
                 const docRef = doc(db, "prompts", id);
                 const docSnap = await getDoc(docRef);
-                if (docSnap.exists()) {
-                    return { id: docSnap.id, ...docSnap.data() };
-                }
+                if (docSnap.exists()) return { id: docSnap.id, ...docSnap.data() };
                 return null;
             } catch (error) {
                 console.error("Ошибка получения промта:", error);
@@ -1023,40 +951,23 @@
             }
         }
 
-        // ==================== ЛОКАЛЬНОЕ ХРАНЕНИЕ (рейтинг и избранное) ====================
-        function saveFavorites() {
-            localStorage.setItem('promptarium_favorites', JSON.stringify(favorites));
-        }
-
-        function saveRatings() {
-            localStorage.setItem('promptarium_ratings', JSON.stringify(ratings));
-        }
-
-        function isFavorite(id) {
-            return favorites.includes(id);
-        }
-
+        // ==================== ЛОКАЛЬНОЕ ХРАНЕНИЕ ====================
+        function saveFavorites() { localStorage.setItem('promptarium_favorites', JSON.stringify(favorites)); }
+        function saveRatings() { localStorage.setItem('promptarium_ratings', JSON.stringify(ratings)); }
+        function isFavorite(id) { return favorites.includes(id); }
         function toggleFavorite(id) {
-            const index = favorites.indexOf(id);
-            if (index > -1) {
-                favorites.splice(index, 1);
-            } else {
-                favorites.push(id);
-            }
+            const idx = favorites.indexOf(id);
+            if (idx > -1) favorites.splice(idx, 1);
+            else favorites.push(id);
             saveFavorites();
             renderAll();
         }
-
-        function getRating(id) {
-            return ratings[id] || 0;
-        }
-
+        function getRating(id) { return ratings[id] || 0; }
         function setRating(id, stars) {
             ratings[id] = stars;
             saveRatings();
             renderAll();
         }
-
         function getAverageRating() {
             const vals = Object.values(ratings).filter(v => v > 0);
             if (vals.length === 0) return 0;
@@ -1079,17 +990,20 @@
             const rating = getRating(p.id);
             const fav = isFavorite(p.id);
             return `
-                <div class="prompt-card" onclick="window.openPrompt('${p.id}')">
-                    <div class="prompt-title">${p.title}</div>
+                <div class="prompt-card" onclick="openPrompt('${p.id}')">
+                    <div class="prompt-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#4FC3F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        ${p.title}
+                    </div>
                     <div class="prompt-tags">
-                        ${(p.tags || []).map(t => `<span onclick="event.stopPropagation(); window.filterByTag('${t}')">#${t}</span>`).join('')}
+                        ${(p.tags || []).map(t => `<span onclick="event.stopPropagation(); filterByTag('${t}')">#${t}</span>`).join('')}
                     </div>
                     <div class="prompt-meta">
                         <span class="stars" onclick="event.stopPropagation()">
                             ${renderStars(p.id, rating)}
                         </span>
-                        <span>👁 ${Math.floor(500 + Math.random() * 2000)}</span>
-                        <span class="favorite ${fav ? 'active' : ''}" onclick="event.stopPropagation(); window.toggleFavorite('${p.id}')">
+                        <span>👁 ${Math.floor(500 + Math.random() * 1500)}</span>
+                        <span class="favorite ${fav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${p.id}')">
                             ${fav ? '❤️' : '🤍'}
                         </span>
                     </div>
@@ -1103,10 +1017,8 @@
             grid.innerHTML = categories.map(cat => {
                 const count = getCategoryCount(cat.id);
                 return `
-                    <div class="category-card" onclick="window.showCategory('${cat.id}')">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="1.5">
-                            ${getCategoryIcon(cat.id)}
-                        </svg>
+                    <div class="category-card" onclick="showCategory('${cat.id}')">
+                        ${getCategoryIcon(cat.id)}
                         <span class="name">${cat.name}</span>
                         <span class="count">${count} промтов</span>
                     </div>
@@ -1116,12 +1028,12 @@
 
         function getCategoryIcon(id) {
             const icons = {
-                work: '<rect x="2" y="7" width="20" height="14" rx="2" stroke="currentColor"/><path d="M16 21V5C16 3.89543 15.1046 3 14 3H10C8.89543 3 8 3.89543 8 5V21" stroke="currentColor"/>',
-                study: '<path d="M12 6V21M12 6L4 10L12 14L20 10L12 6Z" stroke="currentColor"/><path d="M4 10V16L12 20L20 16V10" stroke="currentColor"/>',
-                creative: '<path d="M12 2L14.5 9.5L22 10L16 15.5L18 23L12 19L6 23L8 15.5L2 10L9.5 9.5L12 2Z" stroke="currentColor"/>',
-                it: '<rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor"/><path d="M8 21H16" stroke="currentColor"/><path d="M12 17V21" stroke="currentColor"/>',
-                life: '<path d="M12 2C12 2 8 6 8 10C8 12.2091 9.79086 14 12 14C14.2091 14 16 12.2091 16 10C16 6 12 2 12 2Z" stroke="currentColor"/><path d="M12 14V22" stroke="currentColor"/><path d="M8 18H16" stroke="currentColor"/>',
-                quick: '<path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor"/>'
+                work: `<svg viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
+                study: `<svg viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6V21M12 6L4 10l8 4 8-4-8-4z"/><path d="M4 10v6l8 4 8-4v-6"/></svg>`,
+                creative: `<svg viewBox="0 0 24 24" fill="none" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L14.5 9.5L22 10L16 15.5L18 23L12 19L6 23L8 15.5L2 10L9.5 9.5L12 2z"/></svg>`,
+                it: `<svg viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>`,
+                life: `<svg viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C12 2 8 6 8 10c0 2.2 1.8 4 4 4s4-1.8 4-4c0-4-4-8-4-8z"/><path d="M12 14v8"/><path d="M8 18h8"/></svg>`,
+                quick: `<svg viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`
             };
             return icons[id] || '';
         }
@@ -1144,9 +1056,7 @@
             container.querySelectorAll('.star').forEach(el => {
                 el.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    const id = this.dataset.prompt;
-                    const stars = parseInt(this.dataset.star);
-                    setRating(id, stars);
+                    setRating(this.dataset.prompt, parseInt(this.dataset.star));
                 });
             });
         }
@@ -1154,43 +1064,32 @@
         function renderAll() {
             const mainContent = document.getElementById('main-content');
             if (!mainContent) return;
-
-            // Если промтов ещё нет — показываем загрузку
             if (prompts.length === 0) {
-                mainContent.innerHTML = `
-                    <div class="loader">
-                        <div class="spinner"></div>
-                        <p>Загрузка промтов...</p>
-                    </div>
-                `;
+                mainContent.innerHTML = `<div class="loader"><div class="spinner"></div><p>Загрузка промтов...</p></div>`;
                 return;
             }
-
             mainContent.innerHTML = `
                 <div class="section-title fade-in-up-delay-1">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#4FC3F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
                     КАТАЛОГ КАТЕГОРИЙ
                     <span class="line"></span>
                 </div>
                 <div class="categories-grid fade-in-up-delay-1" id="categories-grid"></div>
 
-                <div class="section-title fade-in-up-delay-3">
-                    ⭐ ПОПУЛЯРНЫЕ ПРОМТЫ
+                <div class="section-title fade-in-up-delay-2">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    ПОПУЛЯРНЫЕ ПРОМТЫ
                     <span class="line"></span>
                 </div>
                 <div class="prompts-grid fade-in-up-delay-3" id="popular-prompts"></div>
             `;
-
             renderCategories();
             renderPopularPrompts();
             updateAboutStats();
-
-            // Обновляем звёзды в популярных
             document.querySelectorAll('#popular-prompts .star').forEach(el => {
                 el.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    const id = this.dataset.prompt;
-                    const stars = parseInt(this.dataset.star);
-                    setRating(id, stars);
+                    setRating(this.dataset.prompt, parseInt(this.dataset.star));
                 });
             });
         }
@@ -1208,7 +1107,6 @@
         // ==================== НАВИГАЦИЯ ====================
         window.showCategory = function(catId) {
             currentCategory = catId;
-            currentFilter = null;
             document.getElementById('main-view').classList.add('hidden');
             document.getElementById('category-view').classList.remove('hidden');
             document.getElementById('category-view').dataset.currentCategory = catId;
@@ -1220,8 +1118,8 @@
             prompts.filter(p => p.category === catId).forEach(p => (p.tags || []).forEach(t => allTags.add(t)));
             const filtersContainer = document.getElementById('category-filters');
             filtersContainer.innerHTML = `
-                <span class="filter-tag all active" onclick="window.filterByTag(null)">Все</span>
-                ${Array.from(allTags).map(t => `<span class="filter-tag" onclick="window.filterByTag('${t}')">#${t}</span>`).join('')}
+                <span class="filter-tag all active" onclick="filterByTag(null)">Все</span>
+                ${Array.from(allTags).map(t => `<span class="filter-tag" onclick="filterByTag('${t}')">#${t}</span>`).join('')}
             `;
 
             const filtered = prompts.filter(p => p.category === catId);
@@ -1231,7 +1129,6 @@
 
         window.filterByTag = function(tag) {
             if (!currentCategory) return;
-            currentFilter = tag;
             document.querySelectorAll('#category-filters .filter-tag').forEach(el => {
                 el.classList.remove('active');
                 if (tag === null && el.classList.contains('all')) el.classList.add('active');
@@ -1251,9 +1148,7 @@
             document.querySelector('.container').scrollIntoView({ behavior: 'smooth' });
         };
 
-        window.showAllCategories = function() {
-            window.goHome();
-        };
+        window.showAllCategories = function() { goHome(); };
 
         // ==================== ПОИСК ====================
         window.searchPrompts = function() {
@@ -1266,12 +1161,12 @@
                 p.template.toLowerCase().includes(query)
             );
             if (results.length === 0) {
-                container.innerHTML = `<p style="color:#4A7A9C;text-align:center;padding:20px;">🚀 Ничего не найдено.</p>`;
+                container.innerHTML = `<p style="color:#4A7A9C;text-align:center;padding:16px;">🚀 Ничего не найдено.</p>`;
                 container.classList.add('active');
                 return;
             }
             container.innerHTML = `
-                <div class="section-title" style="margin-top:0;font-size:18px;">
+                <div class="section-title" style="margin-top:0;font-size:16px;">
                     Найдено ${results.length} промтов <span class="line"></span>
                 </div>
                 <div class="prompts-grid">${results.map(p => renderPromptCard(p)).join('')}</div>
@@ -1283,16 +1178,13 @@
         window.randomPrompt = function() {
             if (prompts.length === 0) return;
             const p = prompts[Math.floor(Math.random() * prompts.length)];
-            window.openPrompt(p.id);
+            openPrompt(p.id);
         };
 
         // ==================== МОДАЛКА ====================
         window.openPrompt = async function(id) {
             const p = await getPromptFromFirebase(id);
-            if (!p) {
-                alert('Промт не найден');
-                return;
-            }
+            if (!p) { alert('Промт не найден'); return; }
             currentPrompt = p;
             document.getElementById('modal-title').textContent = p.title;
             document.getElementById('modal-description').textContent = p.description || 'Без описания';
@@ -1306,16 +1198,16 @@
             if (p.variables && p.variables.length > 0) {
                 varsContainer.innerHTML = p.variables.map(v => `
                     <label>${v}</label>
-                    <input type="text" id="var-${v}" placeholder="Введите ${v.toLowerCase()}" oninput="window.updatePreview()">
+                    <input type="text" id="var-${v}" placeholder="Введите ${v.toLowerCase()}" oninput="updatePreview()">
                 `).join('');
             } else {
-                varsContainer.innerHTML = '<p style="color:#4A7A9C;font-size:14px;">Без переменных</p>';
+                varsContainer.innerHTML = '<p style="color:#4A7A9C;font-size:13px;">Без переменных</p>';
             }
             document.getElementById('modal-preview').textContent = p.template;
             document.getElementById('modal-tags').innerHTML = (p.tags || []).map(t => `<span>#${t}</span>`).join('');
             document.getElementById('modal').classList.add('active');
             document.body.style.overflow = 'hidden';
-            setTimeout(window.updatePreview, 100);
+            setTimeout(updatePreview, 100);
         };
 
         window.updatePreview = function() {
@@ -1335,68 +1227,49 @@
 
         window.copyFinal = function() {
             const text = document.getElementById('modal-preview').textContent;
-            navigator.clipboard.writeText(text).then(() => alert('✅ Готовый промт скопирован!')).catch(() => {
-                const ta = document.createElement('textarea');
-                ta.value = text;
-                document.body.appendChild(ta);
-                ta.select();
-                document.execCommand('copy');
-                document.body.removeChild(ta);
-                alert('✅ Готовый промт скопирован!');
-            });
+            navigator.clipboard.writeText(text).then(() => alert('✅ Готовый промт скопирован!'));
         };
 
         window.copyTemplate = function() {
             if (!currentPrompt) return;
-            navigator.clipboard.writeText(currentPrompt.template).then(() => alert('✅ Шаблон скопирован!')).catch(() => {
-                const ta = document.createElement('textarea');
-                ta.value = currentPrompt.template;
-                document.body.appendChild(ta);
-                ta.select();
-                document.execCommand('copy');
-                document.body.removeChild(ta);
-                alert('✅ Шаблон скопирован!');
-            });
+            navigator.clipboard.writeText(currentPrompt.template).then(() => alert('✅ Шаблон скопирован!'));
         };
 
         window.toggleFavorite = function(id) {
-            const index = favorites.indexOf(id);
-            if (index > -1) favorites.splice(index, 1);
+            const idx = favorites.indexOf(id);
+            if (idx > -1) favorites.splice(idx, 1);
             else favorites.push(id);
             saveFavorites();
             renderAll();
         };
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') { window.closeModal(); closeAbout(); }
+            if (e.key === 'Escape') { closeModal(); closeAbout(); }
         });
         document.getElementById('modal').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) window.closeModal();
+            if (e.target === e.currentTarget) closeModal();
         });
 
         // ==================== О ПРОЕКТЕ ====================
-        function openAbout() {
+        window.openAbout = function() {
             updateAboutStats();
             document.getElementById('about-modal').classList.add('active');
             document.body.style.overflow = 'hidden';
-        }
-        function closeAbout() {
+        };
+        window.closeAbout = function() {
             document.getElementById('about-modal').classList.remove('active');
             document.body.style.overflow = 'auto';
-        }
-        window.openAbout = openAbout;
-        window.closeAbout = closeAbout;
-
+        };
         document.getElementById('about-modal').addEventListener('click', (e) => {
             if (e.target === e.currentTarget) closeAbout();
         });
 
-        // ==================== ЗВЁЗДЫ (CANVAS) ====================
+        // ==================== ЗВЁЗДЫ (ОПТИМИЗИРОВАННЫЕ) ====================
         const canvas = document.getElementById('stars-canvas');
         const ctx = canvas.getContext('2d');
         let w, h;
         const stars = [];
-        const STAR_COUNT = 350;
+        const STAR_COUNT = 150;
 
         function resizeCanvas() {
             w = canvas.width = window.innerWidth;
@@ -1408,62 +1281,33 @@
         class Star {
             constructor() {
                 this.reset();
-                this.twinkleSpeed = 0.003 + Math.random() * 0.015;
+                this.twinkleSpeed = 0.008 + Math.random() * 0.015;
                 this.twinklePhase = Math.random() * Math.PI * 2;
-                const colors = [
-                    { r: 255, g: 255, b: 255 },
-                    { r: 200, g: 230, b: 255 },
-                    { r: 180, g: 220, b: 255 },
-                    { r: 150, g: 200, b: 255 },
-                    { r: 220, g: 235, b: 255 }
-                ];
-                this.color = colors[Math.floor(Math.random() * colors.length)];
-                this.speed = 0.02 + Math.random() * 0.05;
-                this.angle = Math.random() * Math.PI * 2;
+                this.baseOpacity = 0.3 + Math.random() * 0.6;
             }
             reset() {
                 this.x = Math.random() * w;
                 this.y = Math.random() * h;
-                this.size = Math.random() * 2.8 + 0.5;
-                this.baseOpacity = 0.3 + Math.random() * 0.7;
+                this.size = Math.random() * 2 + 0.5;
+                this.speed = 0.01 + Math.random() * 0.03;
+                this.angle = Math.random() * Math.PI * 2;
             }
             update() {
                 this.angle += (Math.random() - 0.5) * 0.01;
                 this.x += Math.cos(this.angle) * this.speed;
                 this.y += Math.sin(this.angle) * this.speed;
                 this.twinklePhase += this.twinkleSpeed;
-                if (this.x < -50) this.x = w + 50;
-                if (this.x > w + 50) this.x = -50;
-                if (this.y < -50) this.y = h + 50;
-                if (this.y > h + 50) this.y = -50;
+                if (this.x < -20) this.x = w + 20;
+                if (this.x > w + 20) this.x = -20;
+                if (this.y < -20) this.y = h + 20;
+                if (this.y > h + 20) this.y = -20;
             }
             draw(ctx) {
                 const opacity = this.baseOpacity * (0.6 + 0.4 * Math.sin(this.twinklePhase));
-                const { r, g, b } = this.color;
-                const size = this.size;
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${r},${g},${b},${opacity})`;
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
                 ctx.fill();
-                const glowLen = size * 5;
-                const glowW = size * 0.6;
-                ctx.shadowColor = `rgba(${r},${g},${b},${opacity * 0.12})`;
-                ctx.shadowBlur = 25;
-                ctx.beginPath();
-                ctx.ellipse(this.x, this.y, glowLen, glowW, 0, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${r},${g},${b},${opacity * 0.06})`;
-                ctx.fill();
-                ctx.beginPath();
-                ctx.ellipse(this.x, this.y, glowW, glowLen, 0, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${r},${g},${b},${opacity * 0.06})`;
-                ctx.fill();
-                ctx.shadowBlur = 0;
-                if (size > 1.8) {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, size * 0.3, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(255,255,255,${opacity * 0.25})`;
-                    ctx.fill();
-                }
             }
         }
 
@@ -1486,14 +1330,14 @@
         document.querySelectorAll('.category-card, .prompt-card, .btn-primary, .btn-secondary, .search-wrapper input, .nav-link').forEach(el => {
             if (!el) return;
             el.addEventListener('mouseenter', () => {
-                glow.style.width = '700px';
-                glow.style.height = '700px';
-                glow.style.background = 'radial-gradient(circle, rgba(30,144,255,0.2) 0%, rgba(79,195,247,0.07) 40%, transparent 70%)';
-            });
-            el.addEventListener('mouseleave', () => {
                 glow.style.width = '500px';
                 glow.style.height = '500px';
                 glow.style.background = 'radial-gradient(circle, rgba(30,144,255,0.15) 0%, rgba(79,195,247,0.05) 40%, transparent 70%)';
+            });
+            el.addEventListener('mouseleave', () => {
+                glow.style.width = '400px';
+                glow.style.height = '400px';
+                glow.style.background = 'radial-gradient(circle, rgba(30,144,255,0.12) 0%, rgba(79,195,247,0.04) 40%, transparent 70%)';
             });
         });
 
