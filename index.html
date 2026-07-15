@@ -911,7 +911,7 @@
         </div>
 
         <footer class="footer">
-            <p>Promptarium — сапфировая библиотека промтов. Версия 13.0 · Firebase</p>
+            <p>Promptarium — сапфировая библиотека промтов. Версия 13.1 · Firebase</p>
             <p style="margin-top: 6px;">
                 <a href="#" onclick="openAbout()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
@@ -998,7 +998,7 @@
                 </p>
 
                 <div class="about-footer">
-                    <p>Версия 13.0 · 2026 · Бесплатно и открыто</p>
+                    <p>Версия 13.1 · 2026 · Бесплатно и открыто</p>
                     <p style="margin-top:4px;">
                         <span style="color:#4A7A9C;">📧 promptarium@example.com</span>
                     </p>
@@ -1096,13 +1096,11 @@
             if (idx > -1) favorites.splice(idx, 1);
             else favorites.push(id);
             saveFavorites();
-            renderAll();
         }
         function getRating(id) { return ratings[id] || 0; }
         function setRating(id, stars) {
             ratings[id] = stars;
             saveRatings();
-            renderAll();
         }
         function getAverageRating() {
             const vals = Object.values(ratings).filter(v => v > 0);
@@ -1209,7 +1207,7 @@
             });
         }
 
-        // === ГЛАВНАЯ СТРАНИЦА ===
+        // === ГЛАВНАЯ СТРАНИЦА (РЕНДЕРИТСЯ ОДИН РАЗ) ===
         function renderAll() {
             if (isCategoryOpen) {
                 console.log('⛔ renderAll() заблокирован, категория открыта');
@@ -1461,13 +1459,11 @@
             if (idx > -1) favorites.splice(idx, 1);
             else favorites.push(id);
             saveFavorites();
-            renderAll();
         };
 
         window.setRating = function(id, stars) {
             ratings[id] = stars;
             saveRatings();
-            renderAll();
         };
 
         document.addEventListener('keydown', (e) => {
