@@ -19,6 +19,24 @@
             cursor: default;
         }
 
+        /* КАСТОМНЫЙ СКРОЛЛБАР */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(30, 144, 255, 0.04);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(30, 144, 255, 0.3);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.1);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(30, 144, 255, 0.5);
+        }
+
         #stars-canvas {
             position: fixed;
             top: 0;
@@ -722,6 +740,22 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* Пустое состояние для поиска */
+        .empty-state {
+            text-align: center;
+            padding: 30px 20px;
+            color: #4A7A9C;
+        }
+        .empty-state svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 12px;
+            opacity: 0.4;
+        }
+        .empty-state p {
+            font-size: 15px;
+        }
+
         @media (max-width: 768px) {
             .header { flex-direction: column; align-items: flex-start; }
             .hero { padding: 16px 0 24px; }
@@ -771,11 +805,11 @@
                 <h1>PROMPTARIUM</h1>
                 <p>Твой ключ к идеальному запросу для ИИ</p>
                 <div class="search-wrapper">
-                    <input type="text" id="searchInput" placeholder="Поиск промта по названию, тегам или содержанию..." oninput="searchPrompts()">
+                    <input type="text" id="searchInput" placeholder="Поиск промта по названию, тегам или содержанию..." oninput="window.searchPrompts()">
                     <div id="search-results" class="search-results"></div>
                 </div>
                 <div class="hero-buttons">
-                    <button class="btn-primary" onclick="randomPrompt()">
+                    <button class="btn-primary" onclick="window.randomPrompt()">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9"/></svg>
                         Случайный промт
                     </button>
@@ -990,20 +1024,20 @@
             const rating = getRating(p.id);
             const fav = isFavorite(p.id);
             return `
-                <div class="prompt-card" onclick="openPrompt('${p.id}')">
+                <div class="prompt-card" onclick="window.openPrompt('${p.id}')">
                     <div class="prompt-title">
                         <svg viewBox="0 0 24 24" fill="none" stroke="#4FC3F7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                         ${p.title}
                     </div>
                     <div class="prompt-tags">
-                        ${(p.tags || []).map(t => `<span onclick="event.stopPropagation(); filterByTag('${t}')">#${t}</span>`).join('')}
+                        ${(p.tags || []).map(t => `<span onclick="event.stopPropagation(); window.filterByTag('${t}')">#${t}</span>`).join('')}
                     </div>
                     <div class="prompt-meta">
                         <span class="stars" onclick="event.stopPropagation()">
                             ${renderStars(p.id, rating)}
                         </span>
                         <span>👁 ${Math.floor(500 + Math.random() * 1500)}</span>
-                        <span class="favorite ${fav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${p.id}')">
+                        <span class="favorite ${fav ? 'active' : ''}" onclick="event.stopPropagation(); window.toggleFavorite('${p.id}')">
                             ${fav ? '❤️' : '🤍'}
                         </span>
                     </div>
@@ -1017,7 +1051,7 @@
             grid.innerHTML = categories.map(cat => {
                 const count = getCategoryCount(cat.id);
                 return `
-                    <div class="category-card" onclick="showCategory('${cat.id}')">
+                    <div class="category-card" onclick="window.showCategory('${cat.id}')">
                         ${getCategoryIcon(cat.id)}
                         <span class="name">${cat.name}</span>
                         <span class="count">${count} промтов</span>
@@ -1056,7 +1090,7 @@
             container.querySelectorAll('.star').forEach(el => {
                 el.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    setRating(this.dataset.prompt, parseInt(this.dataset.star));
+                    window.setRating(this.dataset.prompt, parseInt(this.dataset.star));
                 });
             });
         }
@@ -1089,7 +1123,7 @@
             document.querySelectorAll('#popular-prompts .star').forEach(el => {
                 el.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    setRating(this.dataset.prompt, parseInt(this.dataset.star));
+                    window.setRating(this.dataset.prompt, parseInt(this.dataset.star));
                 });
             });
         }
@@ -1103,6 +1137,56 @@
                 ratingEl.textContent = avg > 0 ? avg.toFixed(1) : '—';
             }
         }
+
+        // ==================== ПОИСК (ИСПРАВЛЕН) ====================
+        window.searchPrompts = function() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const container = document.getElementById('search-results');
+            
+            // Если запрос пустой — скрываем результаты
+            if (query.length === 0) {
+                container.classList.remove('active');
+                container.innerHTML = '';
+                return;
+            }
+
+            // Если промты ещё не загружены — показываем загрузку
+            if (prompts.length === 0) {
+                container.innerHTML = `<div class="loader" style="padding:20px 0;"><div class="spinner" style="width:24px;height:24px;"></div><p style="font-size:14px;">Загрузка...</p></div>`;
+                container.classList.add('active');
+                return;
+            }
+
+            // Ищем промты
+            const results = prompts.filter(p =>
+                p.title.toLowerCase().includes(query) ||
+                (p.tags || []).some(t => t.toLowerCase().includes(query)) ||
+                p.template.toLowerCase().includes(query)
+            );
+
+            // Если ничего не найдено
+            if (results.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#4A7A9C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                        <p>🚀 Ничего не найдено по запросу <strong>"${query}"</strong></p>
+                        <p style="font-size:13px; color:#4A7A9C; margin-top:4px;">Попробуй изменить ключевые слова</p>
+                    </div>
+                `;
+                container.classList.add('active');
+                return;
+            }
+
+            // Показываем результаты
+            container.innerHTML = `
+                <div class="section-title" style="margin-top:0;font-size:16px;">
+                    Найдено ${results.length} промтов <span class="line"></span>
+                </div>
+                <div class="prompts-grid">${results.map(p => renderPromptCard(p)).join('')}</div>
+            `;
+            container.classList.add('active');
+            attachStarEvents(container);
+        };
 
         // ==================== НАВИГАЦИЯ ====================
         window.showCategory = function(catId) {
@@ -1118,8 +1202,8 @@
             prompts.filter(p => p.category === catId).forEach(p => (p.tags || []).forEach(t => allTags.add(t)));
             const filtersContainer = document.getElementById('category-filters');
             filtersContainer.innerHTML = `
-                <span class="filter-tag all active" onclick="filterByTag(null)">Все</span>
-                ${Array.from(allTags).map(t => `<span class="filter-tag" onclick="filterByTag('${t}')">#${t}</span>`).join('')}
+                <span class="filter-tag all active" onclick="window.filterByTag(null)">Все</span>
+                ${Array.from(allTags).map(t => `<span class="filter-tag" onclick="window.filterByTag('${t}')">#${t}</span>`).join('')}
             `;
 
             const filtered = prompts.filter(p => p.category === catId);
@@ -1148,37 +1232,18 @@
             document.querySelector('.container').scrollIntoView({ behavior: 'smooth' });
         };
 
-        window.showAllCategories = function() { goHome(); };
-
-        // ==================== ПОИСК ====================
-        window.searchPrompts = function() {
-            const query = document.getElementById('searchInput').value.toLowerCase().trim();
-            const container = document.getElementById('search-results');
-            if (query.length < 2) { container.classList.remove('active'); return; }
-            const results = prompts.filter(p =>
-                p.title.toLowerCase().includes(query) ||
-                (p.tags || []).some(t => t.includes(query)) ||
-                p.template.toLowerCase().includes(query)
-            );
-            if (results.length === 0) {
-                container.innerHTML = `<p style="color:#4A7A9C;text-align:center;padding:16px;">🚀 Ничего не найдено.</p>`;
-                container.classList.add('active');
-                return;
-            }
-            container.innerHTML = `
-                <div class="section-title" style="margin-top:0;font-size:16px;">
-                    Найдено ${results.length} промтов <span class="line"></span>
-                </div>
-                <div class="prompts-grid">${results.map(p => renderPromptCard(p)).join('')}</div>
-            `;
-            container.classList.add('active');
-            attachStarEvents(container);
+        window.showAllCategories = function() { 
+            window.goHome(); 
         };
 
+        // ==================== СЛУЧАЙНЫЙ ПРОМТ ====================
         window.randomPrompt = function() {
-            if (prompts.length === 0) return;
+            if (prompts.length === 0) {
+                alert('Промты ещё загружаются, попробуй позже!');
+                return;
+            }
             const p = prompts[Math.floor(Math.random() * prompts.length)];
-            openPrompt(p.id);
+            window.openPrompt(p.id);
         };
 
         // ==================== МОДАЛКА ====================
@@ -1198,7 +1263,7 @@
             if (p.variables && p.variables.length > 0) {
                 varsContainer.innerHTML = p.variables.map(v => `
                     <label>${v}</label>
-                    <input type="text" id="var-${v}" placeholder="Введите ${v.toLowerCase()}" oninput="updatePreview()">
+                    <input type="text" id="var-${v}" placeholder="Введите ${v.toLowerCase()}" oninput="window.updatePreview()">
                 `).join('');
             } else {
                 varsContainer.innerHTML = '<p style="color:#4A7A9C;font-size:13px;">Без переменных</p>';
@@ -1207,7 +1272,7 @@
             document.getElementById('modal-tags').innerHTML = (p.tags || []).map(t => `<span>#${t}</span>`).join('');
             document.getElementById('modal').classList.add('active');
             document.body.style.overflow = 'hidden';
-            setTimeout(updatePreview, 100);
+            setTimeout(window.updatePreview, 100);
         };
 
         window.updatePreview = function() {
@@ -1227,12 +1292,29 @@
 
         window.copyFinal = function() {
             const text = document.getElementById('modal-preview').textContent;
-            navigator.clipboard.writeText(text).then(() => alert('✅ Готовый промт скопирован!'));
+            navigator.clipboard.writeText(text).then(() => alert('✅ Готовый промт скопирован!')).catch(() => {
+                // fallback
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                alert('✅ Готовый промт скопирован!');
+            });
         };
 
         window.copyTemplate = function() {
             if (!currentPrompt) return;
-            navigator.clipboard.writeText(currentPrompt.template).then(() => alert('✅ Шаблон скопирован!'));
+            navigator.clipboard.writeText(currentPrompt.template).then(() => alert('✅ Шаблон скопирован!')).catch(() => {
+                const ta = document.createElement('textarea');
+                ta.value = currentPrompt.template;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                alert('✅ Шаблон скопирован!');
+            });
         };
 
         window.toggleFavorite = function(id) {
@@ -1243,11 +1325,17 @@
             renderAll();
         };
 
+        window.setRating = function(id, stars) {
+            ratings[id] = stars;
+            saveRatings();
+            renderAll();
+        };
+
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') { closeModal(); closeAbout(); }
+            if (e.key === 'Escape') { window.closeModal(); window.closeAbout(); }
         });
         document.getElementById('modal').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) closeModal();
+            if (e.target === e.currentTarget) window.closeModal();
         });
 
         // ==================== О ПРОЕКТЕ ====================
@@ -1261,7 +1349,7 @@
             document.body.style.overflow = 'auto';
         };
         document.getElementById('about-modal').addEventListener('click', (e) => {
-            if (e.target === e.currentTarget) closeAbout();
+            if (e.target === e.currentTarget) window.closeAbout();
         });
 
         // ==================== ЗВЁЗДЫ (ОПТИМИЗИРОВАННЫЕ) ====================
@@ -1344,11 +1432,24 @@
         // ==================== ЗАПУСК ====================
         loadPrompts();
 
-        // Делаем функции доступными глобально
+        // Делаем функции и данные доступными глобально
         window.prompts = prompts;
         window.getRating = getRating;
         window.setRating = setRating;
         window.renderAll = renderAll;
+        window.searchPrompts = searchPrompts;
+        window.goHome = goHome;
+        window.showCategory = showCategory;
+        window.filterByTag = filterByTag;
+        window.randomPrompt = randomPrompt;
+        window.openPrompt = openPrompt;
+        window.updatePreview = updatePreview;
+        window.closeModal = closeModal;
+        window.copyFinal = copyFinal;
+        window.copyTemplate = copyTemplate;
+        window.toggleFavorite = toggleFavorite;
+        window.openAbout = openAbout;
+        window.closeAbout = closeAbout;
     </script>
 </body>
 </html>
