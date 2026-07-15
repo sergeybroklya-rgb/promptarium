@@ -824,6 +824,14 @@
         }
         .empty-state p { font-size: 15px; }
 
+        /* ===== ЗАЩИТА ОТ ПРОПАДАНИЯ КАРТОЧЕК ===== */
+        #category-prompts {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            min-height: 200px;
+        }
+
         @media (max-width: 768px) {
             .header { flex-direction: column; align-items: flex-start; }
             .hero { padding: 16px 0 24px; }
@@ -911,7 +919,7 @@
         </div>
 
         <footer class="footer">
-            <p>Promptarium — сапфировая библиотека промтов. Версия 13.1 · Firebase</p>
+            <p>Promptarium — сапфировая библиотека промтов. Версия 14.0 · Firebase</p>
             <p style="margin-top: 6px;">
                 <a href="#" onclick="openAbout()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
@@ -998,7 +1006,7 @@
                 </p>
 
                 <div class="about-footer">
-                    <p>Версия 13.1 · 2026 · Бесплатно и открыто</p>
+                    <p>Версия 14.0 · 2026 · Бесплатно и открыто</p>
                     <p style="margin-top:4px;">
                         <span style="color:#4A7A9C;">📧 promptarium@example.com</span>
                     </p>
@@ -1190,10 +1198,25 @@
 
         function renderPrompts(list, container) {
             if (!container) return;
+            
+            // ===== ЗАЩИТА ОТ ПЕРЕРИСОВКИ =====
+            if (container.offsetParent === null) {
+                console.log('⛔ Контейнер скрыт, рендеринг отложен');
+                setTimeout(() => {
+                    if (container.offsetParent !== null) {
+                        renderPrompts(list, container);
+                    }
+                }, 100);
+                return;
+            }
+            // ====================================
+
             if (!list || list.length === 0) {
                 container.innerHTML = `<div class="empty-state-category"><svg viewBox="0 0 24 24" fill="none" stroke="#4A7A9C" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg><p>В этой категории пока нет промтов</p><p class="sub">Добавьте их через Firebase!</p></div>`;
                 return;
             }
+
+            console.log(`🔄 Рендерим ${list.length} промтов в контейнер`, container);
             container.innerHTML = list.map(p => renderPromptCard(p)).join('');
             attachStarEvents(container);
         }
@@ -1207,7 +1230,7 @@
             });
         }
 
-        // === ГЛАВНАЯ СТРАНИЦА (РЕНДЕРИТСЯ ОДИН РАЗ) ===
+        // === ГЛАВНАЯ СТРАНИЦА ===
         function renderAll() {
             if (isCategoryOpen) {
                 console.log('⛔ renderAll() заблокирован, категория открыта');
@@ -1334,6 +1357,15 @@
             const cat = categories.find(c => c.id === catId);
             document.getElementById('category-title').innerHTML = `${cat.name} <span class="line"></span>`;
 
+            // ===== ФОРСИРУЕМ ВИДИМОСТЬ =====
+            const container = document.getElementById('category-prompts');
+            if (container) {
+                container.style.display = 'block';
+                container.style.visibility = 'visible';
+                container.style.opacity = '1';
+            }
+            // =================================
+
             const allTags = new Set();
             prompts.filter(p => p.category === catId).forEach(p => (p.tags || []).forEach(t => allTags.add(t)));
             const filtersContainer = document.getElementById('category-filters');
@@ -1343,7 +1375,12 @@
             `;
 
             const filtered = prompts.filter(p => p.category === catId);
-            renderPrompts(filtered, document.getElementById('category-prompts'));
+            
+            // Рендерим с задержкой, чтобы браузер успел отрисовать контейнер
+            setTimeout(() => {
+                renderPrompts(filtered, document.getElementById('category-prompts'));
+            }, 50);
+            
             document.querySelector('.container').scrollIntoView({ behavior: 'smooth' });
             console.log(`📂 Открыта категория: ${cat.name} (${filtered.length} промтов)`);
         };
