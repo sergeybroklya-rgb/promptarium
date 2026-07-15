@@ -306,6 +306,10 @@
         .category-card:nth-child(4) { animation-delay: 1.2s; }
         .category-card:nth-child(5) { animation-delay: 1.6s; }
         .category-card:nth-child(6) { animation-delay: 2s; }
+        .category-card:nth-child(7) { animation-delay: 2.4s; }
+        .category-card:nth-child(8) { animation-delay: 2.8s; }
+        .category-card:nth-child(9) { animation-delay: 3.2s; }
+        .category-card:nth-child(10) { animation-delay: 3.6s; }
 
         .category-card:hover {
             transform: translateY(-8px) scale(1.03);
@@ -532,6 +536,7 @@
             display: flex;
             gap: 10px;
             flex-wrap: wrap;
+            margin-bottom: 12px;
         }
         .modal-actions button {
             padding: 10px 24px;
@@ -564,6 +569,52 @@
             background: rgba(30, 144, 255, 0.15);
             transform: scale(1.04);
         }
+
+        .modal-ai-section {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(30, 144, 255, 0.08);
+        }
+        .modal-ai-section .ai-label {
+            font-size: 12px;
+            color: #4A7A9C;
+            margin-bottom: 10px;
+            display: block;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+        .modal-ai-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .modal-ai-buttons button {
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(30, 144, 255, 0.1);
+            background: rgba(6, 10, 26, 0.4);
+            color: #E8F0FE;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .modal-ai-buttons button:hover {
+            background: rgba(30, 144, 255, 0.15);
+            border-color: rgba(30, 144, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(30, 144, 255, 0.1);
+        }
+        .modal-ai-buttons button svg {
+            width: 16px;
+            height: 16px;
+        }
+
         .modal-tags {
             display: flex;
             gap: 5px;
@@ -763,6 +814,7 @@
             .prompts-grid { grid-template-columns: 1fr; }
             .modal { padding: 20px; margin: 8px; }
             .about-content .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+            .modal-ai-buttons button { font-size: 11px; padding: 6px 12px; }
         }
         @media (max-width: 480px) {
             .categories-grid { grid-template-columns: repeat(2, 1fr); }
@@ -839,7 +891,7 @@
         </div>
 
         <footer class="footer">
-            <p>Promptarium — сапфировая библиотека промтов. Версия 11.1 · Firebase</p>
+            <p>Promptarium — сапфировая библиотека промтов. Версия 12.0 · Firebase</p>
             <p style="margin-top: 6px;">
                 <a href="#" onclick="openAbout()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
@@ -866,6 +918,33 @@
                 <button class="btn-copy-template" onclick="copyTemplate()">📋 Скопировать шаблон</button>
             </div>
             <div class="modal-tags" id="modal-tags"></div>
+
+            <!-- НОВЫЙ БЛОК: КНОПКИ ИИ -->
+            <div class="modal-ai-section">
+                <span class="ai-label">🚀 Открыть в нейросети</span>
+                <div class="modal-ai-buttons">
+                    <button onclick="openAI('https://chat.openai.com/', 'chatgpt')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#10a37f" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2v20M2 12h20"/></svg>
+                        ChatGPT
+                    </button>
+                    <button onclick="openAI('https://deepseek.com/', 'deepseek')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#4D6BFE" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="4"/><path d="M8 8v8M16 8v8"/></svg>
+                        DeepSeek
+                    </button>
+                    <button onclick="openAI('https://gemini.google.com/', 'gemini')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#4285F4" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                        Gemini
+                    </button>
+                    <button onclick="openAI('https://claude.ai/', 'claude')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M12 6v6l4 2"/></svg>
+                        Claude
+                    </button>
+                    <button onclick="openAI('https://yandex.ru/gpt/', 'yandexgpt')">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#FC3F1D" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 8l8 8M16 8l-8 8"/></svg>
+                        YandexGPT
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -886,7 +965,7 @@
                         <span class="label">Промтов</span>
                     </div>
                     <div class="stat-item">
-                        <span class="number" id="about-total-categories">6</span>
+                        <span class="number" id="about-total-categories">10</span>
                         <span class="label">Категорий</span>
                     </div>
                     <div class="stat-item">
@@ -900,7 +979,7 @@
                 </p>
 
                 <div class="about-footer">
-                    <p>Версия 11.1 · 2026 · Бесплатно и открыто</p>
+                    <p>Версия 12.0 · 2026 · Бесплатно и открыто</p>
                     <p style="margin-top:4px;">
                         <span style="color:#4A7A9C;">📧 promptarium@example.com</span>
                     </p>
@@ -932,14 +1011,19 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // ==================== ДАННЫЕ ====================
+        // ==================== КАТЕГОРИИ (НОВЫЕ) ====================
         const categories = [
             { id: 'work', name: 'Работа и бизнес' },
             { id: 'study', name: 'Учёба и знания' },
             { id: 'creative', name: 'Творчество' },
             { id: 'it', name: 'Программирование' },
             { id: 'life', name: 'Жизнь и хобби' },
-            { id: 'quick', name: 'Быстрые действия' }
+            { id: 'quick', name: 'Быстрые действия' },
+            { id: 'design', name: 'Дизайн' },
+            { id: 'law', name: 'Юриспруденция' },
+            { id: 'business', name: 'Предпринимательство' },
+            { id: 'photo', name: 'Фотография' },
+            { id: 'psychology', name: 'Психология' }
         ];
 
         // ==================== STATE ====================
@@ -1064,7 +1148,12 @@
                 creative: `<svg viewBox="0 0 24 24" fill="none" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L14.5 9.5L22 10L16 15.5L18 23L12 19L6 23L8 15.5L2 10L9.5 9.5L12 2z"/></svg>`,
                 it: `<svg viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>`,
                 life: `<svg viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C12 2 8 6 8 10c0 2.2 1.8 4 4 4s4-1.8 4-4c0-4-4-8-4-8z"/><path d="M12 14v8"/><path d="M8 18h8"/></svg>`,
-                quick: `<svg viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`
+                quick: `<svg viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
+                design: `<svg viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
+                law: `<svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
+                business: `<svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
+                photo: `<svg viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
+                psychology: `<svg viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`
             };
             return icons[id] || '';
         }
@@ -1135,7 +1224,7 @@
             }
         }
 
-        // ==================== ПОИСК (ИСПРАВЛЕН) ====================
+        // ==================== ПОИСК (БЕЗОПАСНЫЙ) ====================
         window.handleSearch = function() {
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
             const container = document.getElementById('search-results');
@@ -1152,12 +1241,10 @@
                 return;
             }
 
-            // БЕЗОПАСНЫЙ ПОИСК — проверяем, что поля существуют
             const results = prompts.filter(p => {
                 const title = p.title || '';
                 const tags = p.tags || [];
                 const template = p.template || '';
-                
                 return title.toLowerCase().includes(query) ||
                        tags.some(t => t.toLowerCase().includes(query)) ||
                        template.toLowerCase().includes(query);
@@ -1183,6 +1270,27 @@
             `;
             container.classList.add('active');
             attachStarEvents(container);
+        };
+
+        // ==================== КНОПКИ ИИ ====================
+        window.openAI = function(url, name) {
+            const previewText = document.getElementById('modal-preview').textContent;
+            if (previewText) {
+                navigator.clipboard.writeText(previewText).then(() => {
+                    window.open(url, '_blank');
+                }).catch(() => {
+                    // fallback
+                    const ta = document.createElement('textarea');
+                    ta.value = previewText;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    window.open(url, '_blank');
+                });
+            } else {
+                window.open(url, '_blank');
+            }
         };
 
         // ==================== НАВИГАЦИЯ ====================
