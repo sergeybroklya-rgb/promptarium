@@ -9,30 +9,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         /* ============================================
-           ГЛОБАЛЬНЫЙ СБРОС И БАЗОВЫЕ СТИЛИ
+           ГЛОБАЛЬНЫЙ СБРОС
            ============================================ */
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --bg-primary: #0B0D1A;
             --bg-secondary: #11152A;
-            --bg-card: rgba(17, 21, 42, 0.6);
+            --bg-card: rgba(17, 21, 42, 0.5);
             --accent-primary: #6C3CE1;
             --accent-secondary: #1E90FF;
             --accent-rose: #FF2D78;
             --text-primary: #F0F4FF;
             --text-secondary: #8892B0;
-            --glass-border: rgba(108, 60, 225, 0.15);
-            --shadow-neon: 0 0 40px rgba(108, 60, 225, 0.1);
+            --glass-border: rgba(108, 60, 225, 0.12);
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -62,22 +55,18 @@
         /* ============================================
            КАСТОМНЫЙ СКРОЛЛБАР
            ============================================ */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-primary);
-        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
         ::-webkit-scrollbar-thumb {
-            background: var(--accent-primary);
+            background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary), var(--accent-rose));
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(108, 60, 225, 0.3);
         }
 
         /* ============================================
-           ЧАСТИЦЫ (ФОН) + ПАРАЛЛАКС
+           АНИМИРОВАННЫЙ ФОН С ВОЛНАМИ
            ============================================ */
-        #particles-canvas {
+        #wave-canvas {
             position: fixed;
             top: 0;
             left: 0;
@@ -87,15 +76,8 @@
             pointer-events: none;
         }
 
-        .parallax-container {
-            position: relative;
-            z-index: 1;
-            transform: translateZ(0);
-            will-change: transform;
-        }
-
         /* ============================================
-           ТУМАННОСТИ С ПАРАЛЛАКСОМ
+           ТУМАННОСТИ (ПАРАЛЛАКС)
            ============================================ */
         .nebula {
             position: fixed;
@@ -103,30 +85,44 @@
             filter: blur(120px);
             pointer-events: none;
             z-index: 0;
-            opacity: 0.3;
-            transition: transform 0.1s ease-out;
+            opacity: 0.25;
             will-change: transform;
+            transition: transform 0.1s ease-out;
         }
         .nebula-1 {
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(108, 60, 225, 0.15), transparent 70%);
+            background: radial-gradient(circle, rgba(108, 60, 225, 0.2), transparent 70%);
             top: -10%;
             left: -10%;
         }
         .nebula-2 {
             width: 500px;
             height: 500px;
-            background: radial-gradient(circle, rgba(30, 144, 255, 0.1), transparent 70%);
+            background: radial-gradient(circle, rgba(30, 144, 255, 0.15), transparent 70%);
             bottom: -10%;
             right: -10%;
         }
         .nebula-3 {
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, rgba(255, 45, 120, 0.08), transparent 70%);
+            background: radial-gradient(circle, rgba(255, 45, 120, 0.1), transparent 70%);
             top: 40%;
             left: 50%;
+        }
+
+        /* ============================================
+           ЗВЁЗДЫ (ПАРАЛЛАКС)
+           ============================================ */
+        #stars-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            will-change: transform;
         }
 
         /* ============================================
@@ -173,8 +169,8 @@
             to { opacity: 1; transform: translateY(0); }
         }
         @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
+            from { opacity: 0; transform: scale(0.85) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
         @keyframes float {
             0%, 100% { transform: translateY(0); }
@@ -219,19 +215,20 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.9) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
 
-        .fade-in-down {
-            animation: fadeInDown 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-        }
-        .fade-in-up {
-            animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-        }
+        .fade-in-down { animation: fadeInDown 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+        .fade-in-up { animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
         .fade-in-up-delay-1 { animation: fadeInUp 0.6s ease-out 0.1s forwards; opacity: 0; }
         .fade-in-up-delay-2 { animation: fadeInUp 0.6s ease-out 0.2s forwards; opacity: 0; }
         .fade-in-up-delay-3 { animation: fadeInUp 0.6s ease-out 0.3s forwards; opacity: 0; }
         .float-anim { animation: float 4s ease-in-out infinite; }
         .pulse-anim { animation: pulseGlow 3s ease-in-out infinite; }
         .hologram-anim { animation: hologram 4s ease-in-out infinite; }
+        .modal-in { animation: modalIn 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
 
         /* ============================================
            ШАПКА
@@ -242,15 +239,15 @@
             align-items: center;
             margin-bottom: 60px;
             padding: 16px 24px;
-            background: rgba(11, 13, 26, 0.5);
+            background: rgba(11, 13, 26, 0.4);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(108, 60, 225, 0.08);
+            border: 1px solid rgba(108, 60, 225, 0.06);
             border-radius: 20px;
             transition: all 0.3s;
         }
         .header:hover {
-            border-color: rgba(108, 60, 225, 0.2);
-            box-shadow: 0 0 40px rgba(108, 60, 225, 0.05);
+            border-color: rgba(108, 60, 225, 0.15);
+            box-shadow: 0 0 40px rgba(108, 60, 225, 0.03);
         }
 
         .logo {
@@ -289,16 +286,12 @@
             letter-spacing: 0.5px;
         }
 
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .header-actions { display: flex; align-items: center; gap: 12px; }
         .header-btn {
             padding: 8px 20px;
             border-radius: 50px;
-            border: 1px solid rgba(108, 60, 225, 0.15);
-            background: rgba(108, 60, 225, 0.05);
+            border: 1px solid rgba(108, 60, 225, 0.12);
+            background: rgba(108, 60, 225, 0.03);
             color: var(--text-secondary);
             font-size: 14px;
             font-weight: 500;
@@ -310,9 +303,9 @@
             overflow: hidden;
         }
         .header-btn:hover {
-            border-color: rgba(108, 60, 225, 0.4);
+            border-color: rgba(108, 60, 225, 0.3);
             color: #fff;
-            box-shadow: 0 0 30px rgba(108, 60, 225, 0.1);
+            box-shadow: 0 0 30px rgba(108, 60, 225, 0.05);
             transform: scale(1.04);
         }
 
@@ -327,8 +320,8 @@
             display: inline-block;
             padding: 4px 16px;
             border-radius: 50px;
-            background: rgba(108, 60, 225, 0.1);
-            border: 1px solid rgba(108, 60, 225, 0.15);
+            background: rgba(108, 60, 225, 0.08);
+            border: 1px solid rgba(108, 60, 225, 0.12);
             color: var(--accent-secondary);
             font-size: 12px;
             font-weight: 600;
@@ -365,8 +358,8 @@
             width: 100%;
             padding: 18px 24px;
             border-radius: 60px;
-            border: 1px solid rgba(108, 60, 225, 0.12);
-            background: rgba(17, 21, 42, 0.6);
+            border: 1px solid rgba(108, 60, 225, 0.1);
+            background: rgba(17, 21, 42, 0.5);
             backdrop-filter: blur(20px);
             color: #fff;
             font-size: 16px;
@@ -375,13 +368,10 @@
             transition: all 0.3s;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
         }
-        .search-wrapper input::placeholder {
-            color: var(--text-secondary);
-            font-weight: 300;
-        }
+        .search-wrapper input::placeholder { color: var(--text-secondary); font-weight: 300; }
         .search-wrapper input:focus {
             border-color: var(--accent-primary);
-            box-shadow: 0 0 40px rgba(108, 60, 225, 0.1), 0 4px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 40px rgba(108, 60, 225, 0.08), 0 4px 30px rgba(0, 0, 0, 0.3);
             transform: scale(1.02);
         }
 
@@ -390,12 +380,8 @@
             display: none;
             animation: fadeInUp 0.3s ease-out;
         }
-        .search-results.active {
-            display: block;
-        }
-        .search-results .prompts-grid {
-            margin-top: 0;
-        }
+        .search-results.active { display: block; }
+        .search-results .prompts-grid { margin-top: 0; }
 
         .hero-buttons {
             display: flex;
@@ -403,28 +389,7 @@
             justify-content: center;
             flex-wrap: wrap;
         }
-
-        .btn-icon {
-            width: 20px;
-            height: 20px;
-            flex-shrink: 0;
-        }
-
-        /* ============================================
-           RIPPLE-ЭФФЕКТ
-           ============================================ */
-        .ripple-container {
-            position: relative;
-            overflow: hidden;
-        }
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.15);
-            transform: scale(0);
-            animation: ripple 0.6s ease-out forwards;
-            pointer-events: none;
-        }
+        .btn-icon { width: 20px; height: 20px; flex-shrink: 0; }
 
         .btn-primary {
             padding: 14px 36px;
@@ -442,7 +407,7 @@
             gap: 8px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 30px rgba(108, 60, 225, 0.2);
+            box-shadow: 0 4px 30px rgba(108, 60, 225, 0.15);
         }
         .btn-primary::after {
             content: '';
@@ -451,19 +416,16 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.06), transparent);
             animation: shimmer 4s linear infinite;
         }
-        .btn-primary:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 50px rgba(108, 60, 225, 0.4);
-        }
+        .btn-primary:hover { transform: scale(1.05); box-shadow: 0 8px 50px rgba(108, 60, 225, 0.3); }
 
         .btn-secondary {
             padding: 14px 36px;
             border-radius: 60px;
-            border: 1px solid rgba(108, 60, 225, 0.15);
-            background: rgba(17, 21, 42, 0.4);
+            border: 1px solid rgba(108, 60, 225, 0.12);
+            background: rgba(17, 21, 42, 0.3);
             backdrop-filter: blur(10px);
             color: #fff;
             font-weight: 500;
@@ -478,10 +440,10 @@
             overflow: hidden;
         }
         .btn-secondary:hover {
-            background: rgba(108, 60, 225, 0.08);
-            border-color: rgba(108, 60, 225, 0.3);
+            background: rgba(108, 60, 225, 0.06);
+            border-color: rgba(108, 60, 225, 0.2);
             transform: scale(1.05);
-            box-shadow: 0 4px 30px rgba(108, 60, 225, 0.05);
+            box-shadow: 0 4px 30px rgba(108, 60, 225, 0.03);
         }
 
         /* ============================================
@@ -502,15 +464,15 @@
         .section-header .line {
             flex: 1;
             height: 1px;
-            background: linear-gradient(90deg, rgba(108, 60, 225, 0.2), transparent);
+            background: linear-gradient(90deg, rgba(108, 60, 225, 0.15), transparent);
         }
         .section-header .badge {
             font-size: 12px;
             color: var(--text-secondary);
-            background: rgba(108, 60, 225, 0.05);
+            background: rgba(108, 60, 225, 0.03);
             padding: 2px 12px;
             border-radius: 50px;
-            border: 1px solid rgba(108, 60, 225, 0.05);
+            border: 1px solid rgba(108, 60, 225, 0.03);
         }
 
         /* ============================================
@@ -534,6 +496,7 @@
             transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
         .category-card::before {
             content: '';
@@ -546,13 +509,11 @@
             opacity: 0;
             transition: opacity 0.4s;
         }
-        .category-card:hover::before {
-            opacity: 1;
-        }
+        .category-card:hover::before { opacity: 1; }
         .category-card:hover {
             transform: translateY(-8px) scale(1.02);
-            border-color: rgba(108, 60, 225, 0.3);
-            box-shadow: 0 12px 50px rgba(108, 60, 225, 0.08);
+            border-color: rgba(108, 60, 225, 0.25);
+            box-shadow: 0 12px 50px rgba(108, 60, 225, 0.06);
         }
         .category-card svg {
             width: 36px;
@@ -561,21 +522,9 @@
             margin: 0 auto 10px;
             transition: transform 0.3s;
         }
-        .category-card:hover svg {
-            transform: scale(1.1) rotate(-5deg);
-        }
-        .category-card .name {
-            font-weight: 600;
-            font-size: 14px;
-            display: block;
-            color: #fff;
-        }
-        .category-card .count {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-top: 4px;
-            display: block;
-        }
+        .category-card:hover svg { transform: scale(1.1) rotate(-5deg); }
+        .category-card .name { font-weight: 600; font-size: 14px; display: block; color: #fff; }
+        .category-card .count { font-size: 12px; color: var(--text-secondary); margin-top: 4px; display: block; }
 
         /* ============================================
            КАРТОЧКИ ПРОМТОВ + СКЕЛЕТОНЫ
@@ -599,6 +548,7 @@
             opacity: 0;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
         }
         .prompt-card::before {
             content: '';
@@ -607,17 +557,15 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(108, 60, 225, 0.02), transparent);
+            background: linear-gradient(135deg, rgba(108, 60, 225, 0.015), transparent);
             opacity: 0;
             transition: opacity 0.4s;
         }
-        .prompt-card:hover::before {
-            opacity: 1;
-        }
+        .prompt-card:hover::before { opacity: 1; }
         .prompt-card:hover {
             transform: translateY(-6px);
-            border-color: rgba(108, 60, 225, 0.2);
-            box-shadow: 0 12px 40px rgba(108, 60, 225, 0.05);
+            border-color: rgba(108, 60, 225, 0.15);
+            box-shadow: 0 12px 40px rgba(108, 60, 225, 0.03);
         }
         .prompt-card:nth-child(1) { animation-delay: 0s; }
         .prompt-card:nth-child(2) { animation-delay: 0.05s; }
@@ -635,12 +583,7 @@
             align-items: center;
             gap: 8px;
         }
-        .prompt-card .prompt-title svg {
-            width: 20px;
-            height: 20px;
-            flex-shrink: 0;
-            opacity: 0.5;
-        }
+        .prompt-card .prompt-title svg { width: 20px; height: 20px; flex-shrink: 0; opacity: 0.5; }
 
         .prompt-card .prompt-tags {
             display: flex;
@@ -649,18 +592,18 @@
             margin: 8px 0 10px;
         }
         .prompt-card .prompt-tags span {
-            background: rgba(108, 60, 225, 0.06);
+            background: rgba(108, 60, 225, 0.04);
             padding: 2px 12px;
             border-radius: 50px;
             font-size: 10px;
             color: var(--text-secondary);
-            border: 1px solid rgba(108, 60, 225, 0.04);
+            border: 1px solid rgba(108, 60, 225, 0.03);
             transition: all 0.3s;
             cursor: pointer;
         }
         .prompt-card .prompt-tags span:hover {
-            background: rgba(108, 60, 225, 0.12);
-            border-color: rgba(108, 60, 225, 0.1);
+            background: rgba(108, 60, 225, 0.08);
+            border-color: rgba(108, 60, 225, 0.06);
             color: #fff;
         }
 
@@ -683,9 +626,7 @@
             transition: all 0.2s;
             font-size: 14px;
         }
-        .prompt-card .prompt-meta .stars .star:hover {
-            transform: scale(1.2);
-        }
+        .prompt-card .prompt-meta .stars .star:hover { transform: scale(1.2); }
 
         .prompt-card .prompt-meta .favorite {
             cursor: pointer;
@@ -700,20 +641,18 @@
             color: var(--accent-rose);
             animation: heartBeat 0.3s ease-out;
         }
-        .prompt-card .prompt-meta .favorite:hover {
-            transform: scale(1.15);
-        }
+        .prompt-card .prompt-meta .favorite:hover { transform: scale(1.15); }
 
         /* ============================================
-           СКЕЛЕТОНЫ (SKELETON SCREENS)
+           СКЕЛЕТОНЫ
            ============================================ */
         .skeleton {
-            background: rgba(17, 21, 42, 0.4);
+            background: rgba(17, 21, 42, 0.3);
             border-radius: 12px;
             padding: 22px 20px 20px;
-            border: 1px solid rgba(108, 60, 225, 0.03);
+            border: 1px solid rgba(108, 60, 225, 0.02);
             animation: skeletonShimmer 1.5s ease-in-out infinite;
-            background-image: linear-gradient(90deg, rgba(17, 21, 42, 0.4) 0%, rgba(30, 40, 70, 0.6) 50%, rgba(17, 21, 42, 0.4) 100%);
+            background-image: linear-gradient(90deg, rgba(17, 21, 42, 0.3) 0%, rgba(30, 40, 70, 0.5) 50%, rgba(17, 21, 42, 0.3) 100%);
             background-size: 200% 100%;
             min-height: 140px;
             display: flex;
@@ -722,19 +661,13 @@
         }
         .skeleton .skeleton-line {
             height: 12px;
-            background: rgba(108, 60, 225, 0.04);
+            background: rgba(108, 60, 225, 0.03);
             border-radius: 6px;
             width: 80%;
         }
-        .skeleton .skeleton-line.short {
-            width: 50%;
-        }
-        .skeleton .skeleton-line.long {
-            width: 95%;
-        }
-        .skeleton .skeleton-line:last-child {
-            width: 30%;
-        }
+        .skeleton .skeleton-line.short { width: 50%; }
+        .skeleton .skeleton-line.long { width: 95%; }
+        .skeleton .skeleton-line:last-child { width: 30%; }
 
         /* ============================================
            СТРАНИЦА КАТЕГОРИИ
@@ -768,29 +701,29 @@
             border-radius: 50px;
             font-size: 12px;
             color: var(--text-secondary);
-            border: 1px solid rgba(108, 60, 225, 0.06);
-            background: rgba(108, 60, 225, 0.02);
+            border: 1px solid rgba(108, 60, 225, 0.04);
+            background: rgba(108, 60, 225, 0.015);
             cursor: pointer;
             transition: all 0.3s;
         }
         .category-filters .filter-tag:hover {
-            background: rgba(108, 60, 225, 0.06);
-            border-color: rgba(108, 60, 225, 0.1);
+            background: rgba(108, 60, 225, 0.04);
+            border-color: rgba(108, 60, 225, 0.06);
         }
         .category-filters .filter-tag.active {
-            background: rgba(108, 60, 225, 0.12);
-            border-color: rgba(108, 60, 225, 0.2);
+            background: rgba(108, 60, 225, 0.08);
+            border-color: rgba(108, 60, 225, 0.12);
             color: #fff;
         }
         .category-filters .filter-tag.all {
-            background: rgba(108, 60, 225, 0.06);
-            border-color: rgba(108, 60, 225, 0.08);
+            background: rgba(108, 60, 225, 0.04);
+            border-color: rgba(108, 60, 225, 0.04);
             font-weight: 600;
             color: #fff;
         }
 
         /* ============================================
-           МОДАЛКА
+           МОДАЛКА (С МИКРО-АНИМАЦИЕЙ)
            ============================================ */
         .modal-overlay {
             display: none;
@@ -799,21 +732,19 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(20px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
             padding: 20px;
         }
-        .modal-overlay.active {
-            display: flex;
-        }
+        .modal-overlay.active { display: flex; }
 
         .modal {
-            background: rgba(11, 13, 26, 0.9);
+            background: rgba(11, 13, 26, 0.85);
             backdrop-filter: blur(40px);
-            border: 1px solid rgba(108, 60, 225, 0.08);
+            border: 1px solid rgba(108, 60, 225, 0.06);
             border-radius: 24px;
             max-width: 680px;
             width: 100%;
@@ -821,14 +752,12 @@
             overflow-y: auto;
             padding: 36px;
             position: relative;
-            animation: scaleIn 0.3s ease-out;
-            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
+            animation: modalIn 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5), 0 0 60px rgba(108, 60, 225, 0.03);
         }
-        .modal::-webkit-scrollbar {
-            width: 4px;
-        }
+        .modal::-webkit-scrollbar { width: 4px; }
         .modal::-webkit-scrollbar-thumb {
-            background: var(--accent-primary);
+            background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
             border-radius: 10px;
         }
 
@@ -844,10 +773,7 @@
             border: none;
             font-family: 'Inter', sans-serif;
         }
-        .modal-close:hover {
-            color: #fff;
-            transform: rotate(90deg);
-        }
+        .modal-close:hover { color: #fff; transform: rotate(90deg); }
 
         .modal-title {
             font-family: 'Orbitron', sans-serif;
@@ -864,8 +790,8 @@
         }
 
         .modal-template {
-            background: rgba(108, 60, 225, 0.03);
-            border: 1px solid rgba(108, 60, 225, 0.06);
+            background: rgba(108, 60, 225, 0.02);
+            border: 1px solid rgba(108, 60, 225, 0.04);
             border-radius: 14px;
             padding: 16px;
             margin-bottom: 18px;
@@ -877,11 +803,11 @@
             transition: max-height 0.3s ease;
         }
         .modal-template .variable {
-            background: rgba(108, 60, 225, 0.15);
+            background: rgba(108, 60, 225, 0.12);
             color: var(--accent-secondary);
             padding: 1px 6px;
             border-radius: 4px;
-            border: 1px solid rgba(108, 60, 225, 0.1);
+            border: 1px solid rgba(108, 60, 225, 0.06);
             font-weight: 600;
         }
 
@@ -904,9 +830,7 @@
             text-align: center;
             cursor: pointer;
         }
-        .modal-template.expanded {
-            max-height: none;
-        }
+        .modal-template.expanded { max-height: none; }
         .modal-template.expanded::after {
             content: '▲ Свернуть';
             display: block;
@@ -930,8 +854,8 @@
             width: 100%;
             padding: 10px 14px;
             border-radius: 12px;
-            border: 1px solid rgba(108, 60, 225, 0.08);
-            background: rgba(17, 21, 42, 0.4);
+            border: 1px solid rgba(108, 60, 225, 0.06);
+            background: rgba(17, 21, 42, 0.3);
             color: #fff;
             font-size: 14px;
             font-family: 'Inter', sans-serif;
@@ -941,12 +865,12 @@
         }
         .modal-variables input:focus {
             border-color: var(--accent-primary);
-            box-shadow: 0 0 20px rgba(108, 60, 225, 0.05);
+            box-shadow: 0 0 20px rgba(108, 60, 225, 0.03);
         }
 
         .modal-preview {
-            background: rgba(108, 60, 225, 0.02);
-            border: 1px solid rgba(108, 60, 225, 0.04);
+            background: rgba(108, 60, 225, 0.015);
+            border: 1px solid rgba(108, 60, 225, 0.02);
             border-radius: 12px;
             padding: 14px;
             margin-bottom: 18px;
@@ -982,26 +906,20 @@
         .btn-copy {
             background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             color: #fff;
-            box-shadow: 0 0 20px rgba(108, 60, 225, 0.15);
+            box-shadow: 0 0 20px rgba(108, 60, 225, 0.1);
         }
-        .btn-copy:hover {
-            transform: scale(1.04);
-            box-shadow: 0 0 35px rgba(108, 60, 225, 0.2);
-        }
+        .btn-copy:hover { transform: scale(1.04); box-shadow: 0 0 35px rgba(108, 60, 225, 0.15); }
         .btn-copy-template {
-            background: rgba(108, 60, 225, 0.06);
+            background: rgba(108, 60, 225, 0.04);
             color: #fff;
-            border: 1px solid rgba(108, 60, 225, 0.08);
+            border: 1px solid rgba(108, 60, 225, 0.06);
         }
-        .btn-copy-template:hover {
-            background: rgba(108, 60, 225, 0.12);
-            transform: scale(1.04);
-        }
+        .btn-copy-template:hover { background: rgba(108, 60, 225, 0.08); transform: scale(1.04); }
 
         .modal-tip {
             margin-top: 14px;
             padding: 14px 16px;
-            background: rgba(108, 60, 225, 0.03);
+            background: rgba(108, 60, 225, 0.02);
             border-radius: 12px;
             border-left: 3px solid var(--accent-secondary);
         }
@@ -1023,7 +941,7 @@
         .modal-ai-section {
             margin-top: 16px;
             padding-top: 16px;
-            border-top: 1px solid rgba(108, 60, 225, 0.06);
+            border-top: 1px solid rgba(108, 60, 225, 0.04);
         }
         .modal-ai-section .ai-label {
             font-size: 12px;
@@ -1042,8 +960,8 @@
         .modal-ai-buttons button {
             padding: 8px 16px;
             border-radius: 30px;
-            border: 1px solid rgba(108, 60, 225, 0.06);
-            background: rgba(108, 60, 225, 0.02);
+            border: 1px solid rgba(108, 60, 225, 0.04);
+            background: rgba(108, 60, 225, 0.015);
             color: var(--text-secondary);
             font-size: 12px;
             font-weight: 500;
@@ -1057,8 +975,8 @@
             overflow: hidden;
         }
         .modal-ai-buttons button:hover {
-            background: rgba(108, 60, 225, 0.06);
-            border-color: rgba(108, 60, 225, 0.1);
+            background: rgba(108, 60, 225, 0.04);
+            border-color: rgba(108, 60, 225, 0.06);
             color: #fff;
             transform: translateY(-2px);
         }
@@ -1070,12 +988,12 @@
             margin-top: 12px;
         }
         .modal-tags span {
-            background: rgba(108, 60, 225, 0.04);
+            background: rgba(108, 60, 225, 0.02);
             padding: 2px 12px;
             border-radius: 50px;
             font-size: 10px;
             color: var(--text-secondary);
-            border: 1px solid rgba(108, 60, 225, 0.04);
+            border: 1px solid rgba(108, 60, 225, 0.02);
         }
 
         /* ============================================
@@ -1095,12 +1013,7 @@
             gap: 12px;
             margin-bottom: 20px;
         }
-        #ai-tips .tips-header .icon {
-            width: 28px;
-            height: 28px;
-            flex-shrink: 0;
-            color: var(--accent-secondary);
-        }
+        #ai-tips .tips-header .icon { width: 28px; height: 28px; flex-shrink: 0; color: var(--accent-secondary); }
         #ai-tips .tips-header h2 {
             font-family: 'Orbitron', sans-serif;
             font-size: 20px;
@@ -1112,15 +1025,15 @@
             gap: 16px;
         }
         #ai-tips .tip-item {
-            background: rgba(108, 60, 225, 0.03);
+            background: rgba(108, 60, 225, 0.02);
             padding: 16px;
             border-radius: 14px;
-            border: 1px solid rgba(108, 60, 225, 0.04);
+            border: 1px solid rgba(108, 60, 225, 0.02);
             transition: all 0.3s;
         }
         #ai-tips .tip-item:hover {
-            background: rgba(108, 60, 225, 0.06);
-            border-color: rgba(108, 60, 225, 0.08);
+            background: rgba(108, 60, 225, 0.04);
+            border-color: rgba(108, 60, 225, 0.04);
             transform: translateY(-2px);
         }
         #ai-tips .tip-item .tip-icon {
@@ -1130,11 +1043,7 @@
             margin-bottom: 6px;
             display: block;
         }
-        #ai-tips .tip-item .title {
-            color: #fff;
-            font-weight: 600;
-            font-size: 14px;
-        }
+        #ai-tips .tip-item .title { color: #fff; font-weight: 600; font-size: 14px; }
         #ai-tips .tip-item .text {
             color: var(--text-secondary);
             font-size: 13px;
@@ -1150,15 +1059,8 @@
             padding: 40px 20px;
             color: var(--text-secondary);
         }
-        .empty-state svg {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 12px;
-            opacity: 0.3;
-        }
-        .empty-state p {
-            font-size: 15px;
-        }
+        .empty-state svg { width: 48px; height: 48px; margin-bottom: 12px; opacity: 0.3; }
+        .empty-state p { font-size: 15px; }
 
         /* ============================================
            ЗАГРУЗЧИК (СКЕЛЕТОНЫ)
@@ -1180,17 +1082,17 @@
             cursor: pointer;
             padding: 6px 16px;
             border-radius: 50px;
-            border: 1px solid rgba(108, 60, 225, 0.06);
+            border: 1px solid rgba(108, 60, 225, 0.04);
             transition: all 0.3s;
             margin-bottom: 16px;
             font-size: 13px;
-            background: rgba(108, 60, 225, 0.02);
+            background: rgba(108, 60, 225, 0.015);
             position: relative;
             overflow: hidden;
         }
         .back-btn:hover {
-            background: rgba(108, 60, 225, 0.06);
-            border-color: rgba(108, 60, 225, 0.1);
+            background: rgba(108, 60, 225, 0.04);
+            border-color: rgba(108, 60, 225, 0.06);
             color: #fff;
         }
 
@@ -1200,7 +1102,7 @@
         .footer {
             margin-top: 60px;
             padding-top: 24px;
-            border-top: 1px solid rgba(108, 60, 225, 0.04);
+            border-top: 1px solid rgba(108, 60, 225, 0.02);
             text-align: center;
             color: var(--text-secondary);
             font-size: 13px;
@@ -1212,75 +1114,33 @@
             transition: color 0.3s;
             cursor: pointer;
         }
-        .footer a:hover {
-            color: var(--accent-secondary);
-        }
+        .footer a:hover { color: var(--accent-secondary); }
 
         /* ============================================
            АДАПТИВ
            ============================================ */
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
 
         @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-                padding: 14px 18px;
-            }
-            .hero h1 {
-                font-size: clamp(32px, 10vw, 48px);
-            }
-            .categories-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 10px;
-            }
-            .category-card {
-                padding: 16px 8px 14px;
-            }
-            .category-card svg {
-                width: 28px;
-                height: 28px;
-            }
-            .category-card .name {
-                font-size: 12px;
-            }
-            .prompts-grid {
-                grid-template-columns: 1fr;
-            }
-            .modal {
-                padding: 24px 18px;
-                margin: 10px;
-            }
-            #cursor-glow {
-                display: none;
-            }
-            #ai-tips .tips-grid {
-                grid-template-columns: 1fr 1fr;
-            }
+            .header { flex-direction: column; align-items: flex-start; gap: 12px; padding: 14px 18px; }
+            .hero h1 { font-size: clamp(32px, 10vw, 48px); }
+            .categories-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+            .category-card { padding: 16px 8px 14px; }
+            .category-card svg { width: 28px; height: 28px; }
+            .category-card .name { font-size: 12px; }
+            .prompts-grid { grid-template-columns: 1fr; }
+            .modal { padding: 24px 18px; margin: 10px; }
+            #cursor-glow { display: none; }
+            #ai-tips .tips-grid { grid-template-columns: 1fr 1fr; }
+            .nebula { display: none; }
         }
 
         @media (max-width: 480px) {
-            .container {
-                padding: 16px 12px 40px;
-            }
-            .categories-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .search-wrapper input {
-                padding: 14px 18px;
-                font-size: 14px;
-            }
-            .btn-primary,
-            .btn-secondary {
-                padding: 12px 24px;
-                font-size: 14px;
-            }
-            #ai-tips .tips-grid {
-                grid-template-columns: 1fr;
-            }
+            .container { padding: 16px 12px 40px; }
+            .categories-grid { grid-template-columns: repeat(2, 1fr); }
+            .search-wrapper input { padding: 14px 18px; font-size: 14px; }
+            .btn-primary, .btn-secondary { padding: 12px 24px; font-size: 14px; }
+            #ai-tips .tips-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -1291,16 +1151,21 @@
     <div id="progress-bar"></div>
 
     <!-- ============================================
-    ТУМАННОСТИ С ПАРАЛЛАКСОМ
+    ВОЛНОВОЙ ФОН (CANVAS)
     ============================================ -->
-    <div class="nebula nebula-1" data-speed="-0.02"></div>
-    <div class="nebula nebula-2" data-speed="0.03"></div>
-    <div class="nebula nebula-3" data-speed="-0.01"></div>
+    <canvas id="wave-canvas"></canvas>
 
     <!-- ============================================
-    ЧАСТИЦЫ (CANVAS)
+    ТУМАННОСТИ (ПАРАЛЛАКС)
     ============================================ -->
-    <canvas id="particles-canvas"></canvas>
+    <div class="nebula nebula-1" data-depth="0.3"></div>
+    <div class="nebula nebula-2" data-depth="0.2"></div>
+    <div class="nebula nebula-3" data-depth="0.15"></div>
+
+    <!-- ============================================
+    ЗВЁЗДЫ (ПАРАЛЛАКС)
+    ============================================ -->
+    <canvas id="stars-canvas"></canvas>
 
     <!-- ============================================
     СВЕТ ПОД КУРСОРОМ
@@ -1360,9 +1225,7 @@
                         <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
                             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                            <path d="M8 7h8"/>
-                            <path d="M8 11h6"/>
-                            <path d="M8 15h4"/>
+                            <path d="M8 7h8"/><path d="M8 11h6"/><path d="M8 15h4"/>
                         </svg>
                         Все категории
                     </button>
@@ -1370,45 +1233,16 @@
             </section>
 
             <div id="main-content">
-                <!-- Скелетоны будут заменены на реальный контент -->
                 <div class="loader" id="loader-skeleton">
                     <div class="prompts-grid">
-                        <div class="skeleton">
-                            <div class="skeleton-line long"></div>
-                            <div class="skeleton-line"></div>
-                            <div class="skeleton-line short"></div>
-                            <div class="skeleton-line" style="width:40%;"></div>
-                        </div>
-                        <div class="skeleton">
-                            <div class="skeleton-line long"></div>
-                            <div class="skeleton-line"></div>
-                            <div class="skeleton-line short"></div>
-                            <div class="skeleton-line" style="width:40%;"></div>
-                        </div>
-                        <div class="skeleton">
-                            <div class="skeleton-line long"></div>
-                            <div class="skeleton-line"></div>
-                            <div class="skeleton-line short"></div>
-                            <div class="skeleton-line" style="width:40%;"></div>
-                        </div>
-                        <div class="skeleton">
-                            <div class="skeleton-line long"></div>
-                            <div class="skeleton-line"></div>
-                            <div class="skeleton-line short"></div>
-                            <div class="skeleton-line" style="width:40%;"></div>
-                        </div>
-                        <div class="skeleton">
-                            <div class="skeleton-line long"></div>
-                            <div class="skeleton-line"></div>
-                            <div class="skeleton-line short"></div>
-                            <div class="skeleton-line" style="width:40%;"></div>
-                        </div>
-                        <div class="skeleton">
-                            <div class="skeleton-line long"></div>
-                            <div class="skeleton-line"></div>
-                            <div class="skeleton-line short"></div>
-                            <div class="skeleton-line" style="width:40%;"></div>
-                        </div>
+                        ${Array(6).fill(0).map(() => `
+                            <div class="skeleton">
+                                <div class="skeleton-line long"></div>
+                                <div class="skeleton-line"></div>
+                                <div class="skeleton-line short"></div>
+                                <div class="skeleton-line" style="width:40%;"></div>
+                            </div>
+                        `).join('')}
                     </div>
                 </div>
             </div>
@@ -1433,42 +1267,35 @@
         <div id="ai-tips">
             <div class="tips-header">
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                    <path d="M2 17l10 5 10-5"/>
-                    <path d="M2 12l10 5 10-5"/>
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
                 </svg>
                 <h2>Лайфхаки для работы с ИИ</h2>
             </div>
             <div class="tips-grid">
                 <div class="tip-item">
                     <svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"/>
-                        <path d="M12 8v8M8 12h8"/>
+                        <circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/>
                     </svg>
                     <div class="title">Будь конкретным</div>
                     <div class="text">Вместо «напиши письмо» — «напиши письмо начальнику с просьбой о повышении, аргументируй достижениями».</div>
                 </div>
                 <div class="tip-item">
                     <svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 6V21M12 6L4 10l8 4 8-4-8-4z"/>
-                        <path d="M4 10v6l8 4 8-4v-6"/>
+                        <path d="M12 6V21M12 6L4 10l8 4 8-4-8-4z"/><path d="M4 10v6l8 4 8-4v-6"/>
                     </svg>
                     <div class="title">Задавай структуру</div>
                     <div class="text">Укажи формат ответа: «в виде списка», «в 3 абзаца», «с примерами».</div>
                 </div>
                 <div class="tip-item">
                     <svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
                     </svg>
                     <div class="title">Уточняй итеративно</div>
                     <div class="text">Если ответ не тот — скажи ИИ: «Сделай короче», «Добавь больше фактов».</div>
                 </div>
                 <div class="tip-item">
                     <svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 2C12 2 8 6 8 10c0 2.2 1.8 4 4 4s4-1.8 4-4c0-4-4-8-4-8z"/>
-                        <path d="M12 14v8"/>
-                        <path d="M8 18h8"/>
+                        <path d="M12 2C12 2 8 6 8 10c0 2.2 1.8 4 4 4s4-1.8 4-4c0-4-4-8-4-8z"/><path d="M12 14v8"/><path d="M8 18h8"/>
                     </svg>
                     <div class="title">Давай контекст</div>
                     <div class="text">Объясни ИИ, кто ты и для чего тебе это нужно. Это улучшает качество ответа.</div>
@@ -1480,7 +1307,7 @@
         ФУТЕР
         ============================================ -->
         <footer class="footer">
-            <p>Promptarium 2.1 — сапфировая библиотека промтов</p>
+            <p>Promptarium 2.2 — сапфировая библиотека промтов</p>
             <p style="margin-top: 6px;">
                 <a onclick="openAbout()">О проекте</a>
                 <a onclick="alert('✉️ promptarium@example.com')">Контакты</a>
@@ -1539,7 +1366,7 @@
     </div>
 
     <!-- ============================================
-    МОДАЛКА "О ПРОЕКТЕ" (С АНИМИРОВАННЫМ СЧЁТЧИКОМ)
+    МОДАЛКА "О ПРОЕКТЕ"
     ============================================ -->
     <div class="modal-overlay" id="about-modal">
         <div class="modal" style="max-width: 520px;">
@@ -1551,21 +1378,21 @@
                 <p style="font-size:13px;color:#4A5A7A;margin-bottom:16px;">Твой ключ к идеальному запросу для ИИ</p>
 
                 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:360px;margin:20px auto;">
-                    <div style="background:rgba(108,60,225,0.04);border:1px solid rgba(108,60,225,0.06);border-radius:12px;padding:14px 8px;">
+                    <div style="background:rgba(108,60,225,0.02);border:1px solid rgba(108,60,225,0.03);border-radius:12px;padding:14px 8px;">
                         <span style="font-size:24px;font-weight:700;color:#1E90FF;display:block;animation:counterAnim 0.6s ease-out;" id="about-total">0</span>
                         <span style="font-size:11px;color:#4A5A7A;">Промтов</span>
                     </div>
-                    <div style="background:rgba(108,60,225,0.04);border:1px solid rgba(108,60,225,0.06);border-radius:12px;padding:14px 8px;">
+                    <div style="background:rgba(108,60,225,0.02);border:1px solid rgba(108,60,225,0.03);border-radius:12px;padding:14px 8px;">
                         <span style="font-size:24px;font-weight:700;color:#1E90FF;display:block;" id="about-categories">10</span>
                         <span style="font-size:11px;color:#4A5A7A;">Категорий</span>
                     </div>
-                    <div style="background:rgba(108,60,225,0.04);border:1px solid rgba(108,60,225,0.06);border-radius:12px;padding:14px 8px;">
+                    <div style="background:rgba(108,60,225,0.02);border:1px solid rgba(108,60,225,0.03);border-radius:12px;padding:14px 8px;">
                         <span style="font-size:24px;font-weight:700;color:#1E90FF;display:block;" id="about-rating">—</span>
                         <span style="font-size:11px;color:#4A5A7A;">Рейтинг</span>
                     </div>
                 </div>
 
-                <p style="font-size:13px;color:#4A5A7A;margin-top:8px;">✦ Версия 2.1 · 2026 · Бесплатно и открыто ✦</p>
+                <p style="font-size:13px;color:#4A5A7A;margin-top:8px;">✦ Версия 2.2 · 2026 · Бесплатно и открыто ✦</p>
                 <p style="font-size:13px;color:#4A5A7A;margin-top:4px;">📧 promptarium@example.com</p>
             </div>
         </div>
@@ -1631,13 +1458,131 @@
 
         function completeProgress() {
             progressBar.style.width = '100%';
-            setTimeout(() => {
-                progressBar.style.width = '0%';
-            }, 500);
+            setTimeout(() => { progressBar.style.width = '0%'; }, 500);
         }
 
         // ============================================================
-        // 4. ЗАГРУЗКА
+        // 4. ВОЛНЫ (CANVAS)
+        // ============================================================
+        const waveCanvas = document.getElementById('wave-canvas');
+        const waveCtx = waveCanvas.getContext('2d');
+        let waveW, waveH;
+        let time = 0;
+
+        function resizeWave() {
+            waveW = waveCanvas.width = window.innerWidth;
+            waveH = waveCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeWave);
+        resizeWave();
+
+        function drawWaves() {
+            waveCtx.clearRect(0, 0, waveW, waveH);
+            const colors = [
+                'rgba(108, 60, 225, 0.04)',
+                'rgba(30, 144, 255, 0.03)',
+                'rgba(255, 45, 120, 0.02)'
+            ];
+
+            for (let i = 0; i < 3; i++) {
+                waveCtx.beginPath();
+                const amplitude = 40 + i * 15;
+                const frequency = 0.008 + i * 0.002;
+                const speed = 0.3 + i * 0.1;
+                const offset = i * 200;
+
+                waveCtx.moveTo(0, waveH / 2 + i * 30);
+                for (let x = 0; x <= waveW; x += 2) {
+                    const y = waveH / 2 +
+                        Math.sin(x * frequency + time * speed + offset) * amplitude +
+                        Math.sin(x * frequency * 1.5 + time * speed * 0.7 + offset * 0.5) * amplitude * 0.5;
+                    waveCtx.lineTo(x, y);
+                }
+                waveCtx.strokeStyle = colors[i];
+                waveCtx.lineWidth = 2;
+                waveCtx.stroke();
+            }
+            time += 0.3;
+            requestAnimationFrame(drawWaves);
+        }
+        drawWaves();
+
+        // ============================================================
+        // 5. ЗВЁЗДЫ (ПАРАЛЛАКС)
+        // ============================================================
+        const starsCanvas = document.getElementById('stars-canvas');
+        const starsCtx = starsCanvas.getContext('2d');
+        let starsW, starsH;
+        let starParticles = [];
+        const STAR_COUNT = 300;
+
+        function resizeStars() {
+            starsW = starsCanvas.width = window.innerWidth;
+            starsH = starsCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeStars);
+        resizeStars();
+
+        class StarParticle {
+            constructor() {
+                this.x = Math.random() * starsW;
+                this.y = Math.random() * starsH;
+                this.size = Math.random() * 2 + 0.3;
+                this.baseOpacity = 0.1 + Math.random() * 0.4;
+                this.twinkleSpeed = 0.005 + Math.random() * 0.02;
+                this.twinklePhase = Math.random() * Math.PI * 2;
+                this.depth = 0.3 + Math.random() * 0.7;
+                this.parallaxX = (Math.random() - 0.5) * 0.3;
+                this.parallaxY = (Math.random() - 0.5) * 0.3;
+            }
+            draw(ctx, offsetX, offsetY) {
+                const opacity = this.baseOpacity * (0.6 + 0.4 * Math.sin(this.twinklePhase));
+                const px = this.x + offsetX * this.parallaxX * 50;
+                const py = this.y + offsetY * this.parallaxY * 50;
+                ctx.beginPath();
+                ctx.arc(px, py, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+                ctx.fill();
+                this.twinklePhase += this.twinkleSpeed;
+            }
+        }
+
+        for (let i = 0; i < STAR_COUNT; i++) {
+            starParticles.push(new StarParticle());
+        }
+
+        let mouseX = 0,
+            mouseY = 0;
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / starsW - 0.5) * 2;
+            mouseY = (e.clientY / starsH - 0.5) * 2;
+        });
+
+        function animateStars() {
+            starsCtx.clearRect(0, 0, starsW, starsH);
+            const offsetX = mouseX * 0.3;
+            const offsetY = mouseY * 0.3;
+            for (const star of starParticles) {
+                star.draw(starsCtx, offsetX, offsetY);
+            }
+            requestAnimationFrame(animateStars);
+        }
+        animateStars();
+
+        // ============================================================
+        // 6. ТУМАННОСТИ (ПАРАЛЛАКС)
+        // ============================================================
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 2;
+            const y = (e.clientY / window.innerHeight - 0.5) * 2;
+            document.querySelectorAll('.nebula').forEach(nebula => {
+                const depth = parseFloat(nebula.dataset.depth) || 0.2;
+                nebula.style.transform = `translate(${x * depth * 30}px, ${y * depth * 20}px)`;
+            });
+        });
+
+        // ============================================================
+        // 7. ЗАГРУЗКА
         // ============================================================
         async function loadPrompts() {
             if (isDataLoaded) return;
@@ -1681,7 +1626,7 @@
         }
 
         // ============================================================
-        // 5. РЕНДЕРИНГ
+        // 8. РЕНДЕРИНГ
         // ============================================================
         function getCategoryIcon(id) {
             const icons = {
@@ -1733,7 +1678,6 @@
             if (!container) return;
 
             if (!isDataLoaded && prompts.length === 0) {
-                // Показываем скелетоны
                 container.innerHTML = `
                     <div class="prompts-grid">
                         ${Array(6).fill(0).map(() => `
@@ -1858,25 +1802,17 @@
         }
 
         // ============================================================
-        // 6. ИЗБРАННОЕ
+        // 9. ИЗБРАННОЕ
         // ============================================================
         function toggleFavorite(id) {
             const idx = favorites.indexOf(id);
-            if (idx > -1) {
-                favorites.splice(idx, 1);
-            } else {
-                favorites.push(id);
-            }
+            if (idx > -1) { favorites.splice(idx, 1); } else { favorites.push(id); }
             localStorage.setItem('promptarium_favorites', JSON.stringify(favorites));
-            if (isCategoryOpen && currentCategory) {
-                renderCategory(currentCategory);
-            } else {
-                renderHome();
-            }
+            if (isCategoryOpen && currentCategory) { renderCategory(currentCategory); } else { renderHome(); }
         }
 
         // ============================================================
-        // 7. RIPPLE-ЭФФЕКТ
+        // 10. RIPPLE-ЭФФЕКТ
         // ============================================================
         function createRipple(e, container) {
             const rect = container.getBoundingClientRect();
@@ -1893,18 +1829,7 @@
         }
 
         // ============================================================
-        // 8. ПАРАЛЛАКС
-        // ============================================================
-        document.addEventListener('scroll', () => {
-            const scrollY = window.scrollY;
-            document.querySelectorAll('.nebula').forEach(nebula => {
-                const speed = parseFloat(nebula.dataset.speed) || 0;
-                nebula.style.transform = `translateY(${scrollY * speed}px)`;
-            });
-        });
-
-        // ============================================================
-        // 9. НАВИГАЦИЯ
+        // 11. НАВИГАЦИЯ
         // ============================================================
         window.openCategory = function(catId) {
             isCategoryOpen = true;
@@ -1972,7 +1897,7 @@
         };
 
         // ============================================================
-        // 10. ПОИСК
+        // 12. ПОИСК
         // ============================================================
         window.handleSearch = function() {
             if (isCategoryOpen) return;
@@ -2024,7 +1949,7 @@
         };
 
         // ============================================================
-        // 11. СЛУЧАЙНЫЙ ПРОМТ
+        // 13. СЛУЧАЙНЫЙ ПРОМТ
         // ============================================================
         window.randomPrompt = function(e) {
             if (e) createRipple(e, e.currentTarget);
@@ -2034,7 +1959,7 @@
         };
 
         // ============================================================
-        // 12. МОДАЛКА
+        // 14. МОДАЛКА
         // ============================================================
         window.openPrompt = async function(id) {
             const p = await getPrompt(id);
@@ -2121,7 +2046,7 @@
         };
 
         // ============================================================
-        // 13. О ПРОЕКТЕ
+        // 15. О ПРОЕКТЕ
         // ============================================================
         window.openAbout = function() {
             updateStats();
@@ -2144,93 +2069,7 @@
         });
 
         // ============================================================
-        // 14. ЧАСТИЦЫ (CANVAS)
-        // ============================================================
-        const canvas = document.getElementById('particles-canvas');
-        const ctx = canvas.getContext('2d');
-        let w, h;
-        let particles = [];
-        const PARTICLE_COUNT = 120;
-
-        function resizeParticles() {
-            w = canvas.width = window.innerWidth;
-            h = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeParticles);
-        resizeParticles();
-
-        class Particle {
-            constructor() {
-                this.reset();
-                this.hue = 240 + Math.random() * 40;
-            }
-            reset() {
-                this.x = Math.random() * w;
-                this.y = Math.random() * h;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = (Math.random() - 0.5) * 0.3;
-                this.speedY = (Math.random() - 0.5) * 0.3;
-                this.opacity = 0.2 + Math.random() * 0.4;
-                this.hue = 240 + Math.random() * 40;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x < -10) this.x = w + 10;
-                if (this.x > w + 10) this.x = -10;
-                if (this.y < -10) this.y = h + 10;
-                if (this.y > h + 10) this.y = -10;
-            }
-            draw(ctx) {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `hsla(${this.hue}, 80%, 70%, ${this.opacity})`;
-                ctx.fill();
-                if (this.size > 1.5) {
-                    ctx.shadowColor = `hsla(${this.hue}, 80%, 70%, ${this.opacity * 0.2})`;
-                    ctx.shadowBlur = 15;
-                    ctx.fill();
-                    ctx.shadowBlur = 0;
-                }
-            }
-        }
-
-        for (let i = 0; i < PARTICLE_COUNT; i++) {
-            particles.push(new Particle());
-        }
-
-        function drawConnections() {
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 150) {
-                        const opacity = (1 - dist / 150) * 0.06;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = `rgba(108, 60, 225, ${opacity})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.stroke();
-                    }
-                }
-            }
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, w, h);
-            for (const p of particles) {
-                p.update();
-                p.draw(ctx);
-            }
-            drawConnections();
-            requestAnimationFrame(animateParticles);
-        }
-        animateParticles();
-
-        // ============================================================
-        // 15. СВЕТ ПОД КУРСОРОМ
+        // 16. СВЕТ ПОД КУРСОРОМ
         // ============================================================
         const glow = document.getElementById('cursor-glow');
         document.addEventListener('mousemove', (e) => {
@@ -2245,11 +2084,10 @@
         });
 
         // ============================================================
-        // 16. ЗАПУСК
+        // 17. ЗАПУСК
         // ============================================================
         document.addEventListener('DOMContentLoaded', loadPrompts);
 
-        // Экспорт для глобального доступа
         window.prompts = prompts;
         window.ratings = ratings;
         window.favorites = favorites;
