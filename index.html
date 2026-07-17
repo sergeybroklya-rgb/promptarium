@@ -176,6 +176,11 @@
             from { opacity: 0; transform: translateY(30px) scale(0.95); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
 
         .fade-in-down {
             animation: fadeInDown 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
@@ -350,6 +355,13 @@
             justify-content: center;
             flex-wrap: wrap;
         }
+
+        .btn-icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+        }
+
         .btn-primary {
             padding: 14px 36px;
             border-radius: 60px;
@@ -608,15 +620,22 @@
         .prompt-card .prompt-meta .stars .star:hover {
             transform: scale(1.2);
         }
+
+        /* ============================================
+           ИЗБРАННОЕ (СЕРДЦЕ) — ПОЧИНЕНО
+           ============================================ */
         .prompt-card .prompt-meta .favorite {
             cursor: pointer;
-            font-size: 16px;
+            font-size: 18px;
             transition: all 0.3s;
             margin-left: auto;
             color: var(--text-secondary);
+            user-select: none;
+            line-height: 1;
         }
         .prompt-card .prompt-meta .favorite.active {
             color: var(--accent-rose);
+            animation: heartBeat 0.3s ease-out;
         }
         .prompt-card .prompt-meta .favorite:hover {
             transform: scale(1.15);
@@ -961,7 +980,7 @@
         }
 
         /* ============================================
-           ЛАЙФХАКИ
+           ЛАЙФХАКИ (НОВЫЕ ИКОНКИ)
            ============================================ */
         #ai-tips {
             margin-top: 60px;
@@ -978,7 +997,10 @@
             margin-bottom: 20px;
         }
         #ai-tips .tips-header .icon {
-            font-size: 28px;
+            width: 28px;
+            height: 28px;
+            flex-shrink: 0;
+            color: var(--accent-secondary);
         }
         #ai-tips .tips-header h2 {
             font-family: 'Orbitron', sans-serif;
@@ -1002,8 +1024,15 @@
             border-color: rgba(108, 60, 225, 0.08);
             transform: translateY(-2px);
         }
-        #ai-tips .tip-item .title {
+        #ai-tips .tip-item .tip-icon {
+            width: 20px;
+            height: 20px;
             color: var(--accent-secondary);
+            margin-bottom: 6px;
+            display: block;
+        }
+        #ai-tips .tip-item .title {
+            color: #fff;
             font-weight: 600;
             font-size: 14px;
         }
@@ -1223,8 +1252,29 @@
                     <div id="search-results" class="search-results"></div>
                 </div>
                 <div class="hero-buttons">
-                    <button class="btn-primary" onclick="randomPrompt()">🎲 Случайный промт</button>
-                    <button class="btn-secondary" onclick="showAllCategories()">📚 Все категории</button>
+                    <button class="btn-primary" onclick="randomPrompt()">
+                        <!-- Игральный кубик (SVG) -->
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="4"/>
+                            <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
+                            <circle cx="16" cy="8" r="1.5" fill="currentColor"/>
+                            <circle cx="8" cy="16" r="1.5" fill="currentColor"/>
+                            <circle cx="16" cy="16" r="1.5" fill="currentColor"/>
+                            <circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+                        </svg>
+                        Случайный промт
+                    </button>
+                    <button class="btn-secondary" onclick="showAllCategories()">
+                        <!-- Стопка книг (SVG) -->
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                            <path d="M8 7h8"/>
+                            <path d="M8 11h6"/>
+                            <path d="M8 15h4"/>
+                        </svg>
+                        Все категории
+                    </button>
                 </div>
             </section>
 
@@ -1250,28 +1300,49 @@
         </div>
 
         <!-- ============================================
-        ЛАЙФХАКИ
+        ЛАЙФХАКИ (НОВЫЕ ИКОНКИ)
         ============================================ -->
         <div id="ai-tips">
             <div class="tips-header">
-                <span class="icon">🚀</span>
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5"/>
+                    <path d="M2 12l10 5 10-5"/>
+                </svg>
                 <h2>Лайфхаки для работы с ИИ</h2>
             </div>
             <div class="tips-grid">
                 <div class="tip-item">
-                    <div class="title">🎯 Будь конкретным</div>
+                    <svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 8v8M8 12h8"/>
+                    </svg>
+                    <div class="title">Будь конкретным</div>
                     <div class="text">Вместо «напиши письмо» — «напиши письмо начальнику с просьбой о повышении, аргументируй достижениями».</div>
                 </div>
                 <div class="tip-item">
-                    <div class="title">📝 Задавай структуру</div>
+                    <svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 6V21M12 6L4 10l8 4 8-4-8-4z"/>
+                        <path d="M4 10v6l8 4 8-4v-6"/>
+                    </svg>
+                    <div class="title">Задавай структуру</div>
                     <div class="text">Укажи формат ответа: «в виде списка», «в 3 абзаца», «с примерами».</div>
                 </div>
                 <div class="tip-item">
-                    <div class="title">🔄 Уточняй итеративно</div>
+                    <svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    <div class="title">Уточняй итеративно</div>
                     <div class="text">Если ответ не тот — скажи ИИ: «Сделай короче», «Добавь больше фактов».</div>
                 </div>
                 <div class="tip-item">
-                    <div class="title">🧠 Давай контекст</div>
+                    <svg class="tip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2C12 2 8 6 8 10c0 2.2 1.8 4 4 4s4-1.8 4-4c0-4-4-8-4-8z"/>
+                        <path d="M12 14v8"/>
+                        <path d="M8 18h8"/>
+                    </svg>
+                    <div class="title">Давай контекст</div>
                     <div class="text">Объясни ИИ, кто ты и для чего тебе это нужно. Это улучшает качество ответа.</div>
                 </div>
             </div>
@@ -1281,7 +1352,7 @@
         ФУТЕР
         ============================================ -->
         <footer class="footer">
-            <p>Promptarium 2.0 — сапфировая библиотека промтов</p>
+            <p>Promptarium 2.1 — сапфировая библиотека промтов</p>
             <p style="margin-top: 6px;">
                 <a onclick="openAbout()">О проекте</a>
                 <a onclick="alert('✉️ promptarium@example.com')">Контакты</a>
@@ -1366,7 +1437,7 @@
                     </div>
                 </div>
 
-                <p style="font-size:13px;color:#4A5A7A;margin-top:8px;">✦ Версия 2.0 · 2026 · Бесплатно и открыто ✦</p>
+                <p style="font-size:13px;color:#4A5A7A;margin-top:8px;">✦ Версия 2.1 · 2026 · Бесплатно и открыто ✦</p>
                 <p style="font-size:13px;color:#4A5A7A;margin-top:4px;">📧 promptarium@example.com</p>
             </div>
         </div>
@@ -1610,13 +1681,17 @@
         }
 
         // ============================================================
-        // 5. ДЕЙСТВИЯ
+        // 5. ИЗБРАННОЕ (ПОЧИНЕНО)
         // ============================================================
         function toggleFavorite(id) {
             const idx = favorites.indexOf(id);
-            if (idx > -1) favorites.splice(idx, 1);
-            else favorites.push(id);
+            if (idx > -1) {
+                favorites.splice(idx, 1);
+            } else {
+                favorites.push(id);
+            }
             localStorage.setItem('promptarium_favorites', JSON.stringify(favorites));
+            // Обновляем только текущий вид
             if (isCategoryOpen && currentCategory) {
                 renderCategory(currentCategory);
             } else {
@@ -1860,7 +1935,7 @@
         });
 
         // ============================================================
-        // 11. ЧАСТИЦЫ (CANVAS) — АБСОЛЮТНО НОВЫЙ КОД
+        // 11. ЧАСТИЦЫ (CANVAS)
         // ============================================================
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
@@ -1878,7 +1953,7 @@
         class Particle {
             constructor() {
                 this.reset();
-                this.hue = 240 + Math.random() * 40; // 240-280 (фиолетово-синий)
+                this.hue = 240 + Math.random() * 40;
             }
             reset() {
                 this.x = Math.random() * w;
@@ -1902,7 +1977,6 @@
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fillStyle = `hsla(${this.hue}, 80%, 70%, ${this.opacity})`;
                 ctx.fill();
-                // Лёгкое свечение для больших частиц
                 if (this.size > 1.5) {
                     ctx.shadowColor = `hsla(${this.hue}, 80%, 70%, ${this.opacity * 0.2})`;
                     ctx.shadowBlur = 15;
@@ -1912,12 +1986,10 @@
             }
         }
 
-        // Создаём частицы
         for (let i = 0; i < PARTICLE_COUNT; i++) {
             particles.push(new Particle());
         }
 
-        // Связи между частицами (для эффекта паутины)
         function drawConnections() {
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
