@@ -31,6 +31,8 @@
             background: radial-gradient(circle, rgba(30, 144, 255, 0.12) 0%, rgba(79, 195, 247, 0.04) 40%, transparent 70%);
             pointer-events: none; z-index: 0; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s; filter: blur(30px);
         }
+        #cursor-glow.active { width: 600px; height: 600px; background: radial-gradient(circle, rgba(30, 144, 255, 0.2) 0%, rgba(79, 195, 247, 0.07) 40%, transparent 70%); }
+
         .container { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 30px 20px 60px; }
 
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
@@ -130,8 +132,78 @@
         .modal-close:hover { color: #FFFFFF; transform: rotate(90deg); }
         .modal-title { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 20px; color: #FFFFFF; margin-bottom: 6px; }
         .modal-description { color: #64B5F6; font-size: 14px; margin-bottom: 16px; line-height: 1.6; }
-        .modal-template { background: rgba(30, 144, 255, 0.04); border: 1px solid rgba(30, 144, 255, 0.08); border-radius: 12px; padding: 14px; margin-bottom: 16px; font-size: 14px; line-height: 1.8; color: #E8F0FE; white-space: pre-wrap; word-break: break-word; }
+
+        /* ===== СВЁРТКА ДЛИННЫХ ПРОМТОВ ===== */
+        .modal-template.collapsed {
+            max-height: 120px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: max-height 0.3s ease;
+        }
+        .modal-template.collapsed::after {
+            content: '▼ Показать полностью';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 0 5px;
+            background: linear-gradient(to bottom, transparent, rgba(6,10,26,0.9));
+            color: #4FC3F7;
+            font-size: 13px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .modal-template.expanded::after {
+            content: '▲ Свернуть';
+            position: relative;
+            display: block;
+            margin-top: 10px;
+            color: #4FC3F7;
+            font-size: 13px;
+            text-align: center;
+            background: none;
+            padding: 5px;
+            cursor: pointer;
+        }
+        .modal-template {
+            background: rgba(30, 144, 255, 0.04);
+            border: 1px solid rgba(30, 144, 255, 0.08);
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 16px;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #E8F0FE;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
         .modal-template .variable { background: rgba(30, 144, 255, 0.15); color: #4FC3F7; padding: 1px 6px; border-radius: 4px; border: 1px solid rgba(30, 144, 255, 0.1); font-weight: 600; }
+
+        /* ===== ОБУЧАЮЩИЙ БЛОК В МОДАЛКЕ ===== */
+        .modal-tip {
+            margin-top: 16px;
+            padding: 14px 16px;
+            background: rgba(30, 144, 255, 0.04);
+            border-radius: 12px;
+            border-left: 3px solid #4FC3F7;
+        }
+        .modal-tip .tip-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #64B5F6;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+        .modal-tip .tip-title .icon { font-size: 18px; }
+        .modal-tip .tip-text {
+            color: #A0B8D0;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
         .modal-variables label { display: block; color: #64B5F6; font-size: 12px; font-weight: 500; margin-bottom: 3px; }
         .modal-variables input { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(30, 144, 255, 0.1); background: rgba(6, 10, 26, 0.4); color: #FFFFFF; font-size: 14px; font-family: 'Inter', sans-serif; outline: none; transition: all 0.3s; margin-bottom: 10px; }
         .modal-variables input:focus { border-color: #1E90FF; box-shadow: 0 0 20px rgba(30, 144, 255, 0.06); }
@@ -163,26 +235,146 @@
         .about-content .stats-grid .stat-item .label { font-size: 11px; color: #4A7A9C; margin-top: 4px; display: block; }
         .about-content .about-footer { margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(30, 144, 255, 0.04); color: #4A7A9C; font-size: 12px; }
 
-        /* ===== НОВЫЙ УНИКАЛЬНЫЙ КОНТЕЙНЕР ДЛЯ КАТЕГОРИИ ===== */
+        #category-view .prompts-grid { grid-template-columns: 1fr; max-width: 760px; margin: 16px auto 0; }
+
         #category-prompts-container {
             display: block !important;
             visibility: visible !important;
             opacity: 1 !important;
-            min-height: 200px;
+            min-height: 300px;
             width: 100%;
+            padding: 10px 0;
         }
 
-        /* ===== СТАРЫЙ КОНТЕЙНЕР ТОЖЕ ЗАЩИЩЁН ===== */
-        #category-prompts {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
-            min-height: 200px;
+        #category-prompts-container .prompt-card {
+            background: rgba(6, 10, 26, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(30, 144, 255, 0.08);
+            border-radius: 14px;
+            padding: 20px 22px 18px;
+            margin-bottom: 14px;
+            transition: all 0.3s;
+            cursor: pointer;
+            animation: fadeInUp 0.3s ease-out;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+        #category-prompts-container .prompt-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(30, 144, 255, 0.3);
+            box-shadow: 0 12px 50px rgba(30, 144, 255, 0.08);
+            background: rgba(6, 10, 26, 0.5);
         }
 
-        #main-content { min-height: 300px; }
+        #category-prompts-container .prompt-title {
+            font-weight: 600;
+            font-size: 17px;
+            color: #E8F0FE;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #category-prompts-container .prompt-title svg { width: 22px; height: 22px; flex-shrink: 0; opacity: 0.6; }
+
+        #category-prompts-container .prompt-tags {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin: 8px 0 10px;
+        }
+        #category-prompts-container .prompt-tags span {
+            background: rgba(30, 144, 255, 0.06);
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            color: #64B5F6;
+            border: 1px solid rgba(30, 144, 255, 0.04);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        #category-prompts-container .prompt-tags span:hover {
+            background: rgba(30, 144, 255, 0.12);
+            border-color: rgba(30, 144, 255, 0.12);
+        }
+
+        #category-prompts-container .prompt-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 13px;
+            color: #4A7A9C;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        #category-prompts-container .prompt-meta .stars { color: #FBBF24; cursor: pointer; user-select: none; display: flex; gap: 2px; }
+        #category-prompts-container .prompt-meta .stars .star { transition: all 0.2s; font-size: 15px; }
+        #category-prompts-container .prompt-meta .stars .star:hover { transform: scale(1.2); }
+        #category-prompts-container .prompt-meta .favorite { cursor: pointer; font-size: 17px; transition: all 0.3s; margin-left: auto; color: #4A7A9C; }
+        #category-prompts-container .prompt-meta .favorite.active { color: #FF2D78; }
+        #category-prompts-container .prompt-meta .favorite:hover { transform: scale(1.15); }
+
+        .category-filters { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0 16px; justify-content: center; }
+        .category-filters .filter-tag { background: rgba(30, 144, 255, 0.04); padding: 4px 14px; border-radius: 20px; font-size: 12px; color: #64B5F6; border: 1px solid rgba(30, 144, 255, 0.06); cursor: pointer; transition: all 0.3s; }
+        .category-filters .filter-tag:hover { background: rgba(30, 144, 255, 0.08); border-color: rgba(30, 144, 255, 0.12); }
+        .category-filters .filter-tag.active { background: rgba(30, 144, 255, 0.12); border-color: rgba(30, 144, 255, 0.15); color: #FFFFFF; }
+        .category-filters .filter-tag.all { background: rgba(30, 144, 255, 0.08); border-color: rgba(30, 144, 255, 0.08); font-weight: 600; }
+
+        .empty-state-category { text-align: center; padding: 40px 20px; color: #4A7A9C; }
+        .empty-state-category svg { width: 56px; height: 56px; margin-bottom: 16px; opacity: 0.3; }
+        .empty-state-category p { font-size: 16px; }
+        .empty-state-category .sub { font-size: 14px; margin-top: 8px; opacity: 0.7; }
 
         .hidden { display: none !important; }
+
+        /* ============================================
+           ПЛАШКА С ЛАЙФХАКАМИ (НОВАЯ)
+           ============================================ */
+        #ai-tips {
+            margin-top: 60px;
+            padding: 30px;
+            background: rgba(6, 10, 26, 0.3);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(30, 144, 255, 0.06);
+        }
+        #ai-tips .tips-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        #ai-tips .tips-header .icon { font-size: 28px; }
+        #ai-tips .tips-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 20px;
+            color: #E8F0FE;
+        }
+        #ai-tips .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        #ai-tips .tip-item {
+            background: rgba(30, 144, 255, 0.04);
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(30, 144, 255, 0.04);
+            transition: all 0.3s;
+        }
+        #ai-tips .tip-item:hover {
+            background: rgba(30, 144, 255, 0.08);
+            border-color: rgba(30, 144, 255, 0.12);
+            transform: translateY(-2px);
+        }
+        #ai-tips .tip-item .title {
+            color: #4FC3F7;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        #ai-tips .tip-item .text {
+            color: #A0B8D0;
+            font-size: 13px;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
 
         .footer { margin-top: 50px; padding-top: 24px; border-top: 1px solid rgba(30, 144, 255, 0.04); text-align: center; color: #2A4A6A; font-size: 13px; }
         .footer a { color: #4A7A9C; text-decoration: none; margin: 0 10px; transition: all 0.3s; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
@@ -201,10 +393,7 @@
         .empty-state svg { width: 48px; height: 48px; margin-bottom: 12px; opacity: 0.4; }
         .empty-state p { font-size: 15px; }
 
-        .empty-state-category { text-align: center; padding: 40px 20px; color: #4A7A9C; }
-        .empty-state-category svg { width: 56px; height: 56px; margin-bottom: 16px; opacity: 0.3; }
-        .empty-state-category p { font-size: 16px; }
-        .empty-state-category .sub { font-size: 14px; margin-top: 8px; opacity: 0.7; }
+        #category-prompts { display: none !important; }
 
         @media (max-width: 768px) {
             .header { flex-direction: column; align-items: flex-start; }
@@ -217,6 +406,8 @@
             .modal { padding: 20px; margin: 8px; }
             .about-content .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
             .modal-ai-buttons button { font-size: 11px; padding: 6px 12px; }
+            #cursor-glow { display: none; }
+            #ai-tips .tips-grid { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 480px) {
             .categories-grid { grid-template-columns: repeat(2, 1fr); }
@@ -225,6 +416,7 @@
             .btn-primary, .btn-secondary { padding: 10px 20px; font-size: 13px; }
             .btn-primary svg, .btn-secondary svg { width: 16px; height: 16px; }
             .about-content .stats-grid { grid-template-columns: 1fr 1fr; }
+            #ai-tips .tips-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -279,7 +471,6 @@
             </div>
         </div>
 
-        <!-- ===== НОВАЯ СТРУКТУРА КАТЕГОРИИ С УНИКАЛЬНЫМ КОНТЕЙНЕРОМ ===== -->
         <div id="category-view" class="hidden">
             <span class="back-btn" onclick="goHome()">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -290,14 +481,38 @@
                 <span class="line"></span>
             </div>
             <div id="category-filters" class="category-filters"></div>
-            <!-- НОВЫЙ КОНТЕЙНЕР С УНИКАЛЬНЫМ ID -->
             <div id="category-prompts-container" class="prompts-grid"></div>
-            <!-- СТАРЫЙ КОНТЕЙНЕР ОСТАВЛЯЕМ ДЛЯ СОВМЕСТИМОСТИ, НО ОН ПУСТОЙ -->
             <div id="category-prompts" style="display:none;"></div>
         </div>
 
+        <!-- ===== ПЛАШКА С ЛАЙФХАКАМИ (НОВАЯ) ===== -->
+        <div id="ai-tips">
+            <div class="tips-header">
+                <span class="icon">🚀</span>
+                <h2>Лайфхаки для работы с ИИ</h2>
+            </div>
+            <div class="tips-grid">
+                <div class="tip-item">
+                    <div class="title">🎯 Будь конкретным</div>
+                    <div class="text">Вместо «напиши письмо» — «напиши письмо начальнику с просьбой о повышении, аргументируй достижениями».</div>
+                </div>
+                <div class="tip-item">
+                    <div class="title">📝 Задавай структуру</div>
+                    <div class="text">Укажи формат ответа: «в виде списка», «в 3 абзаца», «с примерами».</div>
+                </div>
+                <div class="tip-item">
+                    <div class="title">🔄 Уточняй итеративно</div>
+                    <div class="text">Если ответ не тот — скажи ИИ: «Сделай короче», «Добавь больше фактов».</div>
+                </div>
+                <div class="tip-item">
+                    <div class="title">🧠 Давай контекст</div>
+                    <div class="text">Объясни ИИ, кто ты и для чего тебе это нужно. Это улучшает качество ответа.</div>
+                </div>
+            </div>
+        </div>
+
         <footer class="footer">
-            <p>Promptarium — сапфировая библиотека промтов. Версия 18.0 · Firebase</p>
+            <p>Promptarium — сапфировая библиотека промтов. Версия 18.1 · Firebase</p>
             <p style="margin-top: 6px;">
                 <a href="#" onclick="openAbout()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
@@ -311,7 +526,6 @@
         </footer>
     </div>
 
-    <!-- Модалка -->
     <div class="modal-overlay" id="modal">
         <div class="modal">
             <button class="modal-close" onclick="closeModal()">✕</button>
@@ -325,6 +539,16 @@
                 <button class="btn-copy-template" onclick="copyTemplate()">📋 Скопировать шаблон</button>
             </div>
             <div class="modal-tags" id="modal-tags"></div>
+
+            <!-- ===== ОБУЧАЮЩИЙ БЛОК (НОВЫЙ) ===== -->
+            <div class="modal-tip">
+                <div class="tip-title">
+                    <span class="icon">💡</span> Совет по использованию
+                </div>
+                <div class="tip-text">
+                    Замени <strong>[переменные]</strong> в квадратных скобках на свои данные. Чем конкретнее запрос — тем точнее ответ ИИ.
+                </div>
+            </div>
 
             <div class="modal-ai-section">
                 <span class="ai-label">🚀 Открыть в нейросети</span>
@@ -385,7 +609,7 @@
                 </p>
 
                 <div class="about-footer">
-                    <p>Версия 18.0 · 2026 · Бесплатно и открыто</p>
+                    <p>Версия 18.1 · 2026 · Бесплатно и открыто</p>
                     <p style="margin-top:4px;">
                         <span style="color:#4A7A9C;">📧 promptarium@example.com</span>
                     </p>
@@ -531,7 +755,7 @@
         function renderMainPage() {
             const mainContent = document.getElementById('main-content');
             if (!mainContent) return;
-            
+
             if (!isDataLoaded && prompts.length === 0) {
                 mainContent.innerHTML = `<div class="loader"><div class="spinner"></div><p>Загрузка промтов...</p></div>`;
                 return;
@@ -584,7 +808,6 @@
         // РЕНДЕРИНГ КАТЕГОРИИ В НОВЫЙ КОНТЕЙНЕР
         // ============================================================
         function renderCategory(catId) {
-            // Используем НОВЫЙ контейнер
             const container = document.getElementById('category-prompts-container');
             if (!container) {
                 console.error('❌ Контейнер #category-prompts-container не найден!');
@@ -681,7 +904,7 @@
             });
             let filtered = prompts.filter(p => p.category === currentCategory);
             if (tag) filtered = filtered.filter(p => (p.tags || []).includes(tag));
-            
+
             const container = document.getElementById('category-prompts-container');
             if (filtered.length === 0) {
                 container.innerHTML = `<div class="empty-state-category"><svg viewBox="0 0 24 24" fill="none" stroke="#4A7A9C" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg><p>Нет промтов с тегом <strong>#${tag}</strong></p></div>`;
@@ -708,8 +931,8 @@
             console.log('🏠 Возврат на главную');
         };
 
-        window.showAllCategories = function() { 
-            window.goHome(); 
+        window.showAllCategories = function() {
+            window.goHome();
         };
 
         // ============================================================
@@ -720,7 +943,7 @@
 
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
             const container = document.getElementById('search-results');
-            
+
             if (query.length === 0) {
                 container.classList.remove('active');
                 container.innerHTML = '';
@@ -785,7 +1008,36 @@
             (p.variables || []).forEach(v => {
                 html = html.replace(`[${v}]`, `<span class="variable">[${v}]</span>`);
             });
-            document.getElementById('modal-template').innerHTML = html;
+
+            const templateEl = document.getElementById('modal-template');
+            templateEl.innerHTML = html;
+
+            // ===== СВЁРТКА ДЛИННЫХ ПРОМТОВ =====
+            if (p.template.length > 300) {
+                templateEl.classList.add('collapsed');
+                templateEl.style.maxHeight = '120px';
+                // Убираем старые обработчики
+                const newEl = templateEl.cloneNode(true);
+                templateEl.parentNode.replaceChild(newEl, templateEl);
+                newEl.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    this.classList.toggle('collapsed');
+                    this.classList.toggle('expanded');
+                    if (this.classList.contains('expanded')) {
+                        this.style.maxHeight = 'none';
+                    } else {
+                        this.style.maxHeight = '120px';
+                    }
+                });
+                // Обновляем ссылку на элемент
+                document.getElementById('modal-template').replaceWith(newEl);
+            } else {
+                templateEl.classList.remove('collapsed', 'expanded');
+                templateEl.style.maxHeight = 'none';
+                // Убираем обработчик, если он был
+                const newEl = templateEl.cloneNode(true);
+                templateEl.parentNode.replaceChild(newEl, templateEl);
+            }
 
             const varsContainer = document.getElementById('modal-variables');
             if (p.variables && p.variables.length > 0) {
@@ -950,14 +1202,10 @@
         document.querySelectorAll('.category-card, .prompt-card, .btn-primary, .btn-secondary, .search-wrapper input, .nav-link').forEach(el => {
             if (!el) return;
             el.addEventListener('mouseenter', () => {
-                glow.style.width = '500px';
-                glow.style.height = '500px';
-                glow.style.background = 'radial-gradient(circle, rgba(30,144,255,0.15) 0%, rgba(79,195,247,0.05) 40%, transparent 70%)';
+                glow.classList.add('active');
             });
             el.addEventListener('mouseleave', () => {
-                glow.style.width = '400px';
-                glow.style.height = '400px';
-                glow.style.background = 'radial-gradient(circle, rgba(30,144,255,0.12) 0%, rgba(79,195,247,0.04) 40%, transparent 70%)';
+                glow.classList.remove('active');
             });
         });
 
@@ -992,8 +1240,7 @@
         setInterval(function() {
             const container = document.getElementById('category-prompts-container');
             if (!container) return;
-            
-            // Если контейнер пустой, но категория открыта — перерендерим
+
             if (container.innerHTML.trim() === '' && document.getElementById('category-view').classList.contains('hidden') === false) {
                 console.log('⚠️ КОНТЕЙНЕР КАТЕГОРИИ ПУСТ! ВОССТАНАВЛИВАЕМ...');
                 if (window.currentCategory) {
