@@ -133,76 +133,17 @@
         .modal-title { font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 20px; color: #FFFFFF; margin-bottom: 6px; }
         .modal-description { color: #64B5F6; font-size: 14px; margin-bottom: 16px; line-height: 1.6; }
 
-        /* ===== СВЁРТКА ДЛИННЫХ ПРОМТОВ ===== */
-        .modal-template.collapsed {
-            max-height: 120px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            transition: max-height 0.3s ease;
-        }
-        .modal-template.collapsed::after {
-            content: '▼ Показать полностью';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 20px 0 5px;
-            background: linear-gradient(to bottom, transparent, rgba(6,10,26,0.9));
-            color: #4FC3F7;
-            font-size: 13px;
-            text-align: center;
-            cursor: pointer;
-        }
-        .modal-template.expanded::after {
-            content: '▲ Свернуть';
-            position: relative;
-            display: block;
-            margin-top: 10px;
-            color: #4FC3F7;
-            font-size: 13px;
-            text-align: center;
-            background: none;
-            padding: 5px;
-            cursor: pointer;
-        }
-        .modal-template {
-            background: rgba(30, 144, 255, 0.04);
-            border: 1px solid rgba(30, 144, 255, 0.08);
-            border-radius: 12px;
-            padding: 14px;
-            margin-bottom: 16px;
-            font-size: 14px;
-            line-height: 1.8;
-            color: #E8F0FE;
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
+        .modal-template { background: rgba(30, 144, 255, 0.04); border: 1px solid rgba(30, 144, 255, 0.08); border-radius: 12px; padding: 14px; margin-bottom: 16px; font-size: 14px; line-height: 1.8; color: #E8F0FE; white-space: pre-wrap; word-break: break-word; transition: max-height 0.3s ease; }
+        .modal-template.collapsed { max-height: 120px; overflow: hidden; position: relative; cursor: pointer; }
+        .modal-template.collapsed::after { content: '▼ Показать полностью'; position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 0 5px; background: linear-gradient(to bottom, transparent, rgba(6,10,26,0.9)); color: #4FC3F7; font-size: 13px; text-align: center; cursor: pointer; }
+        .modal-template.expanded { max-height: none; }
+        .modal-template.expanded::after { content: '▲ Свернуть'; display: block; margin-top: 10px; color: #4FC3F7; font-size: 13px; text-align: center; padding: 5px; cursor: pointer; background: none; }
         .modal-template .variable { background: rgba(30, 144, 255, 0.15); color: #4FC3F7; padding: 1px 6px; border-radius: 4px; border: 1px solid rgba(30, 144, 255, 0.1); font-weight: 600; }
 
-        /* ===== ОБУЧАЮЩИЙ БЛОК В МОДАЛКЕ ===== */
-        .modal-tip {
-            margin-top: 16px;
-            padding: 14px 16px;
-            background: rgba(30, 144, 255, 0.04);
-            border-radius: 12px;
-            border-left: 3px solid #4FC3F7;
-        }
-        .modal-tip .tip-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #64B5F6;
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 6px;
-        }
+        .modal-tip { margin-top: 16px; padding: 14px 16px; background: rgba(30, 144, 255, 0.04); border-radius: 12px; border-left: 3px solid #4FC3F7; }
+        .modal-tip .tip-title { display: flex; align-items: center; gap: 10px; color: #64B5F6; font-weight: 600; font-size: 14px; margin-bottom: 6px; }
         .modal-tip .tip-title .icon { font-size: 18px; }
-        .modal-tip .tip-text {
-            color: #A0B8D0;
-            font-size: 13px;
-            line-height: 1.6;
-        }
+        .modal-tip .tip-text { color: #A0B8D0; font-size: 13px; line-height: 1.6; }
 
         .modal-variables label { display: block; color: #64B5F6; font-size: 12px; font-weight: 500; margin-bottom: 3px; }
         .modal-variables input { width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid rgba(30, 144, 255, 0.1); background: rgba(6, 10, 26, 0.4); color: #FFFFFF; font-size: 14px; font-family: 'Inter', sans-serif; outline: none; transition: all 0.3s; margin-bottom: 10px; }
@@ -324,9 +265,6 @@
 
         .hidden { display: none !important; }
 
-        /* ============================================
-           ПЛАШКА С ЛАЙФХАКАМИ (НОВАЯ)
-           ============================================ */
         #ai-tips {
             margin-top: 60px;
             padding: 30px;
@@ -485,7 +423,6 @@
             <div id="category-prompts" style="display:none;"></div>
         </div>
 
-        <!-- ===== ПЛАШКА С ЛАЙФХАКАМИ (НОВАЯ) ===== -->
         <div id="ai-tips">
             <div class="tips-header">
                 <span class="icon">🚀</span>
@@ -512,7 +449,7 @@
         </div>
 
         <footer class="footer">
-            <p>Promptarium — сапфировая библиотека промтов. Версия 18.1 · Firebase</p>
+            <p>Promptarium — сапфировая библиотека промтов. Версия 2.0 · Firebase</p>
             <p style="margin-top: 6px;">
                 <a href="#" onclick="openAbout()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
@@ -540,7 +477,6 @@
             </div>
             <div class="modal-tags" id="modal-tags"></div>
 
-            <!-- ===== ОБУЧАЮЩИЙ БЛОК (НОВЫЙ) ===== -->
             <div class="modal-tip">
                 <div class="tip-title">
                     <span class="icon">💡</span> Совет по использованию
@@ -609,7 +545,7 @@
                 </p>
 
                 <div class="about-footer">
-                    <p>Версия 18.1 · 2026 · Бесплатно и открыто</p>
+                    <p>Версия 2.0 · 2026 · Бесплатно и открыто</p>
                     <p style="margin-top:4px;">
                         <span style="color:#4A7A9C;">📧 promptarium@example.com</span>
                     </p>
@@ -623,7 +559,7 @@
 
     <script>
         // ============================================================
-        // ИНИЦИАЛИЗАЦИЯ FIREBASE
+        // 1. FIREBASE
         // ============================================================
         const firebaseConfig = {
             apiKey: "AIzaSyCr3Jg5y6AzukPXS31k2FOYIqKZJqZv5Yc",
@@ -639,6 +575,9 @@
         }
         const db = firebase.firestore();
 
+        // ============================================================
+        // 2. ДАННЫЕ
+        // ============================================================
         const categories = [
             { id: 'work', name: 'Работа и бизнес' },
             { id: 'study', name: 'Учёба и знания' },
@@ -662,7 +601,7 @@
         let isCategoryOpen = false;
 
         // ============================================================
-        // ЗАГРУЗКА
+        // 3. ЗАГРУЗКА
         // ============================================================
         async function loadPrompts() {
             if (isDataLoaded) return;
@@ -701,7 +640,7 @@
         }
 
         // ============================================================
-        // РЕНДЕРИНГ
+        // 4. РЕНДЕРИНГ
         // ============================================================
         function renderStars(promptId, rating) {
             return Array.from({ length: 5 }, (_, i) => {
@@ -804,15 +743,9 @@
             });
         }
 
-        // ============================================================
-        // РЕНДЕРИНГ КАТЕГОРИИ В НОВЫЙ КОНТЕЙНЕР
-        // ============================================================
         function renderCategory(catId) {
             const container = document.getElementById('category-prompts-container');
-            if (!container) {
-                console.error('❌ Контейнер #category-prompts-container не найден!');
-                return;
-            }
+            if (!container) return;
 
             const filtered = prompts.filter(p => p.category === catId);
             if (filtered.length === 0) {
@@ -820,7 +753,6 @@
                 return;
             }
 
-            console.log(`🔄 Рендерим ${filtered.length} промтов в НОВЫЙ контейнер`);
             container.innerHTML = filtered.map(p => renderPromptCard(p)).join('');
 
             container.querySelectorAll('.star').forEach(el => {
@@ -843,7 +775,7 @@
         }
 
         // ============================================================
-        // ЛОКАЛЬНОЕ ХРАНЕНИЕ
+        // 5. ЛОКАЛЬНОЕ ХРАНЕНИЕ
         // ============================================================
         function saveFavorites() { localStorage.setItem('promptarium_favorites', JSON.stringify(favorites)); }
         function saveRatings() { localStorage.setItem('promptarium_ratings', JSON.stringify(ratings)); }
@@ -871,7 +803,7 @@
         }
 
         // ============================================================
-        // НАВИГАЦИЯ
+        // 6. НАВИГАЦИЯ
         // ============================================================
         window.showCategory = function(catId) {
             isCategoryOpen = true;
@@ -936,7 +868,7 @@
         };
 
         // ============================================================
-        // ПОИСК
+        // 7. ПОИСК
         // ============================================================
         window.handleSearch = function() {
             if (isCategoryOpen) return;
@@ -987,7 +919,7 @@
         };
 
         // ============================================================
-        // ОСТАЛЬНЫЕ ФУНКЦИИ
+        // 8. СЛУЧАЙНЫЙ ПРОМТ
         // ============================================================
         window.randomPrompt = function() {
             if (prompts.length === 0) {
@@ -998,25 +930,32 @@
             window.openPrompt(p.id);
         };
 
+        // ============================================================
+        // 9. МОДАЛКА
+        // ============================================================
         window.openPrompt = async function(id) {
             const p = await getPromptFromFirebase(id);
             if (!p) { alert('Промт не найден'); return; }
             currentPrompt = p;
+
             document.getElementById('modal-title').textContent = p.title;
             document.getElementById('modal-description').textContent = p.description || 'Без описания';
+
+            // Шаблон
             let html = p.template;
             (p.variables || []).forEach(v => {
                 html = html.replace(`[${v}]`, `<span class="variable">[${v}]</span>`);
             });
-
             const templateEl = document.getElementById('modal-template');
             templateEl.innerHTML = html;
+            templateEl.classList.remove('collapsed', 'expanded');
+            templateEl.style.maxHeight = 'none';
 
-            // ===== СВЁРТКА ДЛИННЫХ ПРОМТОВ =====
+            // Свёртка длинных промтов
             if (p.template.length > 300) {
                 templateEl.classList.add('collapsed');
                 templateEl.style.maxHeight = '120px';
-                // Убираем старые обработчики
+                // Убираем старые обработчики, вешаем новые
                 const newEl = templateEl.cloneNode(true);
                 templateEl.parentNode.replaceChild(newEl, templateEl);
                 newEl.addEventListener('click', function(e) {
@@ -1029,16 +968,9 @@
                         this.style.maxHeight = '120px';
                     }
                 });
-                // Обновляем ссылку на элемент
-                document.getElementById('modal-template').replaceWith(newEl);
-            } else {
-                templateEl.classList.remove('collapsed', 'expanded');
-                templateEl.style.maxHeight = 'none';
-                // Убираем обработчик, если он был
-                const newEl = templateEl.cloneNode(true);
-                templateEl.parentNode.replaceChild(newEl, templateEl);
             }
 
+            // Переменные
             const varsContainer = document.getElementById('modal-variables');
             if (p.variables && p.variables.length > 0) {
                 varsContainer.innerHTML = p.variables.map(v => `
@@ -1048,6 +980,7 @@
             } else {
                 varsContainer.innerHTML = '<p style="color:#4A7A9C;font-size:13px;">Без переменных</p>';
             }
+
             document.getElementById('modal-preview').textContent = p.template;
             document.getElementById('modal-tags').innerHTML = (p.tags || []).map(t => `<span>#${t}</span>`).join('');
             document.getElementById('modal').classList.add('active');
@@ -1115,6 +1048,9 @@
             }
         };
 
+        // ============================================================
+        // 10. О ПРОЕКТЕ
+        // ============================================================
         window.openAbout = function() {
             updateAboutStats();
             document.getElementById('about-modal').classList.add('active');
@@ -1136,7 +1072,7 @@
         });
 
         // ============================================================
-        // ЗВЁЗДЫ
+        // 11. ЗВЁЗДЫ
         // ============================================================
         const canvas = document.getElementById('stars-canvas');
         const ctx = canvas.getContext('2d');
@@ -1193,6 +1129,9 @@
         }
         animateStars();
 
+        // ============================================================
+        // 12. СВЕТ ПОД КУРСОРОМ
+        // ============================================================
         const glow = document.getElementById('cursor-glow');
         document.addEventListener('mousemove', (e) => {
             glow.style.left = e.clientX + 'px';
@@ -1210,7 +1149,7 @@
         });
 
         // ============================================================
-        // ЗАПУСК
+        // 13. ЗАПУСК
         // ============================================================
         document.addEventListener('DOMContentLoaded', function() {
             loadPrompts();
@@ -1235,7 +1174,7 @@
         window.closeAbout = closeAbout;
 
         // ============================================================
-        // КОСТЫЛЬ ДЛЯ ДИАГНОСТИКИ
+        // 14. КОСТЫЛЬ ДЛЯ ДИАГНОСТИКИ (НА ВСЯКИЙ СЛУЧАЙ)
         // ============================================================
         setInterval(function() {
             const container = document.getElementById('category-prompts-container');
