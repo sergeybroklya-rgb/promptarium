@@ -3,26 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Promptarium 2.0</title>
+    <title>Promptarium 2.2 — Сапфировая библиотека промтов</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         /* ============================================
-           ГЛОБАЛЬНЫЙ СБРОС
+           ГЛОБАЛЬНЫЙ СБРОС И ПЕРЕМЕННЫЕ
            ============================================ */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --bg-primary: #0B0D1A;
             --bg-secondary: #11152A;
-            --bg-card: rgba(17, 21, 42, 0.5);
+            --bg-card: rgba(17, 21, 42, 0.3);
             --accent-primary: #6C3CE1;
             --accent-secondary: #1E90FF;
             --accent-rose: #FF2D78;
             --text-primary: #F0F4FF;
             --text-secondary: #8892B0;
-            --glass-border: rgba(108, 60, 225, 0.12);
+            --glass-border: rgba(108, 60, 225, 0.08);
+            --shadow-color: rgba(108, 60, 225, 0.1);
+            --theme-transition: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* Тёмная тема */
+        [data-theme="dark"] {
+            --bg-primary: #0B0D1A;
+            --bg-secondary: #11152A;
+            --bg-card: rgba(17, 21, 42, 0.3);
+            --text-primary: #F0F4FF;
+            --text-secondary: #8892B0;
+        }
+
+        /* Светлая тема */
+        [data-theme="light"] {
+            --bg-primary: #F0F4FF;
+            --bg-secondary: #E8EDF9;
+            --bg-card: rgba(255, 255, 255, 0.6);
+            --text-primary: #0B0D1A;
+            --text-secondary: #4A5A7A;
+            --glass-border: rgba(108, 60, 225, 0.08);
         }
 
         html { scroll-behavior: smooth; }
@@ -35,6 +56,24 @@
             overflow-x: hidden;
             cursor: default;
             line-height: 1.6;
+            transition: background var(--theme-transition), color var(--theme-transition);
+        }
+
+        /* ============================================
+           МИКРО-ПАТТЕРН НА ФОНЕ
+           ============================================ */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20px 20px, rgba(108, 60, 225, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
         }
 
         /* ============================================
@@ -53,14 +92,26 @@
         }
 
         /* ============================================
-           КАСТОМНЫЙ СКРОЛЛБАР
+           ПРЕМИУМ-СКРОЛЛБАР
            ============================================ */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(11, 13, 26, 0.3);
+            border-radius: 10px;
+        }
         ::-webkit-scrollbar-thumb {
             background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary), var(--accent-rose));
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(108, 60, 225, 0.3);
+            box-shadow: 0 0 30px rgba(108, 60, 225, 0.15);
+            border: 2px solid rgba(11, 13, 26, 0.2);
+            background-clip: padding-box;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #8B5CF6, #3B82F6, #FF2D78);
+            box-shadow: 0 0 50px rgba(108, 60, 225, 0.25);
         }
 
         /* ============================================
@@ -87,7 +138,7 @@
             z-index: 0;
             opacity: 0.25;
             will-change: transform;
-            transition: transform 0.1s ease-out;
+            transition: background 1s ease;
         }
         .nebula-1 {
             width: 600px;
@@ -178,7 +229,7 @@
         }
         @keyframes pulseGlow {
             0%, 100% { box-shadow: 0 0 20px rgba(108, 60, 225, 0.1); }
-            50% { box-shadow: 0 0 40px rgba(108, 60, 225, 0.25), 0 0 80px rgba(108, 60, 225, 0.05); }
+            50% { box-shadow: 0 0 40px rgba(108, 60, 225, 0.2), 0 0 80px rgba(108, 60, 225, 0.05); }
         }
         @keyframes shimmer {
             0% { background-position: -200% center; }
@@ -207,17 +258,17 @@
             0% { background-position: -200% center; }
             100% { background-position: 200% center; }
         }
-        @keyframes ripple {
-            0% { transform: scale(0); opacity: 0.6; }
-            100% { transform: scale(4); opacity: 0; }
-        }
-        @keyframes counterAnim {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
         }
         @keyframes modalIn {
             from { opacity: 0; transform: scale(0.9) translateY(30px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes counterAnim {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .fade-in-down { animation: fadeInDown 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
@@ -229,6 +280,7 @@
         .pulse-anim { animation: pulseGlow 3s ease-in-out infinite; }
         .hologram-anim { animation: hologram 4s ease-in-out infinite; }
         .modal-in { animation: modalIn 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+        .breathe { animation: breathe 3s ease-in-out infinite; }
 
         /* ============================================
            ШАПКА
@@ -239,15 +291,16 @@
             align-items: center;
             margin-bottom: 60px;
             padding: 16px 24px;
-            background: rgba(11, 13, 26, 0.4);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(108, 60, 225, 0.06);
+            background: var(--bg-card);
+            backdrop-filter: blur(30px) saturate(1.4);
+            border: 1px solid var(--glass-border);
             border-radius: 20px;
-            transition: all 0.3s;
+            transition: all var(--theme-transition);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255,255,255,0.02);
         }
         .header:hover {
             border-color: rgba(108, 60, 225, 0.15);
-            box-shadow: 0 0 40px rgba(108, 60, 225, 0.03);
+            box-shadow: 0 8px 40px rgba(108, 60, 225, 0.05), inset 0 1px 0 rgba(255,255,255,0.03);
         }
 
         .logo {
@@ -257,10 +310,11 @@
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
             font-size: clamp(20px, 3vw, 28px);
-            color: #fff;
+            color: var(--text-primary);
             text-decoration: none;
             cursor: pointer;
             letter-spacing: 1px;
+            transition: color var(--theme-transition);
         }
         .logo-icon {
             width: 36px;
@@ -284,16 +338,22 @@
             font-size: 13px;
             color: var(--text-secondary);
             letter-spacing: 0.5px;
+            transition: color var(--theme-transition);
         }
 
-        .header-actions { display: flex; align-items: center; gap: 12px; }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
         .header-btn {
-            padding: 8px 20px;
+            padding: 8px 16px;
             border-radius: 50px;
-            border: 1px solid rgba(108, 60, 225, 0.12);
+            border: 1px solid var(--glass-border);
             background: rgba(108, 60, 225, 0.03);
             color: var(--text-secondary);
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s;
@@ -303,10 +363,23 @@
             overflow: hidden;
         }
         .header-btn:hover {
-            border-color: rgba(108, 60, 225, 0.3);
-            color: #fff;
+            border-color: rgba(108, 60, 225, 0.2);
+            color: var(--text-primary);
             box-shadow: 0 0 30px rgba(108, 60, 225, 0.05);
             transform: scale(1.04);
+        }
+        .header-btn .icon { margin-right: 4px; }
+
+        /* Кнопка темы */
+        .theme-btn {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
         }
 
         /* ============================================
@@ -321,25 +394,27 @@
             padding: 4px 16px;
             border-radius: 50px;
             background: rgba(108, 60, 225, 0.08);
-            border: 1px solid rgba(108, 60, 225, 0.12);
+            border: 1px solid var(--glass-border);
             color: var(--accent-secondary);
             font-size: 12px;
             font-weight: 600;
             letter-spacing: 1px;
             text-transform: uppercase;
             margin-bottom: 20px;
+            transition: all var(--theme-transition);
         }
         .hero h1 {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
             font-size: clamp(42px, 7vw, 80px);
             line-height: 1.1;
-            background: linear-gradient(135deg, #fff 40%, var(--accent-secondary) 70%, var(--accent-rose) 100%);
-            background-size: 200% 200%;
+            background: linear-gradient(135deg, #FFFFFF 20%, var(--accent-primary) 50%, var(--accent-secondary) 80%, var(--accent-rose) 100%);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 16px;
-            animation: gradientFlow 6s ease-in-out infinite;
+            animation: gradientFlow 8s ease-in-out infinite;
+            text-shadow: 0 0 80px rgba(108, 60, 225, 0.05);
         }
         .hero p {
             font-size: clamp(16px, 1.8vw, 22px);
@@ -347,6 +422,7 @@
             max-width: 600px;
             margin: 0 auto 30px;
             font-weight: 300;
+            transition: color var(--theme-transition);
         }
 
         .search-wrapper {
@@ -358,20 +434,20 @@
             width: 100%;
             padding: 18px 24px;
             border-radius: 60px;
-            border: 1px solid rgba(108, 60, 225, 0.1);
-            background: rgba(17, 21, 42, 0.5);
+            border: 1px solid var(--glass-border);
+            background: var(--bg-card);
             backdrop-filter: blur(20px);
-            color: #fff;
+            color: var(--text-primary);
             font-size: 16px;
             font-family: 'Inter', sans-serif;
             outline: none;
             transition: all 0.3s;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
         .search-wrapper input::placeholder { color: var(--text-secondary); font-weight: 300; }
         .search-wrapper input:focus {
             border-color: var(--accent-primary);
-            box-shadow: 0 0 40px rgba(108, 60, 225, 0.08), 0 4px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 40px rgba(108, 60, 225, 0.08), 0 4px 30px rgba(0, 0, 0, 0.15);
             transform: scale(1.02);
         }
 
@@ -400,7 +476,7 @@
             font-weight: 600;
             font-size: 15px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             font-family: 'Inter', sans-serif;
             display: inline-flex;
             align-items: center;
@@ -420,18 +496,19 @@
             animation: shimmer 4s linear infinite;
         }
         .btn-primary:hover { transform: scale(1.05); box-shadow: 0 8px 50px rgba(108, 60, 225, 0.3); }
+        .btn-primary:active { transform: scale(0.96); transition-duration: 0.05s; }
 
         .btn-secondary {
             padding: 14px 36px;
             border-radius: 60px;
-            border: 1px solid rgba(108, 60, 225, 0.12);
-            background: rgba(17, 21, 42, 0.3);
+            border: 1px solid var(--glass-border);
+            background: var(--bg-card);
             backdrop-filter: blur(10px);
-            color: #fff;
+            color: var(--text-primary);
             font-weight: 500;
             font-size: 15px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             font-family: 'Inter', sans-serif;
             display: inline-flex;
             align-items: center;
@@ -443,8 +520,9 @@
             background: rgba(108, 60, 225, 0.06);
             border-color: rgba(108, 60, 225, 0.2);
             transform: scale(1.05);
-            box-shadow: 0 4px 30px rgba(108, 60, 225, 0.03);
+            box-shadow: 0 4px 30px rgba(108, 60, 225, 0.05);
         }
+        .btn-secondary:active { transform: scale(0.96); transition-duration: 0.05s; }
 
         /* ============================================
            ЗАГОЛОВКИ СЕКЦИЙ
@@ -459,12 +537,13 @@
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             font-size: clamp(18px, 2.5vw, 26px);
-            color: #fff;
+            color: var(--text-primary);
+            transition: color var(--theme-transition);
         }
         .section-header .line {
             flex: 1;
             height: 1px;
-            background: linear-gradient(90deg, rgba(108, 60, 225, 0.15), transparent);
+            background: linear-gradient(90deg, var(--glass-border), transparent);
         }
         .section-header .badge {
             font-size: 12px;
@@ -472,7 +551,8 @@
             background: rgba(108, 60, 225, 0.03);
             padding: 2px 12px;
             border-radius: 50px;
-            border: 1px solid rgba(108, 60, 225, 0.03);
+            border: 1px solid var(--glass-border);
+            transition: all var(--theme-transition);
         }
 
         /* ============================================
@@ -487,16 +567,16 @@
 
         .category-card {
             background: var(--bg-card);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(30px) saturate(1.4);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
             padding: 24px 12px 20px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255,255,255,0.02);
         }
         .category-card::before {
             content: '';
@@ -512,22 +592,26 @@
         .category-card:hover::before { opacity: 1; }
         .category-card:hover {
             transform: translateY(-8px) scale(1.02);
-            border-color: rgba(108, 60, 225, 0.25);
-            box-shadow: 0 12px 50px rgba(108, 60, 225, 0.06);
+            border-color: rgba(108, 60, 225, 0.2);
+            box-shadow: 0 12px 50px rgba(108, 60, 225, 0.06), inset 0 1px 0 rgba(255,255,255,0.03);
         }
+        .category-card:active { transform: scale(0.96); transition-duration: 0.05s; }
         .category-card svg {
             width: 36px;
             height: 36px;
             display: block;
             margin: 0 auto 10px;
-            transition: transform 0.3s;
+            transition: all 0.3s;
         }
-        .category-card:hover svg { transform: scale(1.1) rotate(-5deg); }
-        .category-card .name { font-weight: 600; font-size: 14px; display: block; color: #fff; }
-        .category-card .count { font-size: 12px; color: var(--text-secondary); margin-top: 4px; display: block; }
+        .category-card:hover svg {
+            animation: none;
+            transform: scale(1.15) rotate(-5deg);
+        }
+        .category-card .name { font-weight: 600; font-size: 14px; display: block; color: var(--text-primary); transition: color var(--theme-transition); }
+        .category-card .count { font-size: 12px; color: var(--text-secondary); margin-top: 4px; display: block; transition: color var(--theme-transition); }
 
         /* ============================================
-           КАРТОЧКИ ПРОМТОВ + СКЕЛЕТОНЫ
+           КАРТОЧКИ ПРОМТОВ
            ============================================ */
         .prompts-grid {
             display: grid;
@@ -538,17 +622,22 @@
 
         .prompt-card {
             background: var(--bg-card);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(30px) saturate(1.4);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
             padding: 22px 20px 20px;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             animation: cardReveal 0.5s ease-out forwards;
             opacity: 0;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255,255,255,0.02);
+            border: none;
+            box-shadow: 
+                inset 0 1px 0 rgba(255, 255, 255, 0.02),
+                0 8px 32px rgba(0, 0, 0, 0.15),
+                0 0 0 1px var(--glass-border);
         }
         .prompt-card::before {
             content: '';
@@ -563,10 +652,14 @@
         }
         .prompt-card:hover::before { opacity: 1; }
         .prompt-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-4px) scale(1.005);
             border-color: rgba(108, 60, 225, 0.15);
-            box-shadow: 0 12px 40px rgba(108, 60, 225, 0.03);
+            box-shadow: 
+                0 0 40px rgba(108, 60, 225, 0.05),
+                0 12px 40px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(108, 60, 225, 0.1);
         }
+        .prompt-card:active { transform: scale(0.98); transition-duration: 0.05s; }
         .prompt-card:nth-child(1) { animation-delay: 0s; }
         .prompt-card:nth-child(2) { animation-delay: 0.05s; }
         .prompt-card:nth-child(3) { animation-delay: 0.1s; }
@@ -578,10 +671,11 @@
             font-weight: 600;
             font-size: 16px;
             margin-bottom: 8px;
-            color: #fff;
+            color: var(--text-primary);
             display: flex;
             align-items: center;
             gap: 8px;
+            transition: color var(--theme-transition);
         }
         .prompt-card .prompt-title svg { width: 20px; height: 20px; flex-shrink: 0; opacity: 0.5; }
 
@@ -597,14 +691,14 @@
             border-radius: 50px;
             font-size: 10px;
             color: var(--text-secondary);
-            border: 1px solid rgba(108, 60, 225, 0.03);
+            border: 1px solid var(--glass-border);
             transition: all 0.3s;
             cursor: pointer;
         }
         .prompt-card .prompt-tags span:hover {
             background: rgba(108, 60, 225, 0.08);
             border-color: rgba(108, 60, 225, 0.06);
-            color: #fff;
+            color: var(--text-primary);
         }
 
         .prompt-card .prompt-meta {
@@ -614,6 +708,7 @@
             color: var(--text-secondary);
             align-items: center;
             flex-wrap: wrap;
+            transition: color var(--theme-transition);
         }
         .prompt-card .prompt-meta .stars {
             color: #FBBF24;
@@ -623,10 +718,16 @@
             gap: 2px;
         }
         .prompt-card .prompt-meta .stars .star {
-            transition: all 0.2s;
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
             font-size: 14px;
+            cursor: pointer;
         }
-        .prompt-card .prompt-meta .stars .star:hover { transform: scale(1.2); }
+        .prompt-card .prompt-meta .stars .star:hover {
+            transform: scale(1.4) rotate(-10deg);
+        }
+        .prompt-card .prompt-meta .stars .star:hover ~ .star {
+            transform: scale(1.1);
+        }
 
         .prompt-card .prompt-meta .favorite {
             cursor: pointer;
@@ -650,7 +751,7 @@
             background: rgba(17, 21, 42, 0.3);
             border-radius: 12px;
             padding: 22px 20px 20px;
-            border: 1px solid rgba(108, 60, 225, 0.02);
+            border: 1px solid var(--glass-border);
             animation: skeletonShimmer 1.5s ease-in-out infinite;
             background-image: linear-gradient(90deg, rgba(17, 21, 42, 0.3) 0%, rgba(30, 40, 70, 0.5) 50%, rgba(17, 21, 42, 0.3) 100%);
             background-size: 200% 100%;
@@ -701,7 +802,7 @@
             border-radius: 50px;
             font-size: 12px;
             color: var(--text-secondary);
-            border: 1px solid rgba(108, 60, 225, 0.04);
+            border: 1px solid var(--glass-border);
             background: rgba(108, 60, 225, 0.015);
             cursor: pointer;
             transition: all 0.3s;
@@ -713,17 +814,17 @@
         .category-filters .filter-tag.active {
             background: rgba(108, 60, 225, 0.08);
             border-color: rgba(108, 60, 225, 0.12);
-            color: #fff;
+            color: var(--text-primary);
         }
         .category-filters .filter-tag.all {
             background: rgba(108, 60, 225, 0.04);
-            border-color: rgba(108, 60, 225, 0.04);
+            border-color: var(--glass-border);
             font-weight: 600;
-            color: #fff;
+            color: var(--text-primary);
         }
 
         /* ============================================
-           МОДАЛКА (С МИКРО-АНИМАЦИЕЙ)
+           МОДАЛКА
            ============================================ */
         .modal-overlay {
             display: none;
@@ -744,7 +845,7 @@
         .modal {
             background: rgba(11, 13, 26, 0.85);
             backdrop-filter: blur(40px);
-            border: 1px solid rgba(108, 60, 225, 0.06);
+            border: 1px solid var(--glass-border);
             border-radius: 24px;
             max-width: 680px;
             width: 100%;
@@ -773,13 +874,13 @@
             border: none;
             font-family: 'Inter', sans-serif;
         }
-        .modal-close:hover { color: #fff; transform: rotate(90deg); }
+        .modal-close:hover { color: var(--text-primary); transform: rotate(90deg); }
 
         .modal-title {
             font-family: 'Orbitron', sans-serif;
             font-weight: 700;
             font-size: 22px;
-            color: #fff;
+            color: var(--text-primary);
             margin-bottom: 6px;
         }
         .modal-description {
@@ -791,7 +892,7 @@
 
         .modal-template {
             background: rgba(108, 60, 225, 0.02);
-            border: 1px solid rgba(108, 60, 225, 0.04);
+            border: 1px solid var(--glass-border);
             border-radius: 14px;
             padding: 16px;
             margin-bottom: 18px;
@@ -807,7 +908,7 @@
             color: var(--accent-secondary);
             padding: 1px 6px;
             border-radius: 4px;
-            border: 1px solid rgba(108, 60, 225, 0.06);
+            border: 1px solid var(--glass-border);
             font-weight: 600;
         }
 
@@ -854,9 +955,9 @@
             width: 100%;
             padding: 10px 14px;
             border-radius: 12px;
-            border: 1px solid rgba(108, 60, 225, 0.06);
+            border: 1px solid var(--glass-border);
             background: rgba(17, 21, 42, 0.3);
-            color: #fff;
+            color: var(--text-primary);
             font-size: 14px;
             font-family: 'Inter', sans-serif;
             outline: none;
@@ -870,7 +971,7 @@
 
         .modal-preview {
             background: rgba(108, 60, 225, 0.015);
-            border: 1px solid rgba(108, 60, 225, 0.02);
+            border: 1px solid var(--glass-border);
             border-radius: 12px;
             padding: 14px;
             margin-bottom: 18px;
@@ -880,6 +981,7 @@
             white-space: pre-wrap;
             word-break: break-word;
             min-height: 50px;
+            transition: color var(--theme-transition);
         }
 
         .modal-actions {
@@ -895,7 +997,7 @@
             font-weight: 600;
             font-size: 13px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             font-family: 'Inter', sans-serif;
             display: flex;
             align-items: center;
@@ -903,6 +1005,7 @@
             position: relative;
             overflow: hidden;
         }
+        .modal-actions button:active { transform: scale(0.96); transition-duration: 0.05s; }
         .btn-copy {
             background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
             color: #fff;
@@ -911,8 +1014,8 @@
         .btn-copy:hover { transform: scale(1.04); box-shadow: 0 0 35px rgba(108, 60, 225, 0.15); }
         .btn-copy-template {
             background: rgba(108, 60, 225, 0.04);
-            color: #fff;
-            border: 1px solid rgba(108, 60, 225, 0.06);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
         }
         .btn-copy-template:hover { background: rgba(108, 60, 225, 0.08); transform: scale(1.04); }
 
@@ -941,7 +1044,7 @@
         .modal-ai-section {
             margin-top: 16px;
             padding-top: 16px;
-            border-top: 1px solid rgba(108, 60, 225, 0.04);
+            border-top: 1px solid var(--glass-border);
         }
         .modal-ai-section .ai-label {
             font-size: 12px;
@@ -960,7 +1063,7 @@
         .modal-ai-buttons button {
             padding: 8px 16px;
             border-radius: 30px;
-            border: 1px solid rgba(108, 60, 225, 0.04);
+            border: 1px solid var(--glass-border);
             background: rgba(108, 60, 225, 0.015);
             color: var(--text-secondary);
             font-size: 12px;
@@ -977,7 +1080,7 @@
         .modal-ai-buttons button:hover {
             background: rgba(108, 60, 225, 0.04);
             border-color: rgba(108, 60, 225, 0.06);
-            color: #fff;
+            color: var(--text-primary);
             transform: translateY(-2px);
         }
 
@@ -993,7 +1096,7 @@
             border-radius: 50px;
             font-size: 10px;
             color: var(--text-secondary);
-            border: 1px solid rgba(108, 60, 225, 0.02);
+            border: 1px solid var(--glass-border);
         }
 
         /* ============================================
@@ -1003,9 +1106,11 @@
             margin-top: 60px;
             padding: 32px;
             background: var(--bg-card);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(30px) saturate(1.4);
             border-radius: 20px;
             border: 1px solid var(--glass-border);
+            transition: all var(--theme-transition);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255,255,255,0.02);
         }
         #ai-tips .tips-header {
             display: flex;
@@ -1017,7 +1122,8 @@
         #ai-tips .tips-header h2 {
             font-family: 'Orbitron', sans-serif;
             font-size: 20px;
-            color: #fff;
+            color: var(--text-primary);
+            transition: color var(--theme-transition);
         }
         #ai-tips .tips-grid {
             display: grid;
@@ -1028,12 +1134,12 @@
             background: rgba(108, 60, 225, 0.02);
             padding: 16px;
             border-radius: 14px;
-            border: 1px solid rgba(108, 60, 225, 0.02);
+            border: 1px solid var(--glass-border);
             transition: all 0.3s;
         }
         #ai-tips .tip-item:hover {
             background: rgba(108, 60, 225, 0.04);
-            border-color: rgba(108, 60, 225, 0.04);
+            border-color: rgba(108, 60, 225, 0.06);
             transform: translateY(-2px);
         }
         #ai-tips .tip-item .tip-icon {
@@ -1043,12 +1149,13 @@
             margin-bottom: 6px;
             display: block;
         }
-        #ai-tips .tip-item .title { color: #fff; font-weight: 600; font-size: 14px; }
+        #ai-tips .tip-item .title { color: var(--text-primary); font-weight: 600; font-size: 14px; transition: color var(--theme-transition); }
         #ai-tips .tip-item .text {
             color: var(--text-secondary);
             font-size: 13px;
             margin-top: 6px;
             line-height: 1.5;
+            transition: color var(--theme-transition);
         }
 
         /* ============================================
@@ -1063,15 +1170,6 @@
         .empty-state p { font-size: 15px; }
 
         /* ============================================
-           ЗАГРУЗЧИК (СКЕЛЕТОНЫ)
-           ============================================ */
-        .loader {
-            text-align: center;
-            padding: 60px 0;
-            color: var(--text-secondary);
-        }
-
-        /* ============================================
            КНОПКА НАЗАД
            ============================================ */
         .back-btn {
@@ -1082,7 +1180,7 @@
             cursor: pointer;
             padding: 6px 16px;
             border-radius: 50px;
-            border: 1px solid rgba(108, 60, 225, 0.04);
+            border: 1px solid var(--glass-border);
             transition: all 0.3s;
             margin-bottom: 16px;
             font-size: 13px;
@@ -1093,7 +1191,7 @@
         .back-btn:hover {
             background: rgba(108, 60, 225, 0.04);
             border-color: rgba(108, 60, 225, 0.06);
-            color: #fff;
+            color: var(--text-primary);
         }
 
         /* ============================================
@@ -1102,10 +1200,11 @@
         .footer {
             margin-top: 60px;
             padding-top: 24px;
-            border-top: 1px solid rgba(108, 60, 225, 0.02);
+            border-top: 1px solid var(--glass-border);
             text-align: center;
             color: var(--text-secondary);
             font-size: 13px;
+            transition: all var(--theme-transition);
         }
         .footer a {
             color: var(--text-secondary);
@@ -1133,6 +1232,7 @@
             #cursor-glow { display: none; }
             #ai-tips .tips-grid { grid-template-columns: 1fr 1fr; }
             .nebula { display: none; }
+            .header-actions { width: 100%; justify-content: flex-end; }
         }
 
         @media (max-width: 480px) {
@@ -1141,6 +1241,8 @@
             .search-wrapper input { padding: 14px 18px; font-size: 14px; }
             .btn-primary, .btn-secondary { padding: 12px 24px; font-size: 14px; }
             #ai-tips .tips-grid { grid-template-columns: 1fr; }
+            .header-actions { flex-wrap: wrap; gap: 4px; }
+            .header-btn { font-size: 12px; padding: 6px 12px; }
         }
     </style>
 </head>
@@ -1193,7 +1295,8 @@
                 <span class="logo-sub">· сапфировая библиотека</span>
             </div>
             <div class="header-actions">
-                <button class="header-btn" onclick="openAbout()">О проекте</button>
+                <button class="header-btn" onclick="openAbout()">ℹ️ О проекте</button>
+                <button class="header-btn theme-btn" onclick="toggleTheme()" title="Сменить тему">🌙</button>
             </div>
         </header>
 
@@ -1378,16 +1481,16 @@
                 <p style="font-size:13px;color:#4A5A7A;margin-bottom:16px;">Твой ключ к идеальному запросу для ИИ</p>
 
                 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:360px;margin:20px auto;">
-                    <div style="background:rgba(108,60,225,0.02);border:1px solid rgba(108,60,225,0.03);border-radius:12px;padding:14px 8px;">
-                        <span style="font-size:24px;font-weight:700;color:#1E90FF;display:block;animation:counterAnim 0.6s ease-out;" id="about-total">0</span>
+                    <div style="background:rgba(108,60,225,0.02);border:1px solid var(--glass-border);border-radius:12px;padding:14px 8px;">
+                        <span style="font-family:'Orbitron',sans-serif;font-weight:900;font-size:32px;background:linear-gradient(135deg,#6C3CE1,#1E90FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;animation:counterAnim 0.6s ease-out;" id="about-total">0</span>
                         <span style="font-size:11px;color:#4A5A7A;">Промтов</span>
                     </div>
-                    <div style="background:rgba(108,60,225,0.02);border:1px solid rgba(108,60,225,0.03);border-radius:12px;padding:14px 8px;">
-                        <span style="font-size:24px;font-weight:700;color:#1E90FF;display:block;" id="about-categories">10</span>
+                    <div style="background:rgba(108,60,225,0.02);border:1px solid var(--glass-border);border-radius:12px;padding:14px 8px;">
+                        <span style="font-family:'Orbitron',sans-serif;font-weight:900;font-size:32px;background:linear-gradient(135deg,#6C3CE1,#1E90FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;" id="about-categories">10</span>
                         <span style="font-size:11px;color:#4A5A7A;">Категорий</span>
                     </div>
-                    <div style="background:rgba(108,60,225,0.02);border:1px solid rgba(108,60,225,0.03);border-radius:12px;padding:14px 8px;">
-                        <span style="font-size:24px;font-weight:700;color:#1E90FF;display:block;" id="about-rating">—</span>
+                    <div style="background:rgba(108,60,225,0.02);border:1px solid var(--glass-border);border-radius:12px;padding:14px 8px;">
+                        <span style="font-family:'Orbitron',sans-serif;font-weight:900;font-size:32px;background:linear-gradient(135deg,#6C3CE1,#1E90FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;" id="about-rating">—</span>
                         <span style="font-size:11px;color:#4A5A7A;">Рейтинг</span>
                     </div>
                 </div>
@@ -1446,9 +1549,46 @@
         let ratings = JSON.parse(localStorage.getItem('promptarium_ratings') || '{}');
         let isDataLoaded = false;
         let isCategoryOpen = false;
+        let currentTheme = localStorage.getItem('promptarium_theme') || 'dark';
 
         // ============================================================
-        // 3. ПРОГРЕСС-БАР
+        // 3. ТЕМЫ
+        // ============================================================
+        const themes = {
+            dark: {
+                bg: '#0B0D1A',
+                text: '#F0F4FF',
+                accent: '#6C3CE1',
+                icon: '🌙'
+            },
+            light: {
+                bg: '#F0F4FF',
+                text: '#0B0D1A',
+                accent: '#6C3CE1',
+                icon: '☀️'
+            }
+        };
+
+        function toggleTheme() {
+            currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(currentTheme);
+            localStorage.setItem('promptarium_theme', currentTheme);
+            document.querySelector('.theme-btn').textContent = themes[currentTheme].icon;
+        }
+
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            const t = themes[theme];
+            document.documentElement.style.setProperty('--bg-primary', t.bg);
+            document.documentElement.style.setProperty('--text-primary', t.text);
+            // Обновляем цвета туманностей
+            const hue = theme === 'dark' ? 240 : 210;
+            document.querySelector('.nebula-1').style.background = 
+                `radial-gradient(circle, hsla(${hue}, 70%, 50%, 0.2), transparent 70%)`;
+        }
+
+        // ============================================================
+        // 4. ПРОГРЕСС-БАР
         // ============================================================
         const progressBar = document.getElementById('progress-bar');
 
@@ -1462,7 +1602,7 @@
         }
 
         // ============================================================
-        // 4. ВОЛНЫ (CANVAS)
+        // 5. ВОЛНЫ (CANVAS)
         // ============================================================
         const waveCanvas = document.getElementById('wave-canvas');
         const waveCtx = waveCanvas.getContext('2d');
@@ -1508,7 +1648,7 @@
         drawWaves();
 
         // ============================================================
-        // 5. ЗВЁЗДЫ (ПАРАЛЛАКС)
+        // 6. ЗВЁЗДЫ (ПАРАЛЛАКС)
         // ============================================================
         const starsCanvas = document.getElementById('stars-canvas');
         const starsCtx = starsCanvas.getContext('2d');
@@ -1570,7 +1710,7 @@
         animateStars();
 
         // ============================================================
-        // 6. ТУМАННОСТИ (ПАРАЛЛАКС)
+        // 7. ТУМАННОСТИ (ПАРАЛЛАКС + ЦВЕТ ПРИ СКРОЛЛЕ)
         // ============================================================
         document.addEventListener('mousemove', (e) => {
             const x = (e.clientX / window.innerWidth - 0.5) * 2;
@@ -1581,8 +1721,19 @@
             });
         });
 
+        window.addEventListener('scroll', () => {
+            const scroll = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+            const hue = 240 + scroll * 40;
+            document.querySelector('.nebula-1').style.background = 
+                `radial-gradient(circle, hsla(${hue}, 70%, 50%, 0.2), transparent 70%)`;
+            document.querySelector('.nebula-2').style.background = 
+                `radial-gradient(circle, hsla(${hue + 30}, 70%, 50%, 0.15), transparent 70%)`;
+            document.querySelector('.nebula-3').style.background = 
+                `radial-gradient(circle, hsla(${hue + 60}, 70%, 50%, 0.1), transparent 70%)`;
+        });
+
         // ============================================================
-        // 7. ЗАГРУЗКА
+        // 8. ЗАГРУЗКА
         // ============================================================
         async function loadPrompts() {
             if (isDataLoaded) return;
@@ -1626,21 +1777,21 @@
         }
 
         // ============================================================
-        // 8. РЕНДЕРИНГ
+        // 9. РЕНДЕРИНГ
         // ============================================================
         function getCategoryIcon(id) {
             const icons = {
-                work: `<svg viewBox="0 0 24 24" fill="none" stroke="#6C3CE1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
-                study: `<svg viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6V21M12 6L4 10l8 4 8-4-8-4z"/><path d="M4 10v6l8 4 8-4v-6"/></svg>`,
-                creative: `<svg viewBox="0 0 24 24" fill="none" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L14.5 9.5L22 10L16 15.5L18 23L12 19L6 23L8 15.5L2 10L9.5 9.5L12 2z"/></svg>`,
-                it: `<svg viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>`,
-                life: `<svg viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C12 2 8 6 8 10c0 2.2 1.8 4 4 4s4-1.8 4-4c0-4-4-8-4-8z"/><path d="M12 14v8"/><path d="M8 18h8"/></svg>`,
-                quick: `<svg viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
-                design: `<svg viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
-                law: `<svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
-                business: `<svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
-                photo: `<svg viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
-                psychology: `<svg viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`
+                work: `<svg viewBox="0 0 24 24" fill="none" stroke="#6C3CE1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
+                study: `<svg viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 6V21M12 6L4 10l8 4 8-4-8-4z"/><path d="M4 10v6l8 4 8-4v-6"/></svg>`,
+                creative: `<svg viewBox="0 0 24 24" fill="none" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2L14.5 9.5L22 10L16 15.5L18 23L12 19L6 23L8 15.5L2 10L9.5 9.5L12 2z"/></svg>`,
+                it: `<svg viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>`,
+                life: `<svg viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2C12 2 8 6 8 10c0 2.2 1.8 4 4 4s4-1.8 4-4c0-4-4-8-4-8z"/><path d="M12 14v8"/><path d="M8 18h8"/></svg>`,
+                quick: `<svg viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
+                design: `<svg viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
+                law: `<svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
+                business: `<svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
+                photo: `<svg viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
+                psychology: `<svg viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`
             };
             return icons[id] || '';
         }
@@ -1655,6 +1806,8 @@
         function renderCard(p, isCategory = false) {
             const rating = ratings[p.id] || 0;
             const fav = favorites.includes(p.id);
+            const views = p.views || Math.floor(100 + Math.random() * 900);
+            
             return `
                 <div class="prompt-card" onclick="openPrompt('${p.id}')">
                     <div class="prompt-title">
@@ -1666,7 +1819,7 @@
                     </div>
                     <div class="prompt-meta">
                         <span class="stars" onclick="event.stopPropagation()">${renderStars(p.id, rating)}</span>
-                        <span>👁 ${Math.floor(300 + Math.random() * 1200)}</span>
+                        <span>👁 ${views}</span>
                         <span class="favorite ${fav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${p.id}')">${fav ? '❤️' : '🤍'}</span>
                     </div>
                 </div>
@@ -1802,7 +1955,7 @@
         }
 
         // ============================================================
-        // 9. ИЗБРАННОЕ
+        // 10. ИЗБРАННОЕ
         // ============================================================
         function toggleFavorite(id) {
             const idx = favorites.indexOf(id);
@@ -1812,24 +1965,33 @@
         }
 
         // ============================================================
-        // 10. RIPPLE-ЭФФЕКТ
+        // 11. RIPPLE-ЭФФЕКТ
         // ============================================================
         function createRipple(e, container) {
+            if (!e) return;
             const rect = container.getBoundingClientRect();
             const size = Math.max(rect.width, rect.height);
             const x = (e.clientX || e.pageX || 0) - rect.left - size / 2;
             const y = (e.clientY || e.pageY || 0) - rect.top - size / 2;
             const ripple = document.createElement('span');
             ripple.className = 'ripple';
-            ripple.style.width = ripple.style.height = size + 'px';
-            ripple.style.left = x + 'px';
-            ripple.style.top = y + 'px';
+            ripple.style.cssText = `
+                width: ${size}px; height: ${size}px;
+                left: ${x}px; top: ${y}px;
+                position: absolute; border-radius: 50%;
+                background: rgba(255,255,255,0.1);
+                transform: scale(0);
+                animation: ripple 0.6s ease-out forwards;
+                pointer-events: none;
+            `;
+            container.style.position = 'relative';
+            container.style.overflow = 'hidden';
             container.appendChild(ripple);
             setTimeout(() => ripple.remove(), 600);
         }
 
         // ============================================================
-        // 11. НАВИГАЦИЯ
+        // 12. НАВИГАЦИЯ
         // ============================================================
         window.openCategory = function(catId) {
             isCategoryOpen = true;
@@ -1897,7 +2059,7 @@
         };
 
         // ============================================================
-        // 12. ПОИСК
+        // 13. ПОИСК
         // ============================================================
         window.handleSearch = function() {
             if (isCategoryOpen) return;
@@ -1949,7 +2111,7 @@
         };
 
         // ============================================================
-        // 13. СЛУЧАЙНЫЙ ПРОМТ
+        // 14. СЛУЧАЙНЫЙ ПРОМТ
         // ============================================================
         window.randomPrompt = function(e) {
             if (e) createRipple(e, e.currentTarget);
@@ -1959,7 +2121,7 @@
         };
 
         // ============================================================
-        // 14. МОДАЛКА
+        // 15. МОДАЛКА
         // ============================================================
         window.openPrompt = async function(id) {
             const p = await getPrompt(id);
@@ -2046,7 +2208,7 @@
         };
 
         // ============================================================
-        // 15. О ПРОЕКТЕ
+        // 16. О ПРОЕКТЕ
         // ============================================================
         window.openAbout = function() {
             updateStats();
@@ -2063,13 +2225,17 @@
 
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') { closeModal(); closeAbout(); }
+            if (e.key === 'k' && (e.ctrlKey || e.metaKey)) {
+                e.preventDefault();
+                document.getElementById('searchInput').focus();
+            }
         });
         document.getElementById('modal').addEventListener('click', (e) => {
             if (e.target === e.currentTarget) closeModal();
         });
 
         // ============================================================
-        // 16. СВЕТ ПОД КУРСОРОМ
+        // 17. СВЕТ ПОД КУРСОРОМ
         // ============================================================
         const glow = document.getElementById('cursor-glow');
         document.addEventListener('mousemove', (e) => {
@@ -2084,9 +2250,13 @@
         });
 
         // ============================================================
-        // 17. ЗАПУСК
+        // 18. ЗАПУСК
         // ============================================================
-        document.addEventListener('DOMContentLoaded', loadPrompts);
+        document.addEventListener('DOMContentLoaded', () => {
+            applyTheme(currentTheme);
+            document.querySelector('.theme-btn').textContent = themes[currentTheme].icon;
+            loadPrompts();
+        });
 
         window.prompts = prompts;
         window.ratings = ratings;
@@ -2096,6 +2266,7 @@
         window.renderCategory = renderCategory;
         window.updateStats = updateStats;
         window.createRipple = createRipple;
+        window.toggleTheme = toggleTheme;
     </script>
 </body>
 </html>
