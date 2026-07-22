@@ -8,9 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ============================================
-           ГЛОБАЛЬНЫЙ СБРОС И ПЕРЕМЕННЫЕ
-           ============================================ */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
@@ -24,8 +21,6 @@
             --text-primary: #F0F4FF;
             --text-secondary: #8892B0;
             --glass-border: rgba(108, 60, 225, 0.08);
-            --shadow-color: rgba(108, 60, 225, 0.1);
-            --theme-transition: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         html { scroll-behavior: smooth; }
@@ -38,7 +33,6 @@
             overflow-x: hidden;
             cursor: default;
             line-height: 1.6;
-            transition: background var(--theme-transition), color var(--theme-transition);
         }
 
         body::before {
@@ -48,8 +42,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                radial-gradient(circle at 20px 20px, rgba(108, 60, 225, 0.02) 1px, transparent 1px);
+            background-image: radial-gradient(circle at 20px 20px, rgba(108, 60, 225, 0.02) 1px, transparent 1px);
             background-size: 40px 40px;
             pointer-events: none;
             z-index: 0;
@@ -153,9 +146,6 @@
 
         .fade-in-down { animation: fadeInDown 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
         .fade-in-up { animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-        .fade-in-up-delay-1 { animation: fadeInUp 0.6s ease-out 0.1s forwards; opacity: 0; }
-        .fade-in-up-delay-2 { animation: fadeInUp 0.6s ease-out 0.2s forwards; opacity: 0; }
-        .fade-in-up-delay-3 { animation: fadeInUp 0.6s ease-out 0.3s forwards; opacity: 0; }
         .float-anim { animation: float 4s ease-in-out infinite; }
         .pulse-anim { animation: pulseGlow 3s ease-in-out infinite; }
         .hologram-anim { animation: hologram 4s ease-in-out infinite; }
@@ -177,7 +167,7 @@
             backdrop-filter: blur(30px) saturate(1.4);
             border: 1px solid var(--glass-border);
             border-radius: 20px;
-            transition: all var(--theme-transition);
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255,255,255,0.02);
         }
 
@@ -192,7 +182,6 @@
             text-decoration: none;
             cursor: pointer;
             letter-spacing: 1px;
-            transition: color var(--theme-transition);
         }
         .logo-icon {
             width: 36px;
@@ -203,7 +192,7 @@
         }
         .logo-icon svg { width: 100%; height: 100%; filter: drop-shadow(0 0 20px rgba(108, 60, 225, 0.3)); transition: all 0.5s; }
         .logo:hover .logo-icon svg { animation: hologram 2s ease-in-out infinite; }
-        .logo-sub { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 13px; color: var(--text-secondary); letter-spacing: 0.5px; transition: color var(--theme-transition); }
+        .logo-sub { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 13px; color: var(--text-secondary); letter-spacing: 0.5px; }
 
         .header-actions {
             display: flex;
@@ -223,8 +212,6 @@
             transition: all 0.3s;
             backdrop-filter: blur(10px);
             font-family: 'Inter', sans-serif;
-            position: relative;
-            overflow: hidden;
         }
         .header-btn:hover {
             border-color: rgba(108, 60, 225, 0.2);
@@ -442,8 +429,6 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            position: relative;
-            overflow: hidden;
             box-shadow: 0 4px 30px rgba(108, 60, 225, 0.15);
         }
         .btn-primary:hover { transform: scale(1.05); box-shadow: 0 8px 50px rgba(108, 60, 225, 0.25); }
@@ -463,8 +448,6 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            position: relative;
-            overflow: hidden;
         }
         .btn-secondary:hover { background: rgba(108, 60, 225, 0.06); border-color: rgba(108, 60, 225, 0.2); transform: scale(1.05); }
 
@@ -545,8 +528,6 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            position: relative;
-            overflow: hidden;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255,255,255,0.02);
         }
         .category-card:hover {
@@ -569,12 +550,7 @@
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             animation: cardReveal 0.5s ease-out forwards;
             opacity: 0;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 
-                inset 0 1px 0 rgba(255, 255, 255, 0.02),
-                0 8px 32px rgba(0, 0, 0, 0.15),
-                0 0 0 1px var(--glass-border);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02), 0 8px 32px rgba(0, 0, 0, 0.15), 0 0 0 1px var(--glass-border);
         }
         .prompt-card:hover {
             transform: translateY(-4px) scale(1.005);
@@ -643,9 +619,6 @@
             margin-top: 16px;
         }
 
-        /* ============================================
-           ПРОЧИЕ СТИЛИ
-           ============================================ */
         .section-header {
             display: flex;
             align-items: center;
@@ -738,9 +711,6 @@
         }
         .footer a:hover { color: var(--accent-secondary); }
 
-        /* ============================================
-           АДАПТИВ
-           ============================================ */
         @media (max-width: 768px) {
             .header { flex-direction: column; align-items: flex-start; gap: 12px; padding: 14px 18px; }
             .header-actions { width: 100%; justify-content: flex-end; flex-wrap: wrap; }
@@ -800,7 +770,6 @@
                 <span class="logo-sub">· сапфировая библиотека</span>
             </div>
             <div class="header-actions">
-                <!-- Переключатель Premium -->
                 <div class="premium-toggle" onclick="togglePremiumFilter()" id="premium-toggle">
                     <div class="toggle-track" id="toggle-track">
                         <div class="toggle-thumb" id="toggle-thumb"></div>
@@ -878,7 +847,7 @@
         <!-- ============================================
         ЛАЙФХАКИ + ФУТЕР
         ============================================ -->
-        <div id="ai-tips" style="margin-top:60px;padding:32px;background:var(--bg-card);backdrop-filter:blur(30px) saturate(1.4);border-radius:20px;border:1px solid var(--glass-border);transition:all var(--theme-transition);box-shadow:0 8px 32px rgba(0,0,0,0.1),inset 0 1px 0 rgba(255,255,255,0.02);">
+        <div id="ai-tips" style="margin-top:60px;padding:32px;background:var(--bg-card);backdrop-filter:blur(30px) saturate(1.4);border-radius:20px;border:1px solid var(--glass-border);">
             <div class="tips-header" style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="28" height="28"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
                 <h2 style="font-family:'Orbitron',sans-serif;font-size:20px;color:var(--text-primary);">Лайфхаки для работы с ИИ</h2>
@@ -1666,7 +1635,7 @@
         };
 
         // ============================================================
-        // 11. ОТКРЫТИЕ ПРОМТА (ИСПРАВЛЕНО)
+        // 11. ОТКРЫТИЕ ПРОМТА
         // ============================================================
         window.openPrompt = async function(id) {
             console.log('🔍 Открываем промт:', id);
@@ -1720,7 +1689,7 @@
         };
 
         // ============================================================
-        // 12. РЕНДЕРИНГ МОДАЛКИ (БЕЗ ДУБЛИРОВАНИЯ)
+        // 12. РЕНДЕРИНГ МОДАЛКИ (ТОЛЬКО PREVIEW, БЕЗ ШАБЛОНА)
         // ============================================================
         function renderPromptModal(p) {
             const container = document.getElementById('modal-content');
@@ -1742,11 +1711,7 @@
                 `;
             } else {
                 html += `
-                    <div style="margin-bottom:12px;">
-                        <label style="font-size:13px;color:var(--text-secondary);font-weight:500;display:block;margin-bottom:6px;">📝 Шаблон промта</label>
-                        <div class="modal-preview" id="modal-preview-display" style="background:rgba(108,60,225,0.02);border:1px solid var(--glass-border);border-radius:14px;padding:16px;margin-bottom:18px;font-size:14px;line-height:1.8;color:#E8F0FE;white-space:pre-wrap;word-break:break-word;min-height:60px;">${p.template}</div>
-                    </div>
-                    
+                    <!-- ПЕРЕМЕННЫЕ -->
                     <div class="modal-variables" id="modal-variables-display">
                         ${(p.variables || []).length > 0 ? (p.variables || []).map(v => `
                             <label style="display:block;color:var(--text-secondary);font-size:12px;font-weight:500;margin-bottom:3px;">${v}</label>
@@ -1754,14 +1719,14 @@
                         `).join('') : '<p style="color:#4A5A7A;font-size:13px;">Без переменных</p>'}
                     </div>
                     
+                    <!-- ГОТОВЫЙ ПРОМТ (ТОЛЬКО ЭТОТ БЛОК) -->
                     <div style="margin-bottom:14px;">
-                        <label style="font-size:13px;color:var(--text-secondary);font-weight:500;display:block;margin-bottom:6px;">✅ Готовый промт (с вашими данными)</label>
-                        <div class="modal-preview" id="modal-preview-result" style="background:rgba(108,60,225,0.015);border:1px solid var(--glass-border);border-radius:14px;padding:16px;margin-bottom:18px;font-size:14px;line-height:1.8;color:var(--text-secondary);white-space:pre-wrap;word-break:break-word;min-height:60px;">${p.template}</div>
+                        <label style="font-size:13px;color:var(--text-secondary);font-weight:500;display:block;margin-bottom:6px;">✅ Готовый промт</label>
+                        <div class="modal-preview" id="modal-preview-result" style="background:rgba(108,60,225,0.02);border:1px solid var(--glass-border);border-radius:14px;padding:16px;margin-bottom:18px;font-size:14px;line-height:1.8;color:#E8F0FE;white-space:pre-wrap;word-break:break-word;min-height:80px;max-height:400px;overflow-y:auto;">${p.template}</div>
                     </div>
                     
                     <div class="modal-actions" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
-                        <button class="btn-primary" onclick="copyFinal(event)" style="padding:10px 24px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--accent-primary),var(--accent-secondary));color:#fff;font-weight:600;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;display:inline-flex;align-items:center;gap:6px;">📋 Скопировать готовый</button>
-                        <button class="btn-secondary" onclick="copyTemplate(event)" style="padding:10px 24px;border-radius:50px;border:1px solid var(--glass-border);background:rgba(108,60,225,0.04);color:var(--text-primary);font-weight:600;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;display:inline-flex;align-items:center;gap:6px;">📋 Скопировать шаблон</button>
+                        <button class="btn-primary" onclick="copyFinal(event)" style="padding:10px 24px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--accent-primary),var(--accent-secondary));color:#fff;font-weight:600;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;display:inline-flex;align-items:center;gap:6px;">📋 Скопировать промт</button>
                     </div>
                     
                     <div class="modal-tags" style="display:flex;gap:5px;flex-wrap:wrap;margin-top:12px;">
@@ -1770,7 +1735,7 @@
                     
                     <div class="modal-tip" style="margin-top:14px;padding:14px 16px;background:rgba(108,60,225,0.02);border-radius:12px;border-left:3px solid var(--accent-secondary);">
                         <div class="tip-title" style="display:flex;align-items:center;gap:10px;color:var(--accent-secondary);font-weight:600;font-size:14px;margin-bottom:4px;">💡 Совет по использованию</div>
-                        <div class="tip-text" style="color:var(--text-secondary);font-size:13px;line-height:1.6;">Замени <strong>[переменные]</strong> в квадратных скобках на свои данные. Чем конкретнее запрос — тем точнее ответ ИИ.</div>
+                        <div class="tip-text" style="color:var(--text-secondary);font-size:13px;line-height:1.6;">Заполните поля выше, и готовый промт автоматически обновится.</div>
                     </div>
                     
                     <div class="modal-ai-section" style="margin-top:16px;padding-top:16px;border-top:1px solid var(--glass-border);">
@@ -1811,14 +1776,7 @@
             if (e) e.preventDefault();
             const text = document.getElementById('modal-preview-result')?.textContent;
             if (text) {
-                navigator.clipboard.writeText(text).then(() => showNotification('✅ Готовый промт скопирован!'));
-            }
-        };
-
-        window.copyTemplate = function(e) {
-            if (e) e.preventDefault();
-            if (window.currentPrompt) {
-                navigator.clipboard.writeText(window.currentPrompt.template).then(() => showNotification('✅ Шаблон скопирован!'));
+                navigator.clipboard.writeText(text).then(() => showNotification('✅ Промт скопирован!'));
             }
         };
 
@@ -1860,12 +1818,6 @@
             }
             document.getElementById('auth-modal').classList.add('active');
             document.body.style.overflow = 'hidden';
-            document.getElementById('auth-email').value = '';
-            document.getElementById('auth-password').value = '';
-            if (document.getElementById('auth-name')) {
-                document.getElementById('auth-name').value = '';
-            }
-            document.getElementById('auth-email').focus();
         }
 
         function closeAuthModal() {
@@ -1906,12 +1858,10 @@
             
             const name = currentUser.displayName || currentUser.email || 'User';
             const avatar = currentUser.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=6C3CE1&color=fff&size=80`;
-            const joined = userData.createdAt ? new Date(userData.createdAt.seconds * 1000).toLocaleDateString('ru') : '2026';
             
             document.getElementById('profile-name').textContent = name;
             document.getElementById('profile-email').textContent = currentUser.email;
             document.getElementById('profile-avatar').src = avatar;
-            document.getElementById('profile-joined').textContent = `С нами с ${joined}`;
             
             const favCount = (userData.favorites || []).length;
             const historyCount = (userData.history || []).length;
@@ -1922,7 +1872,7 @@
             document.getElementById('profile-modal').classList.add('active');
             document.body.style.overflow = 'hidden';
             document.getElementById('profile-user-content').innerHTML = `
-                <p style="color:#4A5A7A;font-size:14px;">👋 Привет, ${name}! Ваши данные загружены.</p>
+                <p style="color:#4A5A7A;font-size:14px;">👋 Привет, ${name}!</p>
                 <p style="color:#4A5A7A;font-size:13px;margin-top:4px;">📊 В избранном: ${favCount} промтов</p>
                 <p style="color:#4A5A7A;font-size:13px;">📜 Просмотрено: ${historyCount} промтов</p>
                 <p style="color:#4A5A7A;font-size:13px;">${isPremium ? '⭐ У вас есть Premium!' : '🔓 Купите Premium для доступа к эксклюзивным промтам'}</p>
@@ -1969,10 +1919,6 @@
                     modal.classList.remove('active');
                     document.body.style.overflow = 'auto';
                 });
-            }
-            if (e.key === 'k' && (e.ctrlKey || e.metaKey)) {
-                e.preventDefault();
-                document.getElementById('searchInput').focus();
             }
         });
 
@@ -2217,7 +2163,6 @@
         // ============================================================
         // 22. ФОНОВЫЕ ЭФФЕКТЫ
         // ============================================================
-        // Волны
         const waveCanvas = document.getElementById('wave-canvas');
         const waveCtx = waveCanvas.getContext('2d');
         let waveW, waveH, waveTime = 0;
@@ -2332,12 +2277,6 @@
         document.addEventListener('mousemove', (e) => {
             glow.style.left = e.clientX + 'px';
             glow.style.top = e.clientY + 'px';
-        });
-
-        document.querySelectorAll('.category-card, .prompt-card, .btn-primary, .btn-secondary, .search-wrapper input, .header-btn, .back-btn').forEach(el => {
-            if (!el) return;
-            el.addEventListener('mouseenter', () => glow.classList.add('active'));
-            el.addEventListener('mouseleave', () => glow.classList.remove('active'));
         });
 
         // ============================================================
