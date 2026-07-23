@@ -8,9 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* ============================================
-           ГЛОБАЛЬНЫЙ СБРОС И ПЕРЕМЕННЫЕ
-           ============================================ */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
@@ -21,6 +18,8 @@
             --accent-secondary: #1E90FF;
             --accent-rose: #FF2D78;
             --accent-gold: #FBBF24;
+            --accent-green: #34D399;
+            --accent-orange: #F59E0B;
             --text-primary: #F0F4FF;
             --text-secondary: #8892B0;
             --glass-border: rgba(108, 60, 225, 0.08);
@@ -248,12 +247,7 @@
             border: 2px solid var(--accent-primary);
         }
 
-        /* Иконки в кнопках */
-        .icon-svg {
-            width: 18px;
-            height: 18px;
-            flex-shrink: 0;
-        }
+        .icon-svg { width: 18px; height: 18px; flex-shrink: 0; }
         .icon-svg.gold { color: var(--accent-gold); }
 
         /* ============================================
@@ -297,21 +291,17 @@
             transition: all 0.3s;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
-        .premium-toggle .toggle-track.active .toggle-thumb {
-            left: 20px;
-        }
+        .premium-toggle .toggle-track.active .toggle-thumb { left: 20px; }
         .premium-toggle .toggle-label {
             font-size: 12px;
             font-weight: 600;
             color: var(--text-secondary);
             white-space: nowrap;
         }
-        .premium-toggle .toggle-label.active {
-            color: var(--accent-gold);
-        }
+        .premium-toggle .toggle-label.active { color: var(--accent-gold); }
 
         /* ============================================
-           PREMIUM БЭЙДЖ (золотая звезда SVG)
+           PREMIUM БЭЙДЖ
            ============================================ */
         .premium-badge {
             display: inline-flex;
@@ -328,11 +318,7 @@
             margin-left: 6px;
             vertical-align: middle;
         }
-        .premium-badge svg {
-            width: 12px;
-            height: 12px;
-            fill: #0B0D1A;
-        }
+        .premium-badge svg { width: 12px; height: 12px; fill: #0B0D1A; }
         .prompt-card.premium-card {
             border-color: rgba(251, 191, 36, 0.2);
             box-shadow: 0 0 30px rgba(251, 191, 36, 0.03), inset 0 1px 0 rgba(255,255,255,0.02), 0 0 0 1px rgba(251, 191, 36, 0.05);
@@ -409,15 +395,7 @@
             border: 1px solid rgba(251, 191, 36, 0.06);
             border-radius: 16px;
         }
-        .premium-lock .icon {
-            display: block;
-            margin-bottom: 12px;
-        }
-        .premium-lock .icon svg {
-            width: 56px;
-            height: 56px;
-            fill: var(--accent-gold);
-        }
+        .premium-lock .icon svg { width: 56px; height: 56px; fill: var(--accent-gold); }
         .premium-lock h3 {
             font-family: 'Orbitron', sans-serif;
             font-size: 18px;
@@ -513,22 +491,13 @@
             gap: 16px;
             margin: 4px 0;
         }
-        .auth-divider span {
-            flex: 1;
-            height: 1px;
-            background: var(--glass-border);
-        }
+        .auth-divider span { flex: 1; height: 1px; background: var(--glass-border); }
         .auth-divider .text { color: var(--text-secondary); font-size: 12px; white-space: nowrap; }
         .auth-switch { text-align: center; margin-top: 8px; color: var(--text-secondary); font-size: 14px; }
         .auth-switch a { color: var(--accent-secondary); cursor: pointer; text-decoration: none; }
         .auth-switch a:hover { text-decoration: underline; }
 
-        .auth-header-icon {
-            width: 56px;
-            height: 56px;
-            display: block;
-            margin: 0 auto 8px;
-        }
+        .auth-header-icon { width: 56px; height: 56px; display: block; margin: 0 auto 8px; }
 
         /* ============================================
            ПРОФИЛЬ
@@ -556,29 +525,65 @@
         .profile-stat .label { font-size: 12px; color: var(--text-secondary); }
 
         /* ============================================
-           КАРТОЧКИ
+           КАРТОЧКИ КАТЕГОРИЙ (ИСПРАВЛЕНЫ)
            ============================================ */
         .category-card {
             background: var(--bg-card);
             backdrop-filter: blur(30px) saturate(1.4);
             border: 1px solid var(--glass-border);
             border-radius: 16px;
-            padding: 24px 12px 20px;
+            padding: 16px 6px 14px;
             text-align: center;
             cursor: pointer;
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255,255,255,0.02);
+            min-height: 90px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         .category-card:hover {
-            transform: translateY(-8px) scale(1.02);
+            transform: translateY(-6px) scale(1.02);
             border-color: rgba(108, 60, 225, 0.2);
             box-shadow: 0 12px 50px rgba(108, 60, 225, 0.06), inset 0 1px 0 rgba(255,255,255,0.03);
         }
-        .category-card .name { font-weight: 600; font-size: 14px; display: block; color: var(--text-primary); }
-        .category-card .count { font-size: 12px; color: var(--text-secondary); margin-top: 4px; display: block; }
-        .category-card svg { width: 36px; height: 36px; display: block; margin: 0 auto 10px; transition: all 0.3s; }
+        .category-card .name {
+            font-weight: 600;
+            font-size: 12px;
+            display: block;
+            color: var(--text-primary);
+            line-height: 1.2;
+            word-break: break-word;
+            max-width: 100%;
+            padding: 0 2px;
+        }
+        .category-card .count {
+            font-size: 10px;
+            color: var(--text-secondary);
+            margin-top: 3px;
+            display: block;
+        }
+        .category-card svg {
+            width: 28px;
+            height: 28px;
+            display: block;
+            margin: 0 auto 6px;
+            transition: all 0.3s;
+            flex-shrink: 0;
+        }
         .category-card:hover svg { transform: scale(1.15) rotate(-5deg); }
 
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* ============================================
+           КАРТОЧКИ ПРОМТОВ
+           ============================================ */
         .prompt-card {
             background: var(--bg-card);
             backdrop-filter: blur(30px) saturate(1.4);
@@ -644,20 +649,10 @@
             display: flex;
             align-items: center;
         }
-        .prompt-card .prompt-meta .favorite svg {
-            width: 20px;
-            height: 20px;
-            transition: all 0.3s;
-        }
+        .prompt-card .prompt-meta .favorite svg { width: 20px; height: 20px; transition: all 0.3s; }
         .prompt-card .prompt-meta .favorite.active svg { fill: var(--accent-rose); stroke: var(--accent-rose); animation: heartBeat 0.3s ease-out; }
         .prompt-card .prompt-meta .favorite:hover svg { transform: scale(1.15); }
 
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 14px;
-            margin-bottom: 20px;
-        }
         .prompts-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -665,6 +660,9 @@
             margin-top: 16px;
         }
 
+        /* ============================================
+           ПРОЧИЕ СТИЛИ
+           ============================================ */
         .section-header {
             display: flex;
             align-items: center;
@@ -677,11 +675,7 @@
             font-size: clamp(18px, 2.5vw, 26px);
             color: var(--text-primary);
         }
-        .section-header .line {
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, var(--glass-border), transparent);
-        }
+        .section-header .line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--glass-border), transparent); }
         .section-header .badge {
             font-size: 12px;
             color: var(--text-secondary);
@@ -758,7 +752,28 @@
         .footer a:hover { color: var(--accent-secondary); }
 
         /* ============================================
-           ИКОНКИ В МОДАЛКЕ
+           СКЕЛЕТОНЫ
+           ============================================ */
+        .skeleton {
+            background: rgba(17, 21, 42, 0.3);
+            border-radius: 12px;
+            padding: 22px 20px 20px;
+            border: 1px solid var(--glass-border);
+            animation: skeletonShimmer 1.5s ease-in-out infinite;
+            background-image: linear-gradient(90deg, rgba(17, 21, 42, 0.3) 0%, rgba(30, 40, 70, 0.5) 50%, rgba(17, 21, 42, 0.3) 100%);
+            background-size: 200% 100%;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .skeleton .skeleton-line { height: 12px; background: rgba(108, 60, 225, 0.03); border-radius: 6px; width: 80%; }
+        .skeleton .skeleton-line.short { width: 50%; }
+        .skeleton .skeleton-line.long { width: 95%; }
+        .skeleton .skeleton-line:last-child { width: 30%; }
+
+        /* ============================================
+           МОДАЛКА — ИКОНКИ
            ============================================ */
         .modal-tip .tip-title {
             display: flex;
@@ -769,13 +784,7 @@
             font-size: 14px;
             margin-bottom: 4px;
         }
-        .modal-tip .tip-title svg {
-            width: 20px;
-            height: 20px;
-            flex-shrink: 0;
-            stroke: var(--accent-secondary);
-            fill: none;
-        }
+        .modal-tip .tip-title svg { width: 20px; height: 20px; flex-shrink: 0; stroke: var(--accent-secondary); fill: none; }
         .modal-ai-buttons button {
             padding: 8px 16px;
             border-radius: 30px;
@@ -797,11 +806,7 @@
             color: var(--text-primary);
             transform: translateY(-2px);
         }
-        .modal-ai-buttons button svg {
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-        }
+        .modal-ai-buttons button svg { width: 16px; height: 16px; flex-shrink: 0; }
 
         /* ============================================
            АДАПТИВ
@@ -809,10 +814,10 @@
         @media (max-width: 768px) {
             .header { flex-direction: column; align-items: flex-start; gap: 12px; padding: 14px 18px; }
             .header-actions { width: 100%; justify-content: flex-end; flex-wrap: wrap; }
-            .categories-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
-            .category-card { padding: 16px 8px 14px; }
-            .category-card svg { width: 28px; height: 28px; }
-            .category-card .name { font-size: 12px; }
+            .categories-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+            .category-card { padding: 14px 4px 12px; min-height: 80px; }
+            .category-card .name { font-size: 11px; }
+            .category-card svg { width: 24px; height: 24px; margin-bottom: 4px; }
             .prompts-grid { grid-template-columns: 1fr; }
             .modal { padding: 24px 18px; margin: 10px; }
             #cursor-glow { display: none; }
@@ -820,7 +825,10 @@
         }
         @media (max-width: 480px) {
             .container { padding: 16px 12px 40px; }
-            .categories-grid { grid-template-columns: repeat(2, 1fr); }
+            .categories-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+            .category-card { padding: 12px 4px 10px; min-height: 70px; }
+            .category-card .name { font-size: 10px; }
+            .category-card svg { width: 20px; height: 20px; margin-bottom: 3px; }
             .search-wrapper input { padding: 14px 18px; font-size: 14px; }
             .header-actions { flex-wrap: wrap; gap: 4px; }
             .header-btn { font-size: 12px; padding: 6px 12px; }
@@ -865,28 +873,23 @@
                 <span class="logo-sub">· сапфировая библиотека</span>
             </div>
             <div class="header-actions">
-                <!-- Premium Toggle -->
                 <div class="premium-toggle" onclick="togglePremiumFilter()" id="premium-toggle">
                     <div class="toggle-track" id="toggle-track">
                         <div class="toggle-thumb" id="toggle-thumb"></div>
                     </div>
                     <span class="toggle-label" id="toggle-label">Premium</span>
                 </div>
-                <!-- Premium Button -->
                 <button class="header-btn premium-btn" onclick="openPremiumModal()">
                     <svg class="icon-svg gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                     Premium
                 </button>
-                <!-- Info Button -->
                 <button class="header-btn" onclick="openAbout()">
                     <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
                 </button>
-                <!-- Auth -->
                 <div id="auth-section">
                     <button onclick="openAuthModal()" class="header-btn">Войти</button>
                     <button onclick="openAuthModal('register')" class="header-btn" style="background:linear-gradient(135deg,#6C3CE1,#1E90FF);color:#fff;border:none;">Регистрация</button>
                 </div>
-                <!-- User -->
                 <div id="user-section" style="display:none;">
                     <button onclick="openProfileModal()" class="header-btn user-btn" id="user-btn">
                         <img id="user-avatar" src="https://ui-avatars.com/api/?name=U&background=6C3CE1&color=fff&size=28" alt="User">
@@ -924,11 +927,11 @@
                 <div class="loader" id="loader-skeleton">
                     <div class="prompts-grid">
                         ${Array(6).fill(0).map(() => `
-                            <div class="skeleton" style="background:rgba(17,21,42,0.3);border-radius:12px;padding:22px 20px 20px;border:1px solid var(--glass-border);animation:skeletonShimmer 1.5s ease-in-out infinite;background-image:linear-gradient(90deg,rgba(17,21,42,0.3) 0%,rgba(30,40,70,0.5) 50%,rgba(17,21,42,0.3) 100%);background-size:200% 100%;min-height:140px;display:flex;flex-direction:column;gap:12px;">
-                                <div class="skeleton-line" style="height:12px;background:rgba(108,60,225,0.03);border-radius:6px;width:80%;"></div>
-                                <div class="skeleton-line" style="height:12px;background:rgba(108,60,225,0.03);border-radius:6px;width:50%;"></div>
-                                <div class="skeleton-line" style="height:12px;background:rgba(108,60,225,0.03);border-radius:6px;width:95%;"></div>
-                                <div class="skeleton-line" style="height:12px;background:rgba(108,60,225,0.03);border-radius:6px;width:30%;"></div>
+                            <div class="skeleton">
+                                <div class="skeleton-line long"></div>
+                                <div class="skeleton-line"></div>
+                                <div class="skeleton-line short"></div>
+                                <div class="skeleton-line" style="width:40%;"></div>
                             </div>
                         `).join('')}
                     </div>
@@ -987,7 +990,7 @@
     </div>
 
     <!-- ============================================
-    МОДАЛКА ПРОМТА
+    МОДАЛКИ
     ============================================ -->
     <div class="modal-overlay" id="modal">
         <div class="modal">
@@ -996,9 +999,6 @@
         </div>
     </div>
 
-    <!-- ============================================
-    МОДАЛКА АВТОРИЗАЦИИ
-    ============================================ -->
     <div class="modal-overlay" id="auth-modal">
         <div class="modal" style="max-width:440px;">
             <button class="modal-close" onclick="closeAuthModal()">✕</button>
@@ -1033,9 +1033,6 @@
         </div>
     </div>
 
-    <!-- ============================================
-    МОДАЛКА ПРОФИЛЯ
-    ============================================ -->
     <div class="modal-overlay" id="profile-modal">
         <div class="modal" style="max-width:600px;">
             <button class="modal-close" onclick="closeProfileModal()">✕</button>
@@ -1091,9 +1088,6 @@
         </div>
     </div>
 
-    <!-- ============================================
-    МОДАЛКА PREMIUM
-    ============================================ -->
     <div class="modal-overlay" id="premium-modal">
         <div class="modal" style="max-width:520px;">
             <button class="modal-close" onclick="closePremiumModal()">✕</button>
@@ -1127,9 +1121,6 @@
         </div>
     </div>
 
-    <!-- ============================================
-    МОДАЛКА "О ПРОЕКТЕ"
-    ============================================ -->
     <div class="modal-overlay" id="about-modal">
         <div class="modal" style="max-width:520px;">
             <button class="modal-close" onclick="closeAbout()">✕</button>
@@ -1144,7 +1135,7 @@
                         <span style="font-size:11px;color:#4A5A7A;">Промтов</span>
                     </div>
                     <div style="background:rgba(108,60,225,0.02);border:1px solid var(--glass-border);border-radius:12px;padding:14px 8px;">
-                        <span style="font-family:'Orbitron',sans-serif;font-weight:900;font-size:32px;background:linear-gradient(135deg,#6C3CE1,#1E90FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;">10</span>
+                        <span style="font-family:'Orbitron',sans-serif;font-weight:900;font-size:32px;background:linear-gradient(135deg,#6C3CE1,#1E90FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;">12</span>
                         <span style="font-size:11px;color:#4A5A7A;">Категорий</span>
                     </div>
                     <div style="background:rgba(108,60,225,0.02);border:1px solid var(--glass-border);border-radius:12px;padding:14px 8px;">
@@ -1202,23 +1193,7 @@
         let showOnlyPremium = false;
 
         // ============================================================
-        // 3. SVG-ИКОНКИ ДЛЯ КАРТОЧЕК
-        // ============================================================
-        function getFavoriteIcon(fav) {
-            return fav 
-                ? `<svg viewBox="0 0 24 24" fill="#FF2D78" stroke="#FF2D78" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`
-                : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
-        }
-
-        function getPremiumBadge() {
-            return `<span class="premium-badge">
-                <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                Premium
-            </span>`;
-        }
-
-        // ============================================================
-        // 4. КАТЕГОРИИ
+        // 3. КАТЕГОРИИ (ОБНОВЛЕНЫ)
         // ============================================================
         const categories = [
             { id: 'work', name: 'Работа и бизнес' },
@@ -1231,8 +1206,34 @@
             { id: 'law', name: 'Юриспруденция' },
             { id: 'business', name: 'Предпринимательство' },
             { id: 'photo', name: 'Фотография' },
-            { id: 'psychology', name: 'Психология' }
+            { id: 'psychology', name: 'Психология' },
+            // НОВЫЕ КАТЕГОРИИ
+            { id: 'health', name: 'Здоровье' },
+            { id: 'culinary', name: 'Кулинария' }
         ];
+
+        // ============================================================
+        // 4. ИКОНКИ КАТЕГОРИЙ (ОБНОВЛЕНЫ)
+        // ============================================================
+        function getCategoryIcon(id) {
+            const icons = {
+                work: `<svg viewBox="0 0 24 24" fill="none" stroke="#6C3CE1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
+                study: `<svg viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 6V21M12 6L4 10l8 4 8-4-8-4z"/><path d="M4 10v6l8 4 8-4v-6"/></svg>`,
+                creative: `<svg viewBox="0 0 24 24" fill="none" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2L14.5 9.5L22 10L16 15.5L18 23L12 19L6 23L8 15.5L2 10L9.5 9.5L12 2z"/></svg>`,
+                it: `<svg viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>`,
+                life: `<svg viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2C12 2 8 6 8 10c0 2.2 1.8 4 4 4s4-1.8 4-4c0-4-4-8-4-8z"/><path d="M12 14v8"/><path d="M8 18h8"/></svg>`,
+                quick: `<svg viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
+                design: `<svg viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
+                law: `<svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
+                business: `<svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
+                photo: `<svg viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
+                psychology: `<svg viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
+                // НОВЫЕ ИКОНКИ
+                health: `<svg viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
+                culinary: `<svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>`
+            };
+            return icons[id] || '';
+        }
 
         // ============================================================
         // 5. PREMIUM-ПРОМТЫ (список ID)
@@ -1269,7 +1270,23 @@
         }
 
         // ============================================================
-        // 6. АВТОРИЗАЦИЯ
+        // 6. SVG-ИКОНКИ ДЛЯ КАРТОЧЕК
+        // ============================================================
+        function getFavoriteIcon(fav) {
+            return fav 
+                ? `<svg viewBox="0 0 24 24" fill="#FF2D78" stroke="#FF2D78" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`
+                : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`;
+        }
+
+        function getPremiumBadge() {
+            return `<span class="premium-badge">
+                <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                Premium
+            </span>`;
+        }
+
+        // ============================================================
+        // 7. АВТОРИЗАЦИЯ
         // ============================================================
         auth.onAuthStateChanged(async (user) => {
             if (user) {
@@ -1430,7 +1447,7 @@
         }
 
         // ============================================================
-        // 7. ПЕРЕКЛЮЧАТЕЛЬ PREMIUM
+        // 8. ПЕРЕКЛЮЧАТЕЛЬ PREMIUM
         // ============================================================
         function togglePremiumFilter() {
             showOnlyPremium = !showOnlyPremium;
@@ -1451,7 +1468,7 @@
         }
 
         // ============================================================
-        // 8. ЗАГРУЗКА ПРОМТОВ
+        // 9. ЗАГРУЗКА ПРОМТОВ
         // ============================================================
         async function loadPrompts() {
             if (isDataLoaded) return;
@@ -1484,7 +1501,7 @@
         }
 
         // ============================================================
-        // 9. РЕНДЕРИНГ
+        // 10. РЕНДЕРИНГ
         // ============================================================
         function getFilteredPrompts() {
             if (showOnlyPremium) {
@@ -1534,11 +1551,11 @@
                 container.innerHTML = `
                     <div class="prompts-grid">
                         ${Array(6).fill(0).map(() => `
-                            <div class="skeleton" style="background:rgba(17,21,42,0.3);border-radius:12px;padding:22px 20px 20px;border:1px solid var(--glass-border);animation:skeletonShimmer 1.5s ease-in-out infinite;background-image:linear-gradient(90deg,rgba(17,21,42,0.3) 0%,rgba(30,40,70,0.5) 50%,rgba(17,21,42,0.3) 100%);background-size:200% 100%;min-height:140px;display:flex;flex-direction:column;gap:12px;">
-                                <div class="skeleton-line" style="height:12px;background:rgba(108,60,225,0.03);border-radius:6px;width:80%;"></div>
-                                <div class="skeleton-line" style="height:12px;background:rgba(108,60,225,0.03);border-radius:6px;width:50%;"></div>
-                                <div class="skeleton-line" style="height:12px;background:rgba(108,60,225,0.03);border-radius:6px;width:95%;"></div>
-                                <div class="skeleton-line" style="height:12px;background:rgba(108,60,225,0.03);border-radius:6px;width:30%;"></div>
+                            <div class="skeleton">
+                                <div class="skeleton-line long"></div>
+                                <div class="skeleton-line"></div>
+                                <div class="skeleton-line short"></div>
+                                <div class="skeleton-line" style="width:40%;"></div>
                             </div>
                         `).join('')}
                     </div>
@@ -1591,23 +1608,6 @@
             attachStarEvents(container);
         }
 
-        function getCategoryIcon(id) {
-            const icons = {
-                work: `<svg viewBox="0 0 24 24" fill="none" stroke="#6C3CE1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>`,
-                study: `<svg viewBox="0 0 24 24" fill="none" stroke="#A78BFA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 6V21M12 6L4 10l8 4 8-4-8-4z"/><path d="M4 10v6l8 4 8-4v-6"/></svg>`,
-                creative: `<svg viewBox="0 0 24 24" fill="none" stroke="#F472B6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2L14.5 9.5L22 10L16 15.5L18 23L12 19L6 23L8 15.5L2 10L9.5 9.5L12 2z"/></svg>`,
-                it: `<svg viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>`,
-                life: `<svg viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2C12 2 8 6 8 10c0 2.2 1.8 4 4 4s4-1.8 4-4c0-4-4-8-4-8z"/><path d="M12 14v8"/><path d="M8 18h8"/></svg>`,
-                quick: `<svg viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
-                design: `<svg viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
-                law: `<svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
-                business: `<svg viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
-                photo: `<svg viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`,
-                psychology: `<svg viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="breathe"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>`
-            };
-            return icons[id] || '';
-        }
-
         function attachStarEvents(container) {
             container.querySelectorAll('.star').forEach(el => {
                 el.addEventListener('click', function(e) {
@@ -1653,7 +1653,7 @@
         }
 
         // ============================================================
-        // 10. НАВИГАЦИЯ
+        // 11. НАВИГАЦИЯ
         // ============================================================
         window.openCategory = function(catId) {
             isCategoryOpen = true;
@@ -1724,7 +1724,7 @@
         };
 
         // ============================================================
-        // 11. ПОИСК
+        // 12. ПОИСК
         // ============================================================
         window.handleSearch = function() {
             if (isCategoryOpen) return;
@@ -1774,7 +1774,7 @@
         };
 
         // ============================================================
-        // 12. ОТКРЫТИЕ ПРОМТА
+        // 13. ОТКРЫТИЕ ПРОМТА
         // ============================================================
         window.openPrompt = async function(id) {
             console.log('🔍 Открываем промт:', id);
@@ -1828,7 +1828,7 @@
         };
 
         // ============================================================
-        // 13. РЕНДЕРИНГ МОДАЛКИ (С ИКОНКАМИ)
+        // 14. РЕНДЕРИНГ МОДАЛКИ
         // ============================================================
         function renderPromptModal(p) {
             const container = document.getElementById('modal-content');
@@ -1919,7 +1919,7 @@
         }
 
         // ============================================================
-        // 14. ОБНОВЛЕНИЕ PREVIEW
+        // 15. ОБНОВЛЕНИЕ PREVIEW
         // ============================================================
         window.updatePromptPreview = function() {
             if (!window.currentPrompt) return;
@@ -1933,7 +1933,7 @@
         };
 
         // ============================================================
-        // 15. КОПИРОВАНИЕ
+        // 16. КОПИРОВАНИЕ
         // ============================================================
         window.copyFinal = function(e) {
             if (e) e.preventDefault();
@@ -1954,7 +1954,7 @@
         };
 
         // ============================================================
-        // 16. МОДАЛКИ
+        // 17. МОДАЛКИ
         // ============================================================
         function closeModal() {
             document.getElementById('modal').classList.remove('active');
@@ -2086,7 +2086,7 @@
         });
 
         // ============================================================
-        // 17. ИЗБРАННОЕ
+        // 18. ИЗБРАННОЕ
         // ============================================================
         window.toggleFavorite = async function(id) {
             if (!currentUser) {
@@ -2200,7 +2200,7 @@
         }
 
         // ============================================================
-        // 18. PREMIUM ПОДПИСКА
+        // 19. PREMIUM ПОДПИСКА
         // ============================================================
         async function handleSubscribe() {
             if (!currentUser) {
@@ -2227,7 +2227,7 @@
         }
 
         // ============================================================
-        // 19. СЛУЧАЙНЫЙ ПРОМТ
+        // 20. СЛУЧАЙНЫЙ ПРОМТ
         // ============================================================
         window.randomPrompt = function(e) {
             if (e) e.preventDefault();
@@ -2245,7 +2245,7 @@
         };
 
         // ============================================================
-        // 20. ПРОГРЕСС-БАР
+        // 21. ПРОГРЕСС-БАР
         // ============================================================
         function updateProgress(value) {
             const bar = document.getElementById('progress-bar');
@@ -2261,7 +2261,7 @@
         }
 
         // ============================================================
-        // 21. СТАТИСТИКА
+        // 22. СТАТИСТИКА
         // ============================================================
         function updateStats() {
             const total = document.getElementById('about-total');
@@ -2291,7 +2291,7 @@
         }
 
         // ============================================================
-        // 22. УВЕДОМЛЕНИЯ
+        // 23. УВЕДОМЛЕНИЯ
         // ============================================================
         function showNotification(message) {
             const div = document.createElement('div');
@@ -2324,7 +2324,7 @@
         }
 
         // ============================================================
-        // 23. ФОНОВЫЕ ЭФФЕКТЫ
+        // 24. ФОНОВЫЕ ЭФФЕКТЫ
         // ============================================================
         const waveCanvas = document.getElementById('wave-canvas');
         const waveCtx = waveCanvas.getContext('2d');
@@ -2443,7 +2443,7 @@
         });
 
         // ============================================================
-        // 24. ЗАПУСК
+        // 25. ЗАПУСК
         // ============================================================
         document.addEventListener('DOMContentLoaded', () => {
             loadPrompts();
