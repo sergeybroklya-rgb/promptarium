@@ -214,6 +214,10 @@ nav{position:sticky;top:14px;z-index:500;display:flex;align-items:center;justify
 .mvar input{margin-bottom:11px}
 .ain{margin-bottom:13px}
 .ain::placeholder,.mvar input::placeholder{color:var(--mut)}
+.ic{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:inline-block;vertical-align:-2px;flex-shrink:0}
+.ic.gold{stroke:#fbbf24}
+.views{display:inline-flex;align-items:center;gap:5px}
+.views .ic{width:14px;height:14px}
 .mpreview{background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:15px;padding:17px;font-size:13.5px;line-height:1.85;font-family:ui-monospace,'Cascadia Code',Consolas,monospace;white-space:pre-wrap;word-break:break-word;max-height:360px;overflow-y:auto;margin:9px 0 15px}
 [data-theme="light"] .mpreview{background:rgba(15,15,40,.05)}
 .mpreview .hl{color:var(--a1);font-weight:700;background:rgba(139,92,246,.14);border-radius:5px;padding:0 5px}
@@ -401,9 +405,24 @@ footer a:hover{color:var(--a1)}
 
 <script>
 /* ================= FIREBASE ================= */
-const firebaseConfig={apiKey:"AIzaSyCr3Jg5y6AzukPXS31k2FOYIqKZJqZv5Yc",authDomain:"promptarium-67efb.firebaseapp.com",projectId:"promptarium-67efb",storageBucket:"promptarium-67efb.firebasestorage.app",messagingSenderId:"501668213896",appId:"1:501668213896:web:47c2dc2fb22ee5cf6f5b3d"};
-if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
-const auth=firebase.auth(),db=firebase.firestore(),gprov=new firebase.auth.GoogleAuthProvider();
+/* Демо-режим: работаем даже без Firebase */
+let FB_OK=true, auth=null, db=null, gprov=null;
+const demoPrompts=[
+ {id:'demo-work-001',category:'work',title:'Сопроводительное письмо',description:'Письмо под конкретную вакансию',tags:['карьера','письмо'],variables:['должность','компания','опыт'],template:'Напиши сопроводительное письмо на должность [должность] в компанию [компания]. Мой опыт: [опыт]. Тон — уверенный, но не высокомерный. Объём — до 200 слов.'},
+ {id:'demo-it-001',category:'it',title:'Объясни код простыми словами',description:'Разбор любого фрагмента кода',tags:['код','обучение'],variables:['язык','код'],template:'Объясни простыми словами, что делает этот код на [язык]:\n[код]\nРазбери построчно, укажи возможные проблемы и как улучшить.'},
+ {id:'demo-creative-001',category:'creative',title:'Идеи для контента',description:'20 идей постов по нише',tags:['идеи','контент'],variables:['ниша'],template:'Придумай 20 идей для постов в блоге по нише [ниша]. Сгруппируй по форматам: обучающие, развлекательные, вовлекающие. Для каждой идеи — цепляющий заголовок.'},
+ {id:'demo-study-001',category:'study',title:'Выучить тему с нуля',description:'План изучения любой темы',tags:['учёба','план'],variables:['тема','срок'],template:'Составь план изучения темы [тема] с нуля за [срок]. Разбей по дням, укажи ресурсы и практические задания к каждому блоку.'},
+ {id:'demo-life-001',category:'life',title:'Письмо сложному человеку',description:'Тактичное сообщение в конфликте',tags:['общение','психология'],variables:['ситуация','человек'],template:'Помоги написать тактичное сообщение [человек] в ситуации: [ситуация]. Тон — спокойный, без обвинений, с фокусом на решение. Предложи 2 варианта: мягкий и прямой.'}
+];
+try{
+  if(typeof firebase==='undefined')throw new Error('Firebase SDK не загружен');
+  const firebaseConfig={apiKey:"AIzaSyCr3Jg5y6AzukPXS31k2FOYIqKZJqZv5Yc",authDomain:"promptarium-67efb.firebaseapp.com",projectId:"promptarium-67efb",storageBucket:"promptarium-67efb.firebasestorage.app",messagingSenderId:"501668213896",appId:"1:501668213896:web:47c2dc2fb22ee5cf6f5b3d"};
+  if(!firebase.apps.length)firebase.initializeApp(firebaseConfig);
+  auth=firebase.auth();db=firebase.firestore();gprov=new firebase.auth.GoogleAuthProvider();
+}catch(e){
+  FB_OK=false;
+  console.warn('⚠️ Демо-режим:',e.message);
+}
 
 /* ================= СОСТОЯНИЕ ================= */
 let currentUser=null,userData=null,isPremium=false,isLogin=true;
@@ -473,13 +492,21 @@ const filtered=()=>onlyPremium?prompts.filter(p=>isPrem(p.id)):prompts;
 /* ================= ЗАГРУЗКА ================= */
 async function loadPrompts(){
   if(loaded)return;prog(15);
+  if(!FB_OK){
+    prompts=demoPrompts.slice();loaded=true;
+    renderHome();updStats();prog(100);setTimeout(()=>prog(0),400);
+    notify('Демо-режим: показаны встроенные промты. Firebase недоступен.');
+    return;
+  }
   try{
     const snap=await db.collection('prompts').get();prog(60);
     prompts=[];snap.forEach(d=>{const v=d.data();if(v.title&&v.title.trim())prompts.push({id:d.id,...v})});
     loaded=true;prog(85);renderHome();updStats();prog(100);setTimeout(()=>prog(0),400);
   }catch(e){
     console.error(e);prog(0);
-    document.getElementById('main-content').innerHTML='<div class="empty"><p>Ошибка загрузки. Проверь интернет и Firebase.</p></div>';
+    prompts=demoPrompts.slice();loaded=true;
+    renderHome();updStats();
+    notify('Не удалось загрузить базу — показаны демо-промты');
   }
 }
 
@@ -669,7 +696,7 @@ window.toggleFav=async function(id){
 };
 
 /* ================= AUTH ================= */
-auth.onAuthStateChanged(async u=>{
+if(FB_OK&&auth)auth.onAuthStateChanged(async u=>{
   if(u){currentUser=u;await loadUser(u.uid);uiAuth(true)}
   else{currentUser=null;userData=null;isPremium=false;uiAuth(false)}
 });
