@@ -6,7 +6,7 @@
 <title>Promptarium — проверенные промты для ИИ</title>
 <meta name="description" content="Promptarium — библиотека проверенных промтов с переменными. Выбери шаблон, вставь данные — получи качественный результат за 30 секунд.">
 <meta name="theme-color" content="#8b5cf6">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2L14.5 9.5L22 10L16 15.5L18 23L12 19L6 23L8 15.5L2 10L9.5 9.5L12 2Z' fill='%238b5cf6'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20512%20512%22%3E%0A%3Cdefs%3E%0A%20%20%3ClinearGradient%20id%3D%22bg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%238b5cf6%22/%3E%0A%20%20%20%20%3Cstop%20offset%3D%22.55%22%20stop-color%3D%22%236366f1%22/%3E%0A%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%234f46e5%22/%3E%0A%20%20%3C/linearGradient%3E%0A%20%20%3ClinearGradient%20id%3D%22star%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23ffffff%22/%3E%0A%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23e0e7ff%22/%3E%0A%20%20%3C/linearGradient%3E%0A%20%20%3CradialGradient%20id%3D%22glow%22%20cx%3D%22.5%22%20cy%3D%22.5%22%20r%3D%22.5%22%3E%0A%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%23d946ef%22%20stop-opacity%3D%22.55%22/%3E%0A%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23d946ef%22%20stop-opacity%3D%220%22/%3E%0A%20%20%3C/radialGradient%3E%0A%20%20%3Cfilter%20id%3D%22soft%22%20x%3D%22-60%25%22%20y%3D%22-60%25%22%20width%3D%22220%25%22%20height%3D%22220%25%22%3E%0A%20%20%20%20%3CfeGaussianBlur%20stdDeviation%3D%2218%22/%3E%0A%20%20%3C/filter%3E%0A%3C/defs%3E%0A%3Crect%20x%3D%2216%22%20y%3D%2216%22%20width%3D%22480%22%20height%3D%22480%22%20rx%3D%22112%22%20fill%3D%22url%28%23bg%29%22/%3E%0A%3Crect%20x%3D%2216%22%20y%3D%2216%22%20width%3D%22480%22%20height%3D%22480%22%20rx%3D%22112%22%20fill%3D%22none%22%20stroke%3D%22%23ffffff%22%20stroke-opacity%3D%22.18%22%20stroke-width%3D%222%22/%3E%0A%3Ccircle%20cx%3D%22256%22%20cy%3D%22256%22%20r%3D%22200%22%20fill%3D%22url%28%23glow%29%22/%3E%0A%3Cpath%20d%3D%22M256%2096%20C%20268%20210%20302%20244%20416%20256%20C%20302%20268%20268%20302%20256%20416%20C%20244%20302%20210%20268%2096%20256%20C%20210%20244%20244%20210%20256%2096%20Z%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.55%22%20filter%3D%22url%28%23soft%29%22/%3E%0A%3Cpath%20d%3D%22M256%2096%20C%20268%20210%20302%20244%20416%20256%20C%20302%20268%20268%20302%20256%20416%20C%20244%20302%20210%20268%2096%20256%20C%20210%20244%20244%20210%20256%2096%20Z%22%20fill%3D%22url%28%23star%29%22/%3E%0A%3Ccircle%20cx%3D%22392%22%20cy%3D%22128%22%20r%3D%2214%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.85%22/%3E%0A%3Ccircle%20cx%3D%22120%22%20cy%3D%22392%22%20r%3D%229%22%20fill%3D%22%23ffffff%22%20opacity%3D%22.5%22/%3E%0A%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -115,7 +115,7 @@ nav{position:sticky;top:14px;z-index:500;display:flex;align-items:center;justify
 .hero-orb{position:absolute;top:8%;left:50%;transform:translateX(-50%);width:520px;height:520px;pointer-events:none;
   background:conic-gradient(from 0deg,var(--a1),var(--a2),var(--a3),var(--a1));
   filter:blur(90px);opacity:.28;border-radius:50%;animation:spinSlow 24s linear infinite;z-index:-1}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 18px;border-radius:99px;background:var(--card);border:1px solid var(--line2);backdrop-filter:blur(14px);font-size:12px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;color:var(--mut);margin-bottom:26px}
+.hero-badge{display:inline-flex;align-items:center;gap:7px;padding:5px 14px;border-radius:99px;background:var(--card);border:1px solid var(--line);backdrop-filter:blur(14px);font-size:10.5px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--mut);margin-bottom:22px}
 .hero-badge .pulse{width:7px;height:7px;border-radius:50%;background:var(--a1);box-shadow:0 0 12px var(--a1);animation:float 2.4s ease-in-out infinite}
 .hero h1{font-family:var(--font-d);font-weight:700;font-size:clamp(42px,7.2vw,86px);line-height:1.04;letter-spacing:-.03em;margin-bottom:20px}
 .hero h1 .gr{background:linear-gradient(100deg,var(--a1) 10%,var(--a3) 55%,var(--a2) 95%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
@@ -273,16 +273,31 @@ footer a:hover{color:var(--a1)}
 <div class="wrap">
 <nav>
   <div class="logo" onclick="goHome()">
-    <span class="li"><svg viewBox="0 0 24 24"><path d="M12 2L14.5 9.5L22 10L16 15.5L18 23L12 19L6 23L8 15.5L2 10L9.5 9.5L12 2Z" fill="url(#lg1)"/><defs><linearGradient id="lg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#6366f1"/></linearGradient></defs></svg></span>
+    <span class="li"><svg style="width:100%;height:100%" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<defs>
+  <linearGradient id="lgmark" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#a78bfa"/>
+    <stop offset=".5" stop-color="#8b5cf6"/>
+    <stop offset="1" stop-color="#6366f1"/>
+  </linearGradient>
+  <filter id="lgmarkglow" x="-80%" y="-80%" width="260%" height="260%">
+    <feGaussianBlur stdDeviation="26" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</defs>
+<path d="M256 64 C 270 186 326 242 448 256 C 326 270 270 326 256 448 C 242 326 186 270 64 256 C 186 242 242 186 256 64 Z" fill="url(#lgmark)" filter="url(#lgmarkglow)"/>
+<circle cx="404" cy="110" r="16" fill="#d946ef" filter="url(#lgmarkglow)"/>
+<circle cx="108" cy="404" r="10" fill="#8b5cf6" opacity=".8"/>
+</svg></span>
     <span><span class="ln1">Promptarium</span><br><span class="ln2">библиотека промтов для ИИ</span></span>
   </div>
   <div class="nacts">
     <div class="ptog" id="ptog" onclick="togglePremiumFilter()">
       <div class="trk"><div class="thb"></div></div><span class="pl">Premium</span>
     </div>
-    <button class="nbtn gold" onclick="openPremium()">⭐ Premium</button>
+    <button class="nbtn gold" onclick="openPremium()"><svg class="ic gold" viewBox="0 0 24 24"><path d="M2 18h20M3 8l4.5 4L12 5l4.5 7L21 8l-1.6 10H4.6L3 8z"/></svg> Premium</button>
     <div class="tsel">
-      <button class="nbtn" id="tbtn" onclick="event.stopPropagation();toggleThemeDrop()">🎨 <span id="tname">Nebula</span> ▾</button>
+      <button class="nbtn" id="tbtn" onclick="event.stopPropagation();toggleThemeDrop()"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="8.5" cy="10" r="1.3" fill="currentColor" stroke="none"/><circle cx="15.5" cy="10" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="15.5" r="1.3" fill="currentColor" stroke="none"/></svg> <span id="tname">Туманность</span> ▾</button>
       <div class="tdrop" id="tdrop"></div>
     </div>
     <span id="authbox">
@@ -327,7 +342,7 @@ footer a:hover{color:var(--a1)}
 
 <footer>
   <p>Promptarium — шпаргалка для общения с нейросетями</p>
-  <p style="margin-top:6px"><a onclick="openAbout()">О проекте</a><a onclick="notify('✉️ promptarium@example.com')">Контакты</a></p>
+  <p style="margin-top:6px"><a onclick="openAbout()">О проекте</a><a onclick="notify('promptarium@example.com')"><svg class='ic' viewBox='0 0 24 24' style='vertical-align:-3px'><rect x='2' y='4' width='20' height='16' rx='2'/><path d='M22 6l-10 7L2 6'/></svg> Контакты</a></p>
 </footer>
 </div>
 
@@ -360,10 +375,10 @@ footer a:hover{color:var(--a1)}
   </div>
   <div class="tgrid">
     <div class="tcard"><h3>Бесплатно</h3><p>✔️ Базовые промты<br>✔️ Поиск и категории<br>✕ Премиум-промты<br>✕ Цепочки промтов</p></div>
-    <div class="tcard gold"><h3>⭐ Premium</h3><p>✔️ Все промты без ограничений<br>✔️ Эксклюзивные цепочки<br>✔️ Новые промты каждую неделю</p><div class="price">499 ₽</div><p style="font-size:11px">разово, навсегда</p></div>
+    <div class="tcard gold"><h3>Premium</h3><p>✔️ Все промты без ограничений<br>✔️ Эксклюзивные цепочки<br>✔️ Новые промты каждую неделю</p><div class="price">499 ₽</div><p style="font-size:11px">разово, навсегда</p></div>
   </div>
   <button class="btn pri gold" style="width:100%;justify-content:center;padding:15px;font-size:15.5px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1a1200;box-shadow:0 8px 30px rgba(251,191,36,.35)" onclick="subscribe()">Купить Premium</button>
-  <p style="color:var(--mut);font-size:11.5px;text-align:center;margin-top:12px">⚠️ Демо-режим: платёж не списывается. Для реальных оплат подключите Stripe.</p>
+  <p style="color:var(--mut);font-size:11.5px;text-align:center;margin-top:12px">Демо-режим: платёж не списывается. Для реальных оплат подключите Stripe.</p>
 </div></div>
 
 <div class="mov" id="m-about"><div class="modal" style="max-width:460px"><button class="mclose" onclick="closeM('m-about')">✕</button>
@@ -376,7 +391,7 @@ footer a:hover{color:var(--a1)}
       <div class="pstat"><span class="n">13</span><span class="l">Категорий</span></div>
       <div class="pstat"><span class="n" id="ab-rate">—</span><span class="l">Рейтинг</span></div>
     </div>
-    <p style="font-size:13px;color:var(--mut)">✦ 2026 · Бесплатно и открыто ✦<br>📧 promptarium@example.com</p>
+    <p style="font-size:13px;color:var(--mut)">Promptarium · 2026 · Бесплатно и открыто<br>promptarium@example.com</p>
   </div>
 </div></div>
 
@@ -408,12 +423,12 @@ function prog(v){document.getElementById('progress').style.width=Math.min(v,100)
 
 /* ================= ТЕМЫ (генерируются кодом — переключатель гарантированно работает) ================= */
 const themes=[
-  {id:'nebula',name:'Nebula',grad:'linear-gradient(135deg,#8b5cf6,#6366f1)'},
-  {id:'ocean',name:'Ocean',grad:'linear-gradient(135deg,#22d3ee,#3b82f6)'},
-  {id:'emerald',name:'Emerald',grad:'linear-gradient(135deg,#34d399,#10b981)'},
-  {id:'sunset',name:'Sunset',grad:'linear-gradient(135deg,#fb923c,#f43f5e)'},
-  {id:'mono',name:'Mono',grad:'linear-gradient(135deg,#e5e5e5,#737373)'},
-  {id:'light',name:'Light',grad:'linear-gradient(135deg,#ffffff,#c7cbe0)'}
+  {id:'nebula',name:'Туманность',grad:'linear-gradient(135deg,#8b5cf6,#6366f1)'},
+  {id:'ocean',name:'Океан',grad:'linear-gradient(135deg,#22d3ee,#3b82f6)'},
+  {id:'emerald',name:'Изумруд',grad:'linear-gradient(135deg,#34d399,#10b981)'},
+  {id:'sunset',name:'Закат',grad:'linear-gradient(135deg,#fb923c,#f43f5e)'},
+  {id:'mono',name:'Монохром',grad:'linear-gradient(135deg,#e5e5e5,#737373)'},
+  {id:'light',name:'Светлая',grad:'linear-gradient(135deg,#ffffff,#c7cbe0)'}
 ];
 function buildThemeDrop(){
   document.getElementById('tdrop').innerHTML=themes.map(t=>
@@ -464,7 +479,7 @@ async function loadPrompts(){
     loaded=true;prog(85);renderHome();updStats();prog(100);setTimeout(()=>prog(0),400);
   }catch(e){
     console.error(e);prog(0);
-    document.getElementById('main-content').innerHTML='<div class="empty"><p>⚠️ Ошибка загрузки. Проверь интернет и Firebase.</p></div>';
+    document.getElementById('main-content').innerHTML='<div class="empty"><p>Ошибка загрузки. Проверь интернет и Firebase.</p></div>';
   }
 }
 
@@ -476,7 +491,7 @@ function cardHTML(p,i){
     <div class="ptags">${(p.tags||[]).slice(0,4).map(t=>`<span onclick="event.stopPropagation();openTag('${esc(t)}')">#${esc(t)}</span>`).join('')}</div>
     <div class="pmeta">
       <span class="stars">${[1,2,3,4,5].map(s=>`<span class="star" data-id="${p.id}" data-s="${s}" style="color:${s<=r?'#fbbf24':'var(--mut)'}">★</span>`).join('')}</span>
-      <span>👁 ${stableViews(p.id)}</span>
+      <span class="views"><svg class="ic" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>${stableViews(p.id)}</span>
       <button class="fav ${fav?'on':''}" onclick="event.stopPropagation();toggleFav('${p.id}')" aria-label="Избранное">
         <svg viewBox="0 0 24 24" stroke="${fav?'var(--rose)':'var(--mut)'}" stroke-width="2" fill="${fav?'var(--rose)':'none'}"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
       </button>
@@ -498,7 +513,7 @@ function renderHome(){
   const c=document.getElementById('main-content');
   if(!loaded&&prompts.length===0){c.innerHTML=skeletons(6);return}
   const list=filtered();
-  if(!list.length){c.innerHTML=`<div class="empty"><p>${onlyPremium?'⭐ Нет премиум-промтов':'Промты пока не добавлены'}</p></div>`;return}
+  if(!list.length){c.innerHTML=`<div class="empty"><p>${onlyPremium?'Premium-промты появятся здесь':'Промты пока не добавлены'}</p></div>`;return}
   const catHTML=cats.map(cat=>{
     const n=prompts.filter(p=>p.category===cat.id).length;
     return `<div class="ccard reveal" onclick="openCat('${cat.id}')"><div class="cicon">${catIcon(cat.id)}</div><div class="nm">${cat.name}</div><div class="ct">${n} промтов</div></div>`;
@@ -506,7 +521,7 @@ function renderHome(){
   c.innerHTML=`
     <div class="sh reveal" id="cats-anchor"><div><div class="kick">Каталог</div><h2>Категории</h2></div><span class="ln"></span><span class="bdg">${cats.length}</span></div>
     <div class="cgrid">${catHTML}</div>
-    <div class="sh reveal"><div><div class="kick">${onlyPremium?'Эксклюзив':'Подборка'}</div><h2>${onlyPremium?'⭐ Premium-промты':'Популярные промты'}</h2></div><span class="ln"></span><span class="bdg">${list.length}</span></div>
+    <div class="sh reveal"><div><div class="kick">${onlyPremium?'Эксклюзив':'Подборка'}</div><h2>${onlyPremium?'Premium-промты':'Популярные промты'}</h2></div><span class="ln"></span><span class="bdg">${list.length}</span></div>
     <div class="pgrid">${list.slice(0,6).map((p,i)=>cardHTML(p,i)).join('')}</div>`;
   bindStars(c);observeReveals();
 }
@@ -592,8 +607,8 @@ window.openPrompt=async function(id){
   let p=prompts.find(x=>x.id===id);
   if(!p){try{const d=await db.collection('prompts').doc(id).get();if(d.exists){p={id:d.id,...d.data()};prompts.push(p)}}catch(e){notify('❌ Ошибка загрузки');return}}
   if(!p){notify('❌ Промт не найден');return}
-  if(isPrem(id)&&!isPremium){notify('⭐ Только для Premium');openPremium();return}
-  if(!p.template||!p.template.trim()){notify('⚠️ У промта нет текста');return}
+  if(isPrem(id)&&!isPremium){notify('Только для Premium');openPremium();return}
+  if(!p.template||!p.template.trim()){notify('У промта нет текста');return}
   if(currentUser){
     const h=[id,...(userData.history||[]).filter(x=>x!==id)].slice(0,50);
     await db.collection('users').doc(currentUser.uid).update({history:h}).catch(()=>{});
@@ -604,7 +619,7 @@ window.openPrompt=async function(id){
     <div class="mtitle">${esc(p.title)}</div>
     <div class="mdesc">${esc(p.description||'')}</div>
     ${(p.variables||[]).map(v=>`<div class="mvar"><label>${esc(v)}</label><input type="text" id="vv-${esc(v)}" placeholder="Введите ${esc(v.toLowerCase())}" oninput="updPreview()"></div>`).join('')}
-    <label style="font-size:12.5px;color:var(--mut)">✅ Готовый промт</label>
+    <label style="font-size:12.5px;color:var(--mut);display:flex;align-items:center;gap:6px"><svg class="ic" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg> Готовый промт</label>
     <div class="mpreview" id="preview"></div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:6px">
       <button class="btn pri" id="copybtn" style="padding:11px 26px;font-size:13.5px" onclick="copyPrompt(this)">
@@ -613,7 +628,7 @@ window.openPrompt=async function(id){
     </div>
     <div class="mtags">${(p.tags||[]).map(t=>`<span>#${esc(t)}</span>`).join('')}</div>
     <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--line)">
-      <span style="font-size:12px;color:var(--mut);display:block;text-align:center;margin-bottom:10px">🚀 Открыть в нейросети</span>
+      <span style="font-size:12px;color:var(--mut);display:block;text-align:center;margin-bottom:10px"><svg class="ic" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg> Открыть в нейросети</span>
       <div class="ai-btns">
         ${[['ChatGPT','https://chat.openai.com/'],['Claude','https://claude.ai/'],['Gemini','https://gemini.google.com/'],['DeepSeek','https://chat.deepseek.com/'],['Grok','https://grok.com/'],['YandexGPT','https://ya.ru/ai/']].map(([n,u])=>`<button onclick="openAI('${u}')">${n}</button>`).join('')}
       </div>
@@ -728,16 +743,16 @@ window.openProfile=function(){
     <div class="pstats">
       <div class="pstat"><span class="n">${favs.length}</span><span class="l">Избранное</span></div>
       <div class="pstat"><span class="n">${(userData.history||[]).length}</span><span class="l">Просмотрено</span></div>
-      <div class="pstat"><span class="n" style="${isPremium?'':''}">${isPremium?'⭐':'✕'}</span><span class="l">Premium</span></div>
+      <div class="pstat"><span class="n" style="${isPremium?'':''}">${isPremium?'✓':'✕'}</span><span class="l">Premium</span></div>
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px">
-      <button class="btn sec" style="padding:9px 18px;font-size:13px" onclick="exportData()">⬇ Экспорт</button>
-      ${isPremium?'':`<button class="btn" style="padding:9px 18px;font-size:13px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1a1200" onclick="closeM('m-profile');openPremium()">⭐ Premium</button>`}
+      <button class="btn sec" style="padding:9px 18px;font-size:13px" onclick="exportData()"><svg class="ic" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Экспорт</button>
+      ${isPremium?'':`<button class="btn" style="padding:9px 18px;font-size:13px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#1a1200" onclick="closeM('m-profile');openPremium()">Premium</button>`}
       <button class="nbtn" style="color:var(--rose);border-color:rgba(251,113,133,.3)" onclick="logout()">Выйти</button>
     </div>
-    <h4 style="font-size:14px;margin-bottom:10px">❤️ Избранное (${favs.length})</h4>
+    <h4 style="font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:7px"><svg class="ic" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg> Избранное (${favs.length})</h4>
     ${favs.length?favs.slice(0,8).map(row).join(''):'<p style="color:var(--mut);font-size:13px;margin-bottom:14px">Пока пусто</p>'}
-    <h4 style="font-size:14px;margin:14px 0 10px">📜 История (${hist.length})</h4>
+    <h4 style="font-size:14px;margin:14px 0 10px;display:flex;align-items:center;gap:7px"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> История (${hist.length})</h4>
     ${hist.length?hist.slice(0,8).map(row).join(''):'<p style="color:var(--mut);font-size:13px">Пока пусто</p>'}`;
   openM('m-profile');
 };
